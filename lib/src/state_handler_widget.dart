@@ -5,7 +5,7 @@ class StateHandlerWidget extends StatelessWidget {
   ///
   /// These can be set at app start to provide a consistent look and feel.
   static Widget Function(BuildContext)? _defaultLoadingBuilder;
-  static Widget Function(BuildContext)? _defaultErrorBuilder;
+  static Widget Function(BuildContext, String?)? _defaultErrorBuilder;
   static Widget Function(BuildContext)? _defaultEmptyBuilder;
 
   /// The state of the widget.
@@ -14,11 +14,13 @@ class StateHandlerWidget extends StatelessWidget {
   ///
   /// * loading: The widget is currently loading.
   /// * error: The widget encountered an error.
+  /// * errorMessage: The widget has an error message to display.
   /// * empty: The widget has no data to display.
   /// * normal: The widget is in a normal state.
   final bool loading;
   final bool error;
   final bool empty;
+  final String? errorMessage;
 
   /// The widget to display when the state is loading.
   final Widget? loadingWidget;
@@ -37,6 +39,8 @@ class StateHandlerWidget extends StatelessWidget {
   /// The [loading], [error] and [empty] properties are mutually exclusive.
   /// Only one of them can be true at any given time.
   ///
+  /// The [errorMessage] property is used when the [error] property is true.
+  ///
   /// The [loadingWidget], [errorWidget] and [emptyWidget] properties are used
   /// when the corresponding state is true.
   ///
@@ -46,6 +50,7 @@ class StateHandlerWidget extends StatelessWidget {
     required this.loading,
     this.error = false,
     this.empty = false,
+    this.errorMessage,
     this.loadingWidget,
     this.errorWidget,
     this.emptyWidget,
@@ -64,6 +69,11 @@ class StateHandlerWidget extends StatelessWidget {
   ///   otherwise the default loading widget if it has been set, otherwise a
   ///   simple circular progress indicator.
   //
+  /// * If [error] is true and [errorMessage] is not null, returns the
+  ///   [errorWidget] if it is not null, otherwise the default error widget if
+  ///   it has been set, otherwise a simple text widget with the text
+  ///   'Error: $errorMessage'.
+  ///
   /// * If [error] is true, returns the [errorWidget] if it is not null,
   ///   otherwise the default error widget if it has been set, otherwise a
   ///   simple text widget with the text 'Error'.
@@ -80,7 +90,8 @@ class StateHandlerWidget extends StatelessWidget {
                 const CircularProgressIndicator.adaptive()
             : error
                 ? errorWidget ??
-                    _defaultErrorBuilder?.call(context) ??
+                    _defaultErrorBuilder?.call(
+                        context, errorMessage ?? 'Error') ??
                     const Text('Error')
                 : child;
   }
@@ -96,10 +107,11 @@ class StateHandlerWidget extends StatelessWidget {
   ///
   /// [loadingBuilder] is the default builder for the loading state.
   /// [errorBuilder] is the default builder for the error state.
+  /// [errorMessage] is the error message to display in the error state.
   /// [emptyBuilder] is the default builder for the empty state.
   static void setDefaultWidgets({
     Widget Function(BuildContext)? loadingBuilder,
-    Widget Function(BuildContext)? errorBuilder,
+    Widget Function(BuildContext, String?)? errorBuilder,
     Widget Function(BuildContext)? emptyBuilder,
   }) {
     _defaultLoadingBuilder = loadingBuilder;
