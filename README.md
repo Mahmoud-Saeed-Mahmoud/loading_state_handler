@@ -28,6 +28,7 @@ StateHandlerWidget(
 
 - `loading`: Set to `true` if the widget is currently loading.
 - `error`: Set to `true` if the widget encountered an error.
+- `errorMessage`: The error message to display.
 - `empty`: Set to `true` if there is no data to display.
 - `loadingWidget`: A custom widget to display while loading.
 - `errorWidget`: A custom widget to display on error.
@@ -41,7 +42,7 @@ You can define default widgets for loading, error, and empty states across your 
 ```dart
 StateHandlerWidget.setDefaultWidgets(
   loadingBuilder: (context) => CustomLoadingWidget(),
-  errorBuilder: (context) => CustomErrorWidget(),
+  errorBuilder: (context, error) => CustomErrorWidget(),
   emptyBuilder: (context) => CustomEmptyWidget(),
 );
 ```
@@ -54,6 +55,7 @@ Here’s a complete example demonstrating how to use the `StateHandlerWidget`:
 class ExampleScreen extends StatelessWidget {
   final bool isLoading = false; // Example loading state
   final bool hasError = false;  // Example error state
+  final String errorMessage = 'An error occurred'; // Example error message
   final bool isEmpty = false;    // Example empty state
 
   @override
@@ -62,6 +64,7 @@ class ExampleScreen extends StatelessWidget {
       loading: isLoading,
       error: hasError,
       empty: isEmpty,
+      errorMessage: errorMessage,
       child: ListView.builder(
         itemCount: 10,
         itemBuilder: (context, index) {
