@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
+  <meta name="description" content="loading_state_handler API docs, for the Dart programming language.">
+  <title>loading_state_handler - Dart API docs</title>
+
+
+  
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,300;0,400;0,500;0,700;1,400&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" rel="stylesheet">
+  
+  <link rel="stylesheet" href="static-assets/github.css?v1">
+  <link rel="stylesheet" href="static-assets/styles.css?v1">
+  <link rel="icon" href="static-assets/favicon.png?v1">
+
+  
+</head>
+
+
+<body data-base-href="" data-using-base-href="false" class="light-theme">
+
+<div id="overlay-under-drawer"></div>
+
+<header id="title">
+  <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
+  <ol class="breadcrumbs gt-separated dark hidden-xs">
+    <li><a href="https://github.com/Mahmoud-Saeed-Mahmoud/loading_state_handler">loading_state_handler package</a></li>
+  </ol>
+  <div class="self-name">loading_state_handler</div>
+  <form class="search navbar-right" role="search">
+    <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+  <div class="toggle" id="theme-button" title="Toggle brightness">
+    <label for="theme">
+      <input type="checkbox" id="theme" value="light-theme">
+      <span id="dark-theme-button" class="material-symbols-outlined">
+        dark_mode
+      </span>
+      <span id="light-theme-button" class="material-symbols-outlined">
+        light_mode
+      </span>
+    </label>
+  </div>
+</header>
+<main>
+
+  <div id="dartdoc-main-content" class="main-content">
+      
+<section class="desc markdown">
+  <h1 id="statehandlerwidget">StateHandlerWidget</h1>
+<p>The <code>StateHandlerWidget</code> is a Flutter widget that simplifies the handling of different UI states in your applications. It provides a consistent way to display loading, error, empty, and normal states, allowing for clean and maintainable UI code.</p>
+<h2 id="features">Features</h2>
+<ul>
+<li>Displays different widgets based on the current state (loading, error, empty, or normal).</li>
+<li>Allows customization of state-specific widgets.</li>
+<li>Provides default builder functions to define a consistent look across your app.</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<p>To use the <code>StateHandlerWidget</code>, you can include it in your widget tree as follows:</p>
+<pre class="language-dart"><code class="language-dart">StateHandlerWidget(
+  loading: isLoading, // true if loading
+  error: hasError,    // true if an error occurred
+  empty: isEmpty,     // true if there's no data
+  loadingWidget: CustomLoadingWidget(), // optional custom loading widget
+  errorWidget: CustomErrorWidget(),     // optional custom error widget
+  emptyWidget: CustomEmptyWidget(),     // optional custom empty widget
+  child: YourContentWidget(),            // widget to display when not loading, error, or empty
+);
+</code></pre>
+<h3 id="parameters">Parameters</h3>
+<ul>
+<li><code>loading</code>: Set to <code>true</code> if the widget is currently loading.</li>
+<li><code>error</code>: Set to <code>true</code> if the widget encountered an error.</li>
+<li><code>empty</code>: Set to <code>true</code> if there is no data to display.</li>
+<li><code>loadingWidget</code>: A custom widget to display while loading.</li>
+<li><code>errorWidget</code>: A custom widget to display on error.</li>
+<li><code>emptyWidget</code>: A custom widget to display when empty.</li>
+<li><code>child</code>: The normal state widget to display when no other state is active.</li>
+</ul>
+<h3 id="setting-default-builders">Setting Default Builders</h3>
+<p>You can define default widgets for loading, error, and empty states across your app:</p>
+<pre class="language-dart"><code class="language-dart">StateHandlerWidget.setDefaultWidgets(
+  loadingBuilder: (context) =&gt; CustomLoadingWidget(),
+  errorBuilder: (context) =&gt; CustomErrorWidget(),
+  emptyBuilder: (context) =&gt; CustomEmptyWidget(),
+);
+</code></pre>
+<h3 id="example">Example</h3>
+<p>Here’s a complete example demonstrating how to use the <code>StateHandlerWidget</code>:</p>
+<pre class="language-dart"><code class="language-dart">class ExampleScreen extends StatelessWidget {
+  final bool isLoading = false; // Example loading state
+  final bool hasError = false;  // Example error state
+  final bool isEmpty = false;    // Example empty state
+
+  @override
+  Widget build(BuildContext context) {
+    return StateHandlerWidget(
+      loading: isLoading,
+      error: hasError,
+      empty: isEmpty,
+      child: ListView.builder(
+        itemCount: 10,
+        itemBuilder: (context, index) {
+          return ListTile(title: Text('Item $index'));
+        },
+      ),
+    );
+  }
+}
+</code></pre>
+<h2 id="notes">Notes</h2>
+<ul>
+<li>Ensure that only one of the states (<code>loading</code>, <code>error</code>, or <code>empty</code>) is set to <code>true</code> at any given time.</li>
+<li>The default widgets will be used if the respective widget parameters are not provided.</li>
+</ul>
+<h2 id="conclusion">Conclusion</h2>
+<p>The <code>StateHandlerWidget</code> is a powerful tool for managing different UI states in Flutter applications. It promotes code reuse and enhances the user experience by providing a clean way to handle various application states.</p>
+</section>
+
+
+      <section class="summary">
+          <h2>Libraries</h2>
+        <dl>
+          <dt id="loading_state_handler">
+  <span class="name"><a href="loading_state_handler/loading_state_handler-library.html">loading_state_handler</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+        </dl>
+      </section>
+
+  </div> <!-- /.main-content -->
+
+  <div id="dartdoc-sidebar-left" class="sidebar sidebar-offcanvas-left">
+    <!-- The search input and breadcrumbs below are only responsively visible at low resolutions. -->
+<header id="header-search-sidebar" class="hidden-l">
+  <form class="search-sidebar" role="search">
+    <input type="text" id="search-sidebar" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
+  </form>
+</header>
+
+<ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
+    <li><a href="https://github.com/Mahmoud-Saeed-Mahmoud/loading_state_handler">loading_state_handler package</a></li>
+</ol>
+
+
+    <h5 class="hidden-xs"><span class="package-name">loading_state_handler</span> <span class="package-kind">package</span></h5>
+    <ol>
+      <li class="section-title">Libraries</li>
+      <li><a href="loading_state_handler/loading_state_handler-library.html">loading_state_handler</a></li>
+</ol>
+
+  </div>
+
+  <div id="dartdoc-sidebar-right" class="sidebar sidebar-offcanvas-right">
+  </div>
+
+</main>
+
+<footer>
+  <span class="no-break">
+    loading_state_handler
+      0.0.2
+  </span>
+
+  
+</footer>
+
+
+
+<script src="static-assets/highlight.pack.js?v1"></script>
+<script src="static-assets/docs.dart.js"></script>
+
+
+
+</body>
+
+</html>
+
