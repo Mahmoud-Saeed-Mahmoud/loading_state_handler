@@ -1,7 +1,6 @@
 name: loading_state_handler
 description: "A new Flutter package project."
 version: 0.0.1
-publish_to: pub.dev
 homepage: https://github.com/Mahmoud-Saeed-Mahmoud/loading_state_handler
 
 environment:
