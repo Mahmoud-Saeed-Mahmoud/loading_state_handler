@@ -6,3 +6,7 @@
 
 * changed the description in `pubspec.yaml`.
 
+## 0.0.3
+
+* changed the description in `pubspec.yaml`.
+
