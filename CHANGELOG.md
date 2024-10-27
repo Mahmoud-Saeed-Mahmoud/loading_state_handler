@@ -11,4 +11,8 @@
 - **Added**: String error message support in `StateHandlerWidget`.
 - **Updated**: Documentation to clarify widget behavior for loading, error, and empty states.
 - **Refined**: Default builder functions for consistent styling across app states.
-- **Improved**: Example usage for better demonstration of widget functionality.
+
+
+## 0.0.4
+
+- **Added**: Example usage for better demonstration of widget functionality.
