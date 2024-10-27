@@ -1,5 +1,5 @@
 name: loading_state_handler
-description: "A loading state handler for flutter apps"
+description: "The StateHandlerWidget manages different UI states—loading, error, empty, and normal—allowing you to customize the displayed widgets for each state. It supports dynamic error messages and can set default widgets globally for consistent app styling."
 version: 0.0.2
 homepage: https://github.com/Mahmoud-Saeed-Mahmoud/loading_state_handler
 
