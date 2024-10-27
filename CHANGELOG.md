@@ -21,3 +21,7 @@
 ## 0.0.5
 
 - **Updated**: Documentation to clarify widget behavior for loading, error, and empty states.
+
+## 0.0.6
+
+- **Updated**: Description in `pubspec.yaml`.
