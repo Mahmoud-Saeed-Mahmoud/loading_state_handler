@@ -16,3 +16,8 @@
 ## 0.0.4
 
 - **Added**: Example usage for better demonstration of widget functionality.
+
+
+## 0.0.5
+
+- **Updated**: Documentation to clarify widget behavior for loading, error, and empty states.
