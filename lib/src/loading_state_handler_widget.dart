@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+/// A widget that handles loading, error, and empty states.
+///
 class LoadingStateHandlerWidget extends StatefulWidget {
   /// Default loading widget builder.
   ///
@@ -232,6 +234,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     required this.child,
   });
 
+  /// Creates the state for the [LoadingStateHandlerWidget].
   @override
   State<LoadingStateHandlerWidget> createState() =>
       _LoadingStateHandlerWidgetState();
@@ -279,6 +282,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   }
 }
 
+/// The state for the [LoadingStateHandlerWidget].
 class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   @override
 
