@@ -1,51 +1,230 @@
 import 'package:flutter/material.dart';
 
 class LoadingStateHandlerWidget extends StatefulWidget {
+  /// Default loading widget builder.
+  ///
+  /// This callback will be called when [loading] is true, and the default
+  /// widget is displayed.
+  ///
+  /// The default implementation is to display a [CircularProgressIndicator] in
+  /// the center of the screen.
+  ///
+  /// If not null, the default loading widget will be displayed when [loading] is
+  /// true.
+  ///
+  /// The default value is null, which means the default loading widget will not
+  /// be displayed.
   static Widget Function(BuildContext, String?)? _defaultLoadingBuilder;
+
+  /// Default error widget builder.
+  ///
+  /// This callback will be called when [error] is true, and the default
+  /// widget is displayed.
+  ///
+  /// The default implementation is to display a [Text] widget in the center of
+  /// the screen with the error message.
+  ///
+  /// If not null, the default error widget will be displayed when [error] is
+  /// true.
+  ///
+  /// The default value is null, which means the default error widget will not
+  /// be displayed.
   static Widget Function(BuildContext, String?)? _defaultErrorBuilder;
+
+  /// Default empty widget builder.
+  ///
+  /// This callback will be called when [empty] is true, and the default
+  /// widget is displayed.
+  ///
+  /// The default implementation is to display a [Text] widget in the center of
+  /// the screen with the empty message.
+  ///
+  /// If not null, the default empty widget will be displayed when [empty] is
+  /// true.
+  ///
+  /// The default value is null, which means the default empty widget will not
+  /// be displayed.
   static Widget Function(BuildContext, String?)? _defaultEmptyBuilder;
 
-  static Function(BuildContext, String?)? _defaultOnLoading;
-  static Function(BuildContext, String?)? _defaultOnError;
-  static Function(BuildContext, String?)? _defaultOnEmpty;
-  static Function(BuildContext, String?)? _defaultOnData;
+  /// Default on loading callback.
+  ///
+  /// This callback will be called when [loading] is true.
+  ///
+  /// The default implementation is to display a [SnackBar] with the loading
+  /// message.
+  ///
+  /// If not null, the default on loading callback will be called when [loading]
+  /// is true.
+  ///
+  /// The default value is null, which means the default on loading callback will
+  /// not be called.
+  static void Function(BuildContext, String?)? _defaultOnLoading;
 
+  /// Default on error callback.
+  ///
+  /// This callback will be called when [error] is true.
+  ///
+  /// The default implementation is to display a [SnackBar] with the error
+  /// message.
+  ///
+  /// If not null, the default on error callback will be called when [error] is
+  /// true.
+  ///
+  /// The default value is null, which means the default on error callback will
+  /// not be called.
+  static void Function(BuildContext, String?)? _defaultOnError;
+
+  /// Default on empty callback.
+  ///
+  /// This callback will be called when [empty] is true.
+  ///
+  /// The default implementation is to display a [SnackBar] with the empty
+  /// message.
+  ///
+  /// If not null, the default on empty callback will be called when [empty] is
+  /// true.
+  ///
+  /// The default value is null, which means the default on empty callback will
+  /// not be called.
+  static void Function(BuildContext, String?)? _defaultOnEmpty;
+
+  /// Default on data callback.
+  ///
+  /// This callback will be called when [loading] is false, [error] is false,
+  /// and [empty] is false.
+  ///
+  /// The default implementation is to display a [SnackBar] with the data
+  /// message.
+  ///
+  /// If not null, the default on data callback will be called when [loading] is
+  /// false, [error] is false, and [empty] is false.
+  ///
+  /// The default value is null, which means the default on data callback will
+  /// not be called.
+  static void Function(BuildContext, String?)? _defaultOnData;
+
+  /// Whether the widget is in a loading state.
   final bool loading;
+
+  /// Whether the widget is in an error state.
   final bool error;
+
+  /// Whether the widget is in an empty state.
   final bool empty;
+
+  /// The error message.
   final String? errorMessage;
+
+  /// The empty message.
   final String? emptyMessage;
+
+  /// The loading message.
   final String? loadingMessage;
+
+  /// The data message.
   final String? dataMessage;
 
+  /// The widget to display when the state is loading.
+  ///
+  /// If not null, the [loadingWidget] will be displayed when [loading] is true.
+  ///
+  /// The default value is null, which means the default loading widget will be
+  /// used.
   final Widget? loadingWidget;
 
+  /// The widget to display when the state is error.
+  ///
+  /// If not null, the [errorWidget] will be displayed when [error] is true.
+  ///
+  /// The default value is null, which means the default error widget will be
+  /// used.
   final Widget? errorWidget;
 
+  /// The widget to display when the state is empty.
+  ///
+  /// If not null, the [emptyWidget] will be displayed when [empty] is true.
+  ///
+  /// The default value is null, which means the default empty widget will be
+  /// used.
   final Widget? emptyWidget;
 
+  /// The widget to display when the state is normal.
+  ///
+  /// This widget will be displayed when [loading] is false, [error] is false,
+  /// and [empty] is false.
   final Widget child;
 
+  /// A callback function that will be called when the state is error.
+  ///
+  /// The callback function takes two parameters, the default error widget
+  /// function and the error message.
+  ///
+  /// The default error widget function will be passed to the callback function
+  /// and can be used to generate the error widget.
+  ///
+  /// The error message will be passed to the callback function and can be used
+  /// to display the error message.
+  ///
+  /// The default value is null, which means the default error widget will be
+  /// used.
   final Function(
     Function(BuildContext, String?)?,
     String?,
   )? onError;
 
+  /// A callback function that will be called when the state is empty.
+  ///
+  /// The callback function takes two parameters, the default empty widget
+  /// function and the empty message.
+  ///
+  /// The default empty widget function will be passed to the callback function
+  /// and can be used to generate the empty widget.
+  ///
+  /// The empty message will be passed to the callback function and can be used
+  /// to display the empty message.
+  ///
+  /// The default value is null, which means the default empty widget will be
+  /// used.
   final Function(
     Function(BuildContext, String?)?,
     String?,
   )? onEmpty;
 
+  /// A callback function that will be called when the state is loading.
+  ///
+  /// The callback function takes two parameters, the default loading widget
+  /// function and the loading message.
+  ///
+  /// The default loading widget function will be passed to the callback function
+  /// and can be used to generate the loading widget.
+  ///
+  /// The loading message will be passed to the callback function and can be used
+  /// to display the loading message.
+  ///
+  /// The default value is null, which means the default loading widget will be
+  /// used.
   final Function(
     Function(BuildContext, String?)?,
     String?,
   )? onLoading;
 
+  /// A callback function that will be called when the state is normal.
+  ///
+  /// The callback function takes two parameters, the default data widget
+  /// function and the data message.
+  ///
+  /// The default data widget function will be passed to the callback function
+  /// and can be used to generate the data widget.
+  ///
+  /// The data message will be passed to the callback function and can be used
+  /// to display the data message.
+  ///
+  /// The default value is null, which means the default data widget will be
+  /// used.
   final Function(
     Function(BuildContext, String?)?,
     String?,
   )? onData;
-
   const LoadingStateHandlerWidget({
     super.key,
     required this.loading,
@@ -69,6 +248,29 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   State<LoadingStateHandlerWidget> createState() =>
       _LoadingStateHandlerWidgetState();
 
+  /// Sets the default widgets and callbacks to be used by all
+  /// [LoadingStateHandlerWidget]s.
+  ///
+  /// The default widgets and callbacks will be used if the corresponding
+  /// parameter of the [LoadingStateHandlerWidget] constructor is null.
+  ///
+  /// This function is useful if you want to set the default widgets and
+  /// callbacks to be used by all [LoadingStateHandlerWidget]s in your app.
+  ///
+  /// The default widgets and callbacks can be set at any time, but it is
+  /// recommended to set them before creating any [LoadingStateHandlerWidget]s.
+  ///
+  /// The default widgets and callbacks will be used until they are set again.
+  ///
+  /// The default widgets and callbacks are as follows:
+  ///
+  /// * [defaultLoadingBuilder]: The default loading widget builder.
+  /// * [defaultErrorBuilder]: The default error widget builder.
+  /// * [defaultEmptyBuilder]: The default empty widget builder.
+  /// * [defaultOnError]: The default error callback.
+  /// * [defaultOnEmpty]: The default empty callback.
+  /// * [defaultOnLoading]: The default loading callback.
+  /// * [defaultOnData]: The default data callback.
   static void setDefaultWidgets({
     Widget Function(BuildContext, String?)? defaultLoadingBuilder,
     Widget Function(BuildContext, String?)? defaultErrorBuilder,
@@ -91,6 +293,17 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
 class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   @override
+
+  /// Builds the widget tree based on the current loading, error, and empty states.
+  ///
+  /// This method returns different widgets depending on the state:
+  /// - If `loading` is true, returns the loading widget or the default loading builder.
+  /// - If `error` is true, returns the error widget or the default error builder.
+  /// - If `empty` is true, returns the empty widget or the default empty builder.
+  /// - Otherwise, returns the normal child widget.
+  ///
+  /// The context parameter provides the location in the widget tree where this
+  /// widget is being built.
   Widget build(BuildContext context) {
     if (widget.loading) {
       return widget.loadingWidget ??
@@ -110,6 +323,20 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   }
 
   @override
+
+  /// Called when this widget is updated with a new configuration.
+  ///
+  /// This method is invoked when the widget is rebuilt with a new instance but
+  /// with the same runtimeType. It allows the widget to update its internal
+  /// state to reflect the new configuration.
+  ///
+  /// The [oldWidget] parameter contains the previous configuration of this
+  /// widget. If necessary, you can compare it to the current widget to determine
+  /// what has changed.
+  ///
+  /// In this implementation, a post-frame callback is added to apply any
+  /// updated methods after the current frame is rendered, ensuring that the
+  /// widget tree reflects the latest changes.
   void didUpdateWidget(covariant LoadingStateHandlerWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
 
@@ -119,6 +346,16 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   }
 
   @override
+
+  /// Initializes the state of the [LoadingStateHandlerWidget].
+  ///
+  /// This method is responsible for applying the methods in the next frame.
+  /// This is necessary to ensure that the current widget tree is updated before
+  /// updating the methods.
+  ///
+  /// The method adds a post-frame callback to apply the methods in the next
+  /// frame. When the callback is called, the [_applyMethods] function is called
+  /// to apply the methods.
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback(
@@ -126,6 +363,27 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
     );
   }
 
+  /// Applies the methods provided in the [LoadingStateHandlerWidget].
+  ///
+  /// This function is called in the next frame after the widget is updated.
+  /// It is responsible for calling the methods provided in the
+  /// [LoadingStateHandlerWidget] according to the state of the widget.
+  ///
+  /// The methods are called with the default methods if they are not provided.
+  /// If the default methods are not provided, the methods are not called.
+  ///
+  /// The methods are called with the [BuildContext] and the corresponding
+  /// message as arguments.
+  ///
+  /// The methods are called in the following order:
+  ///
+  /// 1. [onLoading] if [loading] is true.
+  /// 2. [onError] if [error] is true.
+  /// 3. [onEmpty] if [empty] is true.
+  /// 4. [onData] if [loading], [error], and [empty] are all false.
+  ///
+  /// If the methods are not provided, the default methods are called.
+  /// If the default methods are not provided, the methods are not called.
   void _applyMethods() {
     if (widget.loading) {
       if (widget.onLoading != null) {
