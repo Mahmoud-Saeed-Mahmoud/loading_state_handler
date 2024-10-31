@@ -2,8 +2,36 @@ import 'package:flutter/material.dart';
 import 'package:loading_state_handler/loading_state_handler.dart';
 
 void main() {
-  // Set default widgets for different states
+  /// Sets the default widgets and callbacks to be used by all
+  /// [LoadingStateHandlerWidget]s.
+  ///
+  /// The default widgets and callbacks will be used if the corresponding
+  /// parameter of the [LoadingStateHandlerWidget] constructor is null.
+  ///
+  /// This function is useful if you want to set the default widgets and
+  /// callbacks to be used by all [LoadingStateHandlerWidget]s in your app.
+  ///
+  /// The default widgets and callbacks can be set at any time, but it is
+  /// recommended to set them before creating any [LoadingStateHandlerWidget]s.
+  ///
+  /// The default widgets and callbacks will be used until they are set again.
+  ///
+  /// The default widgets and callbacks are as follows:
+  ///
+  /// * [defaultLoadingBuilder]: The default loading widget builder.
+  /// * [defaultErrorBuilder]: The default error widget builder.
+  /// * [defaultEmptyBuilder]: The default empty widget builder.
+  /// * [defaultOnError]: The default error callback.
+  /// * [defaultOnEmpty]: The default empty callback.
+  /// * [defaultOnLoading]: The default loading callback.
+  /// * [defaultOnData]: The default data callback.
   LoadingStateHandlerWidget.setDefaultWidgets(
+    /// Called when the widget is in the data state.
+    ///
+    /// The [context] parameter provides the location in the widget tree where this
+    /// widget is being built.
+    ///
+    /// The [message] parameter is the message to be displayed in the widget.
     defaultOnData: (context, message) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -11,6 +39,13 @@ void main() {
         ),
       );
     },
+
+    /// Called when the widget is in the loading state.
+    ///
+    /// The [context] parameter provides the location in the widget tree where this
+    /// widget is being built.
+    ///
+    /// The [message] parameter is the message to be displayed in the widget.
     defaultOnLoading: (context, message) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
@@ -18,12 +53,33 @@ void main() {
         ),
       );
     },
+
+    /// The default loading widget builder.
+    ///
+    /// The [context] parameter provides the location in the widget tree where this
+    /// widget is being built.
+    ///
+    /// The [loadingMessage] parameter is the message to be displayed in the widget.
     defaultLoadingBuilder: (context, loadingMessage) =>
         const Center(child: CircularProgressIndicator()),
+
+    /// The default error widget builder.
+    ///
+    /// The [context] parameter provides the location in the widget tree where this
+    /// widget is being built.
+    ///
+    /// The [errorMessage] parameter is the message to be displayed in the widget.
     defaultErrorBuilder: (context, errorMessage) => Center(
       child: Text('Custom Error: $errorMessage',
           style: const TextStyle(color: Colors.red)),
     ),
+
+    /// The default empty widget builder.
+    ///
+    /// The [context] parameter provides the location in the widget tree where this
+    /// widget is being built.
+    ///
+    /// The [emptyMessage] parameter is the message to be displayed in the widget.
     defaultEmptyBuilder: (context, emptyMessage) => const Center(
       child: Text('No Data Available'),
     ),
@@ -51,7 +107,6 @@ class HomeScreenState extends State<HomeScreen> {
       body: LoadingStateHandlerWidget(
         loading: loading,
         onLoading: (defaultOnLoading, message) {
-          // defaultOnLoading?.call(context, message);
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(message ?? 'Custom Loading...'),
