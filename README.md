@@ -1,86 +1,140 @@
-# StateHandlerWidget
+# LoadingStateHandlerWidget
 
-The `StateHandlerWidget` is a Flutter widget that simplifies the handling of different UI states in your applications. It provides a consistent way to display loading, error, empty, and normal states, allowing for clean and maintainable UI code.
+A customizable Flutter widget for handling various loading states (loading, error, empty, and normal) in your application. This widget allows you to display different UIs based on the current state and provides hooks for additional actions.
 
 ## Features
 
-- Displays different widgets based on the current state (loading, error, empty, or normal).
-- Allows customization of state-specific widgets.
-- Provides default builder functions to define a consistent look across your app.
+- Displays different widgets based on the state: loading, error, empty, or normal.
+- Customizable loading, error, and empty widgets.
+- Global default widget builders and callbacks.
+- Easy integration with Flutter applications.
+
+## Installation
+
+Add the following dependency in your `pubspec.yaml` file:
+
+```yaml
+dependencies:
+  flutter:
+    sdk: flutter
+  loading_state_handler: ^1.0.0
+```
 
 ## Usage
 
-To use the `StateHandlerWidget`, you can include it in your widget tree as follows:
-
 ```dart
-StateHandlerWidget(
-  loading: isLoading, // true if loading
-  error: hasError,    // true if an error occurred
-  empty: isEmpty,     // true if there's no data
-  loadingWidget: CustomLoadingWidget(), // optional custom loading widget
-  errorWidget: CustomErrorWidget(),     // optional custom error widget
-  emptyWidget: CustomEmptyWidget(),     // optional custom empty widget
-  child: YourContentWidget(),            // widget to display when not loading, error, or empty
-);
-```
+import 'package:flutter/material.dart';
+import 'package:loading_state_handler/loading_state_handler.dart';
 
-### Parameters
+void main() {
+  LoadingStateHandlerWidget.setDefaultWidgets(
+    defaultOnData: (context, message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message ?? 'Default Got Data...'),
+        ),
+      );
+    },
 
-- `loading`: Set to `true` if the widget is currently loading.
-- `error`: Set to `true` if the widget encountered an error.
-- `errorMessage`: The error message to display.
-- `empty`: Set to `true` if there is no data to display.
-- `loadingWidget`: A custom widget to display while loading.
-- `errorWidget`: A custom widget to display on error.
-- `emptyWidget`: A custom widget to display when empty.
-- `child`: The normal state widget to display when no other state is active.
+    defaultOnLoading: (context, message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message ?? 'Default Loading...'),
+        ),
+      );
+    },
 
-### Setting Default Builders
+    defaultLoadingBuilder: (context, loadingMessage) =>
+        const Center(child: CircularProgressIndicator()),
 
-You can define default widgets for loading, error, and empty states across your app:
+    defaultErrorBuilder: (context, errorMessage) => Center(
+      child: Text('Custom Error: $errorMessage',
+          style: const TextStyle(color: Colors.red)),
+    ),
 
-```dart
-StateHandlerWidget.setDefaultWidgets(
-  loadingBuilder: (context) => CustomLoadingWidget(),
-  errorBuilder: (context, error) => CustomErrorWidget(),
-  emptyBuilder: (context) => CustomEmptyWidget(),
-);
-```
+    defaultEmptyBuilder: (context, emptyMessage) => const Center(
+      child: Text('No Data Available'),
+    ),
+  );
+  runApp(const MyApp());
+}
 
-### Example
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
-Here’s a complete example demonstrating how to use the `StateHandlerWidget`:
+  @override
+  HomeScreenState createState() => HomeScreenState();
+}
 
-```dart
-class ExampleScreen extends StatelessWidget {
-  final bool isLoading = false; // Example loading state
-  final bool hasError = false;  // Example error state
-  final String errorMessage = 'An error occurred'; // Example error message
-  final bool isEmpty = false;    // Example empty state
+class HomeScreenState extends State<HomeScreen> {
+  bool loading = true;
+  bool error = false;
+  bool empty = false;
+  String? errorMessage;
 
   @override
   Widget build(BuildContext context) {
-    return StateHandlerWidget(
-      loading: isLoading,
-      error: hasError,
-      empty: isEmpty,
-      errorMessage: errorMessage,
-      child: ListView.builder(
-        itemCount: 10,
-        itemBuilder: (context, index) {
-          return ListTile(title: Text('Item $index'));
+    return Scaffold(
+      appBar: AppBar(title: const Text('Loading State Handler Example')),
+      body: LoadingStateHandlerWidget(
+        loading: loading,
+        onLoading: (defaultOnLoading, message) {
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message ?? 'Custom Loading...'),
+            ),
+          );
         },
+        error: error,
+        errorMessage: errorMessage,
+        empty: empty,
+        child: const Center(child: Text('Data Loaded Successfully!')),
       ),
     );
   }
+
+  @override
+  void initState() {
+    super.initState();
+    // Simulate a data fetch
+    Future.delayed(const Duration(seconds: 2), () {
+      setState(() {
+        loading = false;
+        // Uncomment to simulate an error
+        // error = true;
+        // errorMessage = "Failed to load data";
+        // Uncomment to simulate an empty state
+        // empty = true;
+      });
+    });
+  }
 }
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: HomeScreen(),
+    );
+  }
+}
+
 ```
 
-## Notes
+## Customization
 
-- Ensure that only one of the states (`loading`, `error`, or `empty`) is set to `true` at any given time.
-- The default widgets will be used if the respective widget parameters are not provided.
+You can customize the loading, error, and empty widgets by providing your own widget implementations. Here’s how you can do that:
 
-## Conclusion
-
-The `StateHandlerWidget` is a powerful tool for managing different UI states in Flutter applications. It promotes code reuse and enhances the user experience by providing a clean way to handle various application states.
+```dart
+LoadingStateHandlerWidget(
+  loading: isLoading,
+  error: hasError,
+  empty: isEmpty,
+  loadingWidget: CustomLoadingWidget(), // Your custom loading widget
+  errorWidget: CustomErrorWidget(),     // Your custom error widget
+  emptyWidget: CustomEmptyWidget(),     // Your custom empty widget
+  child: YourMainContentWidget(),       // The main content of your page
+);
+```
