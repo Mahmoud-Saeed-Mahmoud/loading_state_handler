@@ -25,3 +25,8 @@
 ## 0.0.6
 
 - **Updated**: Description in `pubspec.yaml`.
+
+
+## 1.0.0
+
+- **Added** Added new feature to `StateHandlerWidget`.
