@@ -51,7 +51,12 @@ class HomeScreenState extends State<HomeScreen> {
       body: LoadingStateHandlerWidget(
         loading: loading,
         onLoading: (defaultOnLoading, message) {
-          defaultOnLoading?.call(context, message);
+          // defaultOnLoading?.call(context, message);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message ?? 'Custom Loading...'),
+            ),
+          );
         },
         error: error,
         errorMessage: errorMessage,
