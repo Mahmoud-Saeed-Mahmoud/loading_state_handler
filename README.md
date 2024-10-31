@@ -20,6 +20,17 @@ dependencies:
   loading_state_handler: ^1.0.0
 ```
 
+or add it using `flutter pub add loading_state_handler`.
+
+## Parameters
+
+- `loading`: A boolean value indicating whether the widget is currently in the loading state.
+- `error`: A boolean value indicating whether the widget is currently in the error state.
+- `empty`: A boolean value indicating whether the widget is currently in the empty state.
+- `errorMessage`: A string value containing the error message, if the widget is in the error state.
+- `emptyMessage`: A string value containing the empty message, if the widget is in the empty state.
+- `loadingMessage`: A string value containing the loading message, if the widget is in the loading state.
+
 ## Usage
 
 ```dart
