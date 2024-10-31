@@ -29,4 +29,4 @@
 
 ## 1.0.0
 
-- **Added** Added new feature to `StateHandlerWidget`.
+- **Added** new feature to `StateHandlerWidget`.
