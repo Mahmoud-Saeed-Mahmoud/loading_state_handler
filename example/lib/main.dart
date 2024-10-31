@@ -3,14 +3,30 @@ import 'package:loading_state_handler/loading_state_handler.dart';
 
 void main() {
   // Set default widgets for different states
-  StateHandlerWidget.setDefaultWidgets(
-    loadingBuilder: (context) =>
+  LoadingStateHandlerWidget.setDefaultWidgets(
+    defaultOnData: (context, message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message ?? 'Default Got Data...'),
+        ),
+      );
+    },
+    defaultOnLoading: (context, message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message ?? 'Default Loading...'),
+        ),
+      );
+    },
+    defaultLoadingBuilder: (context, loadingMessage) =>
         const Center(child: CircularProgressIndicator()),
-    errorBuilder: (context, errorMessage) => Center(
+    defaultErrorBuilder: (context, errorMessage) => Center(
       child: Text('Custom Error: $errorMessage',
           style: const TextStyle(color: Colors.red)),
     ),
-    emptyBuilder: (context) => const Center(child: Text('No Data Available')),
+    defaultEmptyBuilder: (context, emptyMessage) => const Center(
+      child: Text('No Data Available'),
+    ),
   );
   runApp(const MyApp());
 }
@@ -31,9 +47,12 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('State Handler Example')),
-      body: StateHandlerWidget(
+      appBar: AppBar(title: const Text('Loading State Handler Example')),
+      body: LoadingStateHandlerWidget(
         loading: loading,
+        onLoading: (defaultOnLoading, message) {
+          defaultOnLoading?.call(context, message);
+        },
         error: error,
         errorMessage: errorMessage,
         empty: empty,
