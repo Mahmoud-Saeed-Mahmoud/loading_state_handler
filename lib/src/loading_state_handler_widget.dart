@@ -50,9 +50,6 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// This callback will be called when [loading] is true.
   ///
-  /// The default implementation is to display a [SnackBar] with the loading
-  /// message.
-  ///
   /// If not null, the default on loading callback will be called when [loading]
   /// is true.
   ///
@@ -63,9 +60,6 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// Default on error callback.
   ///
   /// This callback will be called when [error] is true.
-  ///
-  /// The default implementation is to display a [SnackBar] with the error
-  /// message.
   ///
   /// If not null, the default on error callback will be called when [error] is
   /// true.
@@ -78,9 +72,6 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// This callback will be called when [empty] is true.
   ///
-  /// The default implementation is to display a [SnackBar] with the empty
-  /// message.
-  ///
   /// If not null, the default on empty callback will be called when [empty] is
   /// true.
   ///
@@ -92,9 +83,6 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// This callback will be called when [loading] is false, [error] is false,
   /// and [empty] is false.
-  ///
-  /// The default implementation is to display a [SnackBar] with the data
-  /// message.
   ///
   /// If not null, the default on data callback will be called when [loading] is
   /// false, [error] is false, and [empty] is false.
