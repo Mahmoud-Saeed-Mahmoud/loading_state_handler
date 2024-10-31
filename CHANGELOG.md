@@ -30,3 +30,7 @@
 ## 1.0.0
 
 - **Added** new feature to `StateHandlerWidget`.
+
+## 1.0.1
+
+- **Refined**: Documentation to clarify widget behavior for loading, error, and empty states.
