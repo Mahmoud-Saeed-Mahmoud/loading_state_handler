@@ -34,3 +34,7 @@
 ## 1.0.1
 
 - **Refined**: Documentation to clarify widget behavior for loading, error, and empty states.
+
+## 1.0.2
+
+- **Fixed**: Issue with `onLoading` callback in `StateHandlerWidget`.
