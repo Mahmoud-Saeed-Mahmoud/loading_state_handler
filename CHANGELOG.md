@@ -38,3 +38,7 @@
 ## 1.0.2
 
 - **Fixed**: Issue with `onLoading` callback in `StateHandlerWidget`.
+
+## 1.0.3
+
+- **Updated**: Default builder functions for consistent styling across app states.
