@@ -301,17 +301,23 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
       return widget.loadingWidget ??
           LoadingStateHandlerWidget._defaultLoadingBuilder
               ?.call(context, widget.loadingMessage) ??
-          const CircularProgressIndicator();
+          const Center(
+            child: CircularProgressIndicator(),
+          );
     } else if (widget.error) {
       return widget.errorWidget ??
           LoadingStateHandlerWidget._defaultErrorBuilder
               ?.call(context, widget.errorMessage) ??
-          const Text('Error');
+          const Center(
+            child: Text('Error'),
+          );
     } else if (widget.empty) {
       return widget.emptyWidget ??
           LoadingStateHandlerWidget._defaultEmptyBuilder
               ?.call(context, widget.emptyMessage) ??
-          const Text('Empty');
+          const Center(
+            child: Text('Empty'),
+          );
     } else {
       return widget.child;
     }
