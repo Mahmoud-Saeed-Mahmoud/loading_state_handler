@@ -42,3 +42,7 @@
 ## 1.0.3
 
 - **Updated**: Default builder functions for consistent styling across app states.
+
+## 1.0.4
+
+- **Updated**: README to use the latest version of `loading_state_handler`.
