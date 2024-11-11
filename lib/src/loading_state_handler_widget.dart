@@ -299,16 +299,19 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   Widget build(BuildContext context) {
     if (widget.loading) {
       return widget.loadingWidget ??
-          LoadingStateHandlerWidget._defaultLoadingBuilder!(
-              context, widget.loadingMessage);
+          LoadingStateHandlerWidget._defaultLoadingBuilder
+              ?.call(context, widget.loadingMessage) ??
+          const CircularProgressIndicator();
     } else if (widget.error) {
       return widget.errorWidget ??
-          LoadingStateHandlerWidget._defaultErrorBuilder!(
-              context, widget.errorMessage);
+          LoadingStateHandlerWidget._defaultErrorBuilder
+              ?.call(context, widget.errorMessage) ??
+          const Text('Error');
     } else if (widget.empty) {
       return widget.emptyWidget ??
-          LoadingStateHandlerWidget._defaultEmptyBuilder!(
-              context, widget.emptyMessage);
+          LoadingStateHandlerWidget._defaultEmptyBuilder
+              ?.call(context, widget.emptyMessage) ??
+          const Text('Empty');
     } else {
       return widget.child;
     }
