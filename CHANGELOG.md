@@ -58,3 +58,7 @@
 ## 1.0.7
 
 - **Updated**: README to use the latest version of `loading_state_handler`.
+
+## 1.0.8
+
+- **Fixed**: `disableWidgetChanges` callback in `StateHandlerWidget`.
