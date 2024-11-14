@@ -93,6 +93,13 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// not be called.
   static void Function(BuildContext, String?)? _defaultOnData;
 
+  /// To disable widget changes.
+  ///
+  /// If set to true, widget changes will be disabled.
+  ///
+  /// The default value is false, which means widget changes are enabled.
+  final bool disableWidgetChanges;
+
   /// Whether the widget is in a loading state.
   final bool loading;
 
@@ -217,6 +224,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   )? onData;
   const LoadingStateHandlerWidget({
     super.key,
+    this.disableWidgetChanges = false,
     required this.loading,
     this.error = false,
     this.empty = false,
@@ -263,6 +271,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// * [defaultOnLoading]: The default loading callback.
   /// * [defaultOnData]: The default data callback.
   static void setDefaultWidgets({
+    bool? disableWidgetChanges,
     Widget Function(BuildContext, String?)? defaultLoadingBuilder,
     Widget Function(BuildContext, String?)? defaultErrorBuilder,
     Widget Function(BuildContext, String?)? defaultEmptyBuilder,
@@ -271,6 +280,8 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     Function(BuildContext, String?)? defaultOnLoading,
     Function(BuildContext, String?)? defaultOnData,
   }) {
+    disableWidgetChanges = disableWidgetChanges ?? false;
+
     _defaultLoadingBuilder = defaultLoadingBuilder;
     _defaultErrorBuilder = defaultErrorBuilder;
     _defaultEmptyBuilder = defaultEmptyBuilder;
@@ -286,40 +297,54 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   @override
 
-  /// Builds the widget tree based on the current loading, error, and empty states.
+  /// Builds the widget tree based on the current state of the [LoadingStateHandlerWidget].
   ///
-  /// This method returns different widgets depending on the state:
-  /// - If `loading` is true, returns the loading widget or the default loading builder.
-  /// - If `error` is true, returns the error widget or the default error builder.
-  /// - If `empty` is true, returns the empty widget or the default empty builder.
-  /// - Otherwise, returns the normal child widget.
+  /// This method returns the appropriate widget according to the loading, error,
+  /// empty, and normal states of the widget. If widget changes are disabled,
+  /// it simply returns the child widget.
   ///
-  /// The context parameter provides the location in the widget tree where this
-  /// widget is being built.
+  /// The priority of state handling is as follows:
+  /// 1. If [disableWidgetChanges] is true, returns [child].
+  /// 2. If [loading] is true, returns the [loadingWidget] if provided, otherwise
+  ///    calls the default loading widget builder. If neither is available, displays
+  ///    a [CircularProgressIndicator].
+  /// 3. If [error] is true, returns the [errorWidget] if provided, otherwise
+  ///    calls the default error widget builder. If neither is available, displays
+  ///    an 'Error' message.
+  /// 4. If [empty] is true, returns the [emptyWidget] if provided, otherwise
+  ///    calls the default empty widget builder. If neither is available, displays
+  ///    an 'Empty' message.
+  /// 5. If none of the above states are true, returns [child].
+  ///
+  /// The [context] parameter is used to locate the widget in the widget tree.
   Widget build(BuildContext context) {
-    if (widget.loading) {
-      return widget.loadingWidget ??
-          LoadingStateHandlerWidget._defaultLoadingBuilder
-              ?.call(context, widget.loadingMessage) ??
-          const Center(
-            child: CircularProgressIndicator(),
-          );
-    } else if (widget.error) {
-      return widget.errorWidget ??
-          LoadingStateHandlerWidget._defaultErrorBuilder
-              ?.call(context, widget.errorMessage) ??
-          const Center(
-            child: Text('Error'),
-          );
-    } else if (widget.empty) {
-      return widget.emptyWidget ??
-          LoadingStateHandlerWidget._defaultEmptyBuilder
-              ?.call(context, widget.emptyMessage) ??
-          const Center(
-            child: Text('Empty'),
-          );
-    } else {
+    if (widget.disableWidgetChanges) {
       return widget.child;
+    } else {
+      if (widget.loading) {
+        return widget.loadingWidget ??
+            LoadingStateHandlerWidget._defaultLoadingBuilder
+                ?.call(context, widget.loadingMessage) ??
+            const Center(
+              child: CircularProgressIndicator(),
+            );
+      } else if (widget.error) {
+        return widget.errorWidget ??
+            LoadingStateHandlerWidget._defaultErrorBuilder
+                ?.call(context, widget.errorMessage) ??
+            const Center(
+              child: Text('Error'),
+            );
+      } else if (widget.empty) {
+        return widget.emptyWidget ??
+            LoadingStateHandlerWidget._defaultEmptyBuilder
+                ?.call(context, widget.emptyMessage) ??
+            const Center(
+              child: Text('Empty'),
+            );
+      } else {
+        return widget.child;
+      }
     }
   }
 
