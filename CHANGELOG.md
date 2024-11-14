@@ -54,3 +54,7 @@
 ## 1.0.6
 
 - **Added**: `disableEmptyWidgetChanges` and `disableErrorWidgetChanges` callback in `StateHandlerWidget`.
+
+## 1.0.7
+
+- **Updated**: README to use the latest version of `loading_state_handler`.
