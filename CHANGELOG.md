@@ -50,3 +50,7 @@
 ## 1.0.5
 
 - **Added**: bool `disableWidgetChanges` in `StateHandlerWidget`.
+
+## 1.0.6
+
+- **Added**: `disableEmptyWidgetChanges` and `disableErrorWidgetChanges` callback in `StateHandlerWidget`.
