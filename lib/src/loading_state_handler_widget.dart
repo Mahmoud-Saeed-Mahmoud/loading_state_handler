@@ -145,6 +145,9 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// Whether the widget is in an empty state.
   final bool empty;
 
+  /// Whether the widget is in a data state.
+  final bool data;
+
   /// The error message.
   final String? errorMessage;
 
@@ -263,6 +266,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     this.disableWidgetChanges = false,
     this.disableErrorWidgetChanges = false,
     this.disableEmptyWidgetChanges = false,
+    this.data = false,
     required this.loading,
     this.error = false,
     this.empty = false,
@@ -492,7 +496,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
       if (widget.onData != null) {
         widget.onData?.call(
             LoadingStateHandlerWidget._defaultOnData, widget.dataMessage);
-      } else {
+      } else if (widget.data) {
         if (widget.onData != null) {
           widget.onData?.call(
               LoadingStateHandlerWidget._defaultOnData, widget.dataMessage);
