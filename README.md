@@ -17,7 +17,7 @@ Add the following dependency in your `pubspec.yaml` file:
 dependencies:
   flutter:
     sdk: flutter
-  loading_state_handler: ^1.0.6
+  loading_state_handler: ^1.0.7
 ```
 
 or add it using `flutter pub add loading_state_handler`.
