@@ -63,6 +63,10 @@
     <section class="multi-line-signature">
       const
       <span class="name ">LoadingStateHandlerWidget</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="-param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span>, </span></li>
+<li><span class="parameter" id="-param-disableWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">disableWidgetChanges</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-disableErrorWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">disableErrorWidgetChanges</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-disableEmptyWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">disableEmptyWidgetChanges</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">data</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-loading"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">loading</span>, </span></li>
 <li><span class="parameter" id="-param-error"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">error</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-empty"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">empty</span> = <span class="default-value">false</span>, </span></li>
@@ -105,6 +109,10 @@
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">const LoadingStateHandlerWidget({
   super.key,
+  this.disableWidgetChanges = false,
+  this.disableErrorWidgetChanges = false,
+  this.disableEmptyWidgetChanges = false,
+  this.data = false,
   required this.loading,
   this.error = false,
   this.empty = false,
@@ -154,7 +162,7 @@
 <footer>
   <span class="no-break">
     loading_state_handler
-      1.0.0
+      1.1.0
   </span>
 
   

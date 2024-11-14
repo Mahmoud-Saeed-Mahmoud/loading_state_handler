@@ -64,7 +64,10 @@
       
 
 <span class="returntype">void</span>
-<span class="name ">setDefaultWidgets</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="setDefaultWidgets-param-defaultLoadingBuilder"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span> <span class="parameter-name">defaultLoadingBuilder</span>(<ol class="parameter-list single-line"> <li><span class="parameter" id="param-"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span>, </span></li>
+<span class="name ">setDefaultWidgets</span>(<wbr>{<ol class="parameter-list"> <li><span class="parameter" id="setDefaultWidgets-param-disableWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">disableWidgetChanges</span>, </span></li>
+<li><span class="parameter" id="setDefaultWidgets-param-disableErrorWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">disableErrorWidgetChanges</span>, </span></li>
+<li><span class="parameter" id="setDefaultWidgets-param-disableEmptyWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">disableEmptyWidgetChanges</span>, </span></li>
+<li><span class="parameter" id="setDefaultWidgets-param-defaultLoadingBuilder"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span> <span class="parameter-name">defaultLoadingBuilder</span>(<ol class="parameter-list single-line"> <li><span class="parameter" id="param-"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span>, </span></li>
 <li><span class="parameter" id="param-"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span></span></li>
 </ol>)?, </span></li>
 <li><span class="parameter" id="setDefaultWidgets-param-defaultErrorBuilder"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span> <span class="parameter-name">defaultErrorBuilder</span>(<ol class="parameter-list single-line"> <li><span class="parameter" id="param-"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/BuildContext-class.html">BuildContext</a></span>, </span></li>
@@ -118,6 +121,9 @@ recommended to set them before creating any <a href="../../loading_state_handler
 <section class="summary source-code" id="source">
   <h2><span>Implementation</span></h2>
   <pre class="language-dart"><code class="language-dart">static void setDefaultWidgets({
+  bool? disableWidgetChanges,
+  bool? disableErrorWidgetChanges,
+  bool? disableEmptyWidgetChanges,
   Widget Function(BuildContext, String?)? defaultLoadingBuilder,
   Widget Function(BuildContext, String?)? defaultErrorBuilder,
   Widget Function(BuildContext, String?)? defaultEmptyBuilder,
@@ -126,6 +132,10 @@ recommended to set them before creating any <a href="../../loading_state_handler
   Function(BuildContext, String?)? defaultOnLoading,
   Function(BuildContext, String?)? defaultOnData,
 }) {
+  _disableWidgetChanges = disableWidgetChanges ?? false;
+  _disableErrorWidgetChanges = disableErrorWidgetChanges ?? false;
+  _disableEmptyWidgetChanges = disableEmptyWidgetChanges ?? false;
+
   _defaultLoadingBuilder = defaultLoadingBuilder;
   _defaultErrorBuilder = defaultErrorBuilder;
   _defaultEmptyBuilder = defaultEmptyBuilder;
@@ -168,7 +178,7 @@ recommended to set them before creating any <a href="../../loading_state_handler
 <footer>
   <span class="no-break">
     loading_state_handler
-      1.0.0
+      1.1.0
   </span>
 
   
