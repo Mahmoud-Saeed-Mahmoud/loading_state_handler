@@ -66,3 +66,7 @@
 ## 1.0.9
 
 - **Added**: `onData` callback in `StateHandlerWidget`.
+
+## 1.1.0
+
+- **Updated**: README to use the latest version of `loading_state_handler`.
