@@ -1,6 +1,6 @@
 name: loading_state_handler
 description: "The StateHandlerWidget manages different UI states—loading, error, empty, and normal—allowing you to customize the displayed widgets for each state."
-version: 1.0.8
+version: 1.0.9
 homepage: https://github.com/Mahmoud-Saeed-Mahmoud/loading_state_handler
 
 environment:
