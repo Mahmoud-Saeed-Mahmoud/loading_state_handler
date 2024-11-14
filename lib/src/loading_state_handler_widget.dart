@@ -362,7 +362,8 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   ///
   /// If the state is normal, the method returns the [child] widget.
   Widget build(BuildContext context) {
-    if (widget.disableWidgetChanges) {
+    if (widget.disableWidgetChanges ||
+        (LoadingStateHandlerWidget._disableWidgetChanges ?? false)) {
       return widget.child;
     } else {
       if (widget.loading) {
