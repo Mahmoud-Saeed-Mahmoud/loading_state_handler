@@ -93,6 +93,27 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// not be called.
   static void Function(BuildContext, String?)? _defaultOnData;
 
+  /// To disable widget changes globally.
+  ///
+  /// If set to true, widget changes will be disabled globally.
+  ///
+  /// The default value is false, which means widget changes are enabled globally.
+  static bool? _disableWidgetChanges;
+
+  /// To disable error widget changes globally.
+  ///
+  /// If set to true, error widget changes will be disabled globally.
+  ///
+  /// The default value is false, which means error widget changes are enabled globally.
+  static bool? _disableErrorWidgetChanges;
+
+  /// To disable empty widget changes globally.
+  ///
+  /// If set to true, empty widget changes will be disabled globally.
+  ///
+  /// The default value is false, which means empty widget changes are enabled globally.
+  static bool? _disableEmptyWidgetChanges;
+
   /// To disable widget changes.
   ///
   /// If set to true, widget changes will be disabled.
@@ -299,9 +320,9 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     Function(BuildContext, String?)? defaultOnLoading,
     Function(BuildContext, String?)? defaultOnData,
   }) {
-    disableWidgetChanges = disableWidgetChanges ?? false;
-    disableErrorWidgetChanges = disableErrorWidgetChanges ?? false;
-    disableEmptyWidgetChanges = disableEmptyWidgetChanges ?? false;
+    _disableWidgetChanges = disableWidgetChanges ?? false;
+    _disableErrorWidgetChanges = disableErrorWidgetChanges ?? false;
+    _disableEmptyWidgetChanges = disableEmptyWidgetChanges ?? false;
 
     _defaultLoadingBuilder = defaultLoadingBuilder;
     _defaultErrorBuilder = defaultErrorBuilder;
@@ -352,7 +373,10 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
               child: CircularProgressIndicator(),
             );
       } else if (widget.error) {
-        if (widget.disableErrorWidgetChanges) return widget.child;
+        if (widget.disableErrorWidgetChanges ||
+            (LoadingStateHandlerWidget._disableErrorWidgetChanges ?? false)) {
+          return widget.child;
+        }
         return widget.errorWidget ??
             LoadingStateHandlerWidget._defaultErrorBuilder
                 ?.call(context, widget.errorMessage) ??
@@ -360,7 +384,10 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
               child: Text('Error'),
             );
       } else if (widget.empty) {
-        if (widget.disableEmptyWidgetChanges) return widget.child;
+        if (widget.disableEmptyWidgetChanges ||
+            (LoadingStateHandlerWidget._disableEmptyWidgetChanges ?? false)) {
+          return widget.child;
+        }
         return widget.emptyWidget ??
             LoadingStateHandlerWidget._defaultEmptyBuilder
                 ?.call(context, widget.emptyMessage) ??
