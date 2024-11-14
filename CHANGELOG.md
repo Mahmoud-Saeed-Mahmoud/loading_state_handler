@@ -62,3 +62,7 @@
 ## 1.0.8
 
 - **Fixed**: `disableWidgetChanges` callback in `StateHandlerWidget`.
+
+## 1.0.9
+
+- **Added**: `onData` callback in `StateHandlerWidget`.
