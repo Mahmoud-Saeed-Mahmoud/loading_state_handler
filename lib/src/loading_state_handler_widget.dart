@@ -205,6 +205,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// used.
   final Function(
     Function(BuildContext, String?)?,
+    BuildContext,
     String?,
   )? onError;
 
@@ -223,6 +224,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// used.
   final Function(
     Function(BuildContext, String?)?,
+    BuildContext,
     String?,
   )? onEmpty;
 
@@ -241,6 +243,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// used.
   final Function(
     Function(BuildContext, String?)?,
+    BuildContext,
     String?,
   )? onLoading;
 
@@ -259,6 +262,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// used.
   final Function(
     Function(BuildContext, String?)?,
+    BuildContext,
     String?,
   )? onData;
   const LoadingStateHandlerWidget({
@@ -470,36 +474,36 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   void _applyMethods() {
     if (widget.loading) {
       if (widget.onLoading != null) {
-        widget.onLoading?.call(
-            LoadingStateHandlerWidget._defaultOnLoading, widget.loadingMessage);
+        widget.onLoading?.call(LoadingStateHandlerWidget._defaultOnLoading,
+            context, widget.loadingMessage);
       } else {
         LoadingStateHandlerWidget._defaultOnLoading
             ?.call(context, widget.loadingMessage);
       }
     } else if (widget.error) {
       if (widget.onError != null) {
-        widget.onError?.call(
-            LoadingStateHandlerWidget._defaultOnError, widget.errorMessage);
+        widget.onError?.call(LoadingStateHandlerWidget._defaultOnError, context,
+            widget.errorMessage);
       } else {
         LoadingStateHandlerWidget._defaultOnError
             ?.call(context, widget.errorMessage);
       }
     } else if (widget.empty) {
       if (widget.onEmpty != null) {
-        widget.onEmpty?.call(
-            LoadingStateHandlerWidget._defaultOnEmpty, widget.emptyMessage);
+        widget.onEmpty?.call(LoadingStateHandlerWidget._defaultOnEmpty, context,
+            widget.emptyMessage);
       } else {
         LoadingStateHandlerWidget._defaultOnEmpty
             ?.call(context, widget.emptyMessage);
       }
     } else if (widget.data) {
       if (widget.onData != null) {
-        widget.onData?.call(
-            LoadingStateHandlerWidget._defaultOnData, widget.dataMessage);
+        widget.onData?.call(LoadingStateHandlerWidget._defaultOnData, context,
+            widget.dataMessage);
       } else if (widget.data) {
         if (widget.onData != null) {
-          widget.onData?.call(
-              LoadingStateHandlerWidget._defaultOnData, widget.dataMessage);
+          widget.onData?.call(LoadingStateHandlerWidget._defaultOnData, context,
+              widget.dataMessage);
         } else {
           LoadingStateHandlerWidget._defaultOnData
               ?.call(context, widget.dataMessage);

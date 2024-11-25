@@ -74,3 +74,7 @@
 ## 1.1.1
 
 - **Fixed**: Issue with `onData` callback in `StateHandlerWidget`.
+
+## 1.1.2
+
+- **Added**: `BuildContext` parameter in `StateHandlerWidget`.
