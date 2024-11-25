@@ -492,7 +492,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         LoadingStateHandlerWidget._defaultOnEmpty
             ?.call(context, widget.emptyMessage);
       }
-    } else {
+    } else if (widget.data) {
       if (widget.onData != null) {
         widget.onData?.call(
             LoadingStateHandlerWidget._defaultOnData, widget.dataMessage);
