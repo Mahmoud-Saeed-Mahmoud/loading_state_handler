@@ -106,7 +106,7 @@ class HomeScreenState extends State<HomeScreen> {
       appBar: AppBar(title: const Text('Loading State Handler Example')),
       body: LoadingStateHandlerWidget(
         loading: loading,
-        onLoading: (defaultOnLoading, message) {
+        onLoading: (defaultOnLoading, context, message) {
           /// Uncomment to use the default loading callback
           // defaultOnLoading?.call(context, message);
           ScaffoldMessenger.of(context).showSnackBar(
