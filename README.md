@@ -1,13 +1,16 @@
 # LoadingStateHandlerWidget
 
-A customizable Flutter widget for handling various loading states (loading, error, empty, and normal) in your application. This widget allows you to display different UIs based on the current state and provides hooks for additional actions.
+A powerful Flutter widget for managing UI states with built-in retry functionality. This widget handles loading, error, empty, and normal states elegantly while providing a customizable retry mechanism with cooldown support.
 
 ## Features
 
-- Displays different widgets based on the state: loading, error, empty, or normal.
-- Customizable loading, error, and empty widgets.
-- Global default widget builders and callbacks.
-- Easy integration with Flutter applications.
+- 🔄 Smart state management (loading, error, empty, normal)
+- ⏲️ Built-in retry mechanism with configurable cooldown
+- 🎨 Fully customizable widgets for each state
+- 🌐 Global default configurations
+- 📱 Easy integration with Flutter applications
+- ⚡ Optimized performance with const constructor
+- 🎯 Type-safe callbacks and builders
 
 ## Installation
 
@@ -17,135 +20,121 @@ Add the following dependency in your `pubspec.yaml` file:
 dependencies:
   flutter:
     sdk: flutter
-  loading_state_handler: ^1.1.0
+  loading_state_handler: ^1.2.0
 ```
 
-or add it using `flutter pub add loading_state_handler`.
-
-## Parameters
-
-- `loading`: A boolean value indicating whether the widget is currently in the loading state.
-- `error`: A boolean value indicating whether the widget is currently in the error state.
-- `empty`: A boolean value indicating whether the widget is currently in the empty state.
-- `errorMessage`: A string value containing the error message, if the widget is in the error state.
-- `emptyMessage`: A string value containing the empty message, if the widget is in the empty state.
-- `loadingMessage`: A string value containing the loading message, if the widget is in the loading state.
-
-## Usage
+## Quick Start
 
 ```dart
-import 'package:flutter/material.dart';
-import 'package:loading_state_handler/loading_state_handler.dart';
+// Set global defaults (optional)
+LoadingStateHandlerWidget.setDefaults(
+  defaultRetryCooldown: const Duration(seconds: 5),
+  defaultLoadingBuilder: (context, message) => 
+    const Center(child: CircularProgressIndicator()),
+);
 
-void main() {
-  LoadingStateHandlerWidget.setDefaultWidgets(
-    defaultOnData: (context, message) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message ?? 'Default Got Data...'),
-        ),
-      );
-    },
-
-    defaultOnLoading: (context, message) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message ?? 'Default Loading...'),
-        ),
-      );
-    },
-
-    defaultLoadingBuilder: (context, loadingMessage) =>
-        const Center(child: CircularProgressIndicator()),
-
-    defaultErrorBuilder: (context, errorMessage) => Center(
-      child: Text('Custom Error: $errorMessage',
-          style: const TextStyle(color: Colors.red)),
-    ),
-
-    defaultEmptyBuilder: (context, emptyMessage) => const Center(
-      child: Text('No Data Available'),
-    ),
-  );
-  runApp(const MyApp());
-}
-
-class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
-
-  @override
-  HomeScreenState createState() => HomeScreenState();
-}
-
-class HomeScreenState extends State<HomeScreen> {
-  bool loading = true;
-  bool error = false;
-  bool empty = false;
-  String? errorMessage;
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: const Text('Loading State Handler Example')),
-      body: LoadingStateHandlerWidget(
-        loading: loading,
-        onLoading: (defaultOnLoading, message) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(
-              content: Text(message ?? 'Custom Loading...'),
-            ),
-          );
-        },
-        error: error,
-        errorMessage: errorMessage,
-        empty: empty,
-        child: const Center(child: Text('Data Loaded Successfully!')),
-      ),
-    );
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    // Simulate a data fetch
-    Future.delayed(const Duration(seconds: 2), () {
-      setState(() {
-        loading = false;
-        // Uncomment to simulate an error
-        // error = true;
-        // errorMessage = "Failed to load data";
-        // Uncomment to simulate an empty state
-        // empty = true;
-      });
-    });
-  }
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomeScreen(),
-    );
-  }
-}
-
+// Use in your widget
+LoadingStateHandlerWidget(
+  loading: isLoading,
+  error: hasError,
+  empty: isEmpty,
+  errorMessage: 'Failed to load data',
+  enableRetry: true,
+  retryCooldown: const Duration(seconds: 3),
+  onRetry: () => fetchData(),
+  child: YourWidget(),
+);
 ```
 
-## Customization
+## Advanced Usage
 
-You can customize the loading, error, and empty widgets by providing your own widget implementations. Here’s how you can do that:
+### Retry Mechanism
+
+The widget includes a sophisticated retry mechanism with cooldown:
+
+```dart
+LoadingStateHandlerWidget(
+  error: true,
+  errorMessage: 'Network error occurred',
+  enableRetry: true,
+  retryCooldown: const Duration(seconds: 3),
+  onRetry: () async {
+    await refetchData();
+  },
+  child: DataWidget(),
+);
+```
+
+### Global Configuration
+
+Set default behaviors for all instances:
+
+```dart
+LoadingStateHandlerWidget.setDefaults(
+  defaultRetryCooldown: const Duration(seconds: 5),
+  defaultLoadingBuilder: (context, message) => CustomLoadingWidget(),
+  defaultErrorBuilder: (context, message) => CustomErrorWidget(),
+  defaultEmptyBuilder: (context, message) => CustomEmptyWidget(),
+);
+```
+
+### State-Specific Callbacks
+
+Handle different states with custom callbacks:
 
 ```dart
 LoadingStateHandlerWidget(
   loading: isLoading,
   error: hasError,
   empty: isEmpty,
-  loadingWidget: CustomLoadingWidget(), // Your custom loading widget
-  errorWidget: CustomErrorWidget(),     // Your custom error widget
-  emptyWidget: CustomEmptyWidget(),     // Your custom empty widget
-  child: YourMainContentWidget(),       // The main content of your page
+  onLoading: (defaultCallback, context, message) {
+    // Custom loading behavior
+  },
+  onError: (defaultCallback, context, message) {
+    // Custom error handling
+  },
+  onEmpty: (defaultCallback, context, message) {
+    // Custom empty state handling
+  },
+  child: ContentWidget(),
 );
 ```
+
+### Disable State Changes
+
+Control widget behavior granularly:
+
+```dart
+LoadingStateHandlerWidget(
+  disableWidgetChanges: false,
+  disableErrorWidgetChanges: true,
+  disableEmptyWidgetChanges: false,
+  // ... other properties
+);
+```
+
+## Properties
+
+| Property | Type | Description |
+|----------|------|-------------|
+| `loading` | `bool` | Shows loading state when true |
+| `error` | `bool` | Shows error state when true |
+| `empty` | `bool` | Shows empty state when true |
+| `enableRetry` | `bool` | Enables retry functionality |
+| `retryCooldown` | `Duration` | Cooldown period between retries |
+| `onRetry` | `VoidCallback` | Callback when retry is triggered |
+| `errorMessage` | `String?` | Custom error message |
+| `loadingMessage` | `String?` | Custom loading message |
+| `emptyMessage` | `String?` | Custom empty state message |
+
+## Example
+
+Check out the [example](example/lib/retry_example.dart) for a complete demonstration of all features.
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+## License
+
+This project is licensed under the BSD 3-Clause License - see the [LICENSE](LICENSE) file for details.

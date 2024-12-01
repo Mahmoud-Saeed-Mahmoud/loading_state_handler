@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 
 /// A widget that handles loading, error, and empty states.
@@ -114,6 +116,11 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// The default value is false, which means empty widget changes are enabled globally.
   static bool? _disableEmptyWidgetChanges;
 
+  /// Default retry cooldown duration in seconds.
+  ///
+  /// This is the default duration that users must wait before retrying after an error.
+  static Duration _defaultRetryCooldown = const Duration(seconds: 5);
+
   /// To disable widget changes.
   ///
   /// If set to true, widget changes will be disabled.
@@ -133,7 +140,6 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// If set to true, empty widget changes will be disabled.
   ///
   /// The default value is false, which means empty widget changes are enabled.
-
   final bool disableEmptyWidgetChanges;
 
   /// Whether the widget is in a loading state.
@@ -265,27 +271,40 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     BuildContext,
     String?,
   )? onData;
+
+  /// The callback to be executed when retry is attempted.
+  final VoidCallback? onRetry;
+
+  /// The duration to wait before allowing another retry attempt.
+  final Duration? retryCooldown;
+
+  /// Whether the retry mechanism is enabled.
+  final bool enableRetry;
+
   const LoadingStateHandlerWidget({
     super.key,
     this.disableWidgetChanges = false,
     this.disableErrorWidgetChanges = false,
     this.disableEmptyWidgetChanges = false,
-    this.data = false,
-    required this.loading,
+    this.loading = false,
     this.error = false,
     this.empty = false,
+    this.data = false,
+    this.loadingMessage,
     this.errorMessage,
     this.emptyMessage,
-    this.loadingMessage,
+    this.dataMessage,
     this.loadingWidget,
     this.errorWidget,
     this.emptyWidget,
-    this.dataMessage,
-    this.onEmpty,
     this.onError,
+    this.onEmpty,
     this.onLoading,
     this.onData,
     required this.child,
+    this.onRetry,
+    this.retryCooldown,
+    this.enableRetry = true,
   });
 
   /// Creates the state for the [LoadingStateHandlerWidget].
@@ -316,10 +335,11 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// * [defaultOnEmpty]: The default empty callback.
   /// * [defaultOnLoading]: The default loading callback.
   /// * [defaultOnData]: The default data callback.
-  static void setDefaultWidgets({
+  static void setDefaults({
     bool? disableWidgetChanges,
     bool? disableErrorWidgetChanges,
     bool? disableEmptyWidgetChanges,
+    Duration? defaultRetryCooldown,
     Widget Function(BuildContext, String?)? defaultLoadingBuilder,
     Widget Function(BuildContext, String?)? defaultErrorBuilder,
     Widget Function(BuildContext, String?)? defaultEmptyBuilder,
@@ -328,6 +348,8 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     Function(BuildContext, String?)? defaultOnLoading,
     Function(BuildContext, String?)? defaultOnData,
   }) {
+    _defaultRetryCooldown = defaultRetryCooldown ?? _defaultRetryCooldown;
+
     _disableWidgetChanges = disableWidgetChanges ?? false;
     _disableErrorWidgetChanges = disableErrorWidgetChanges ?? false;
     _disableEmptyWidgetChanges = disableEmptyWidgetChanges ?? false;
@@ -345,6 +367,12 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
 /// The state for the [LoadingStateHandlerWidget].
 class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
+  /// The current retry cooldown timer.
+  Timer? _retryCooldownTimer;
+
+  /// Remaining cooldown time in seconds.
+  int _remainingCooldown = 0;
+
   @override
 
   /// Builds the widget tree for the [LoadingStateHandlerWidget].
@@ -389,8 +417,16 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         return widget.errorWidget ??
             LoadingStateHandlerWidget._defaultErrorBuilder
                 ?.call(context, widget.errorMessage) ??
-            const Center(
-              child: Text('Error'),
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const Text('Error'),
+                  if (widget.errorMessage != null) Text(widget.errorMessage!),
+                  const SizedBox(height: 16),
+                  _buildRetryButton(),
+                ],
+              ),
             );
       } else if (widget.empty) {
         if (widget.disableEmptyWidgetChanges ||
@@ -430,6 +466,12 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) => _applyMethods(),
     );
+  }
+
+  @override
+  void dispose() {
+    _retryCooldownTimer?.cancel();
+    super.dispose();
   }
 
   @override
@@ -510,5 +552,49 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         }
       }
     }
+  }
+
+  /// Builds the retry button.
+  Widget _buildRetryButton() {
+    if (!widget.enableRetry || widget.onRetry == null) {
+      return const SizedBox.shrink();
+    }
+
+    return Column(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        if (_remainingCooldown > 0)
+          Text('Retry available in $_remainingCooldown seconds'),
+        ElevatedButton(
+          onPressed: _remainingCooldown > 0
+              ? null
+              : () {
+                  widget.onRetry?.call();
+                  _startRetryCooldown();
+                },
+          child: const Text('Retry'),
+        ),
+      ],
+    );
+  }
+
+  /// Starts the retry cooldown timer.
+  void _startRetryCooldown() {
+    if (!widget.enableRetry || widget.onRetry == null) return;
+
+    _remainingCooldown = (widget.retryCooldown ??
+            LoadingStateHandlerWidget._defaultRetryCooldown)
+        .inSeconds;
+
+    _retryCooldownTimer?.cancel();
+    _retryCooldownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
+      setState(() {
+        if (_remainingCooldown > 0) {
+          _remainingCooldown--;
+        } else {
+          timer.cancel();
+        }
+      });
+    });
   }
 }

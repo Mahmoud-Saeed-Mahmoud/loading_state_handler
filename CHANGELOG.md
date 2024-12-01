@@ -78,3 +78,21 @@
 ## 1.1.2
 
 - **Added**: `BuildContext` parameter in `StateHandlerWidget`.
+
+## 1.2.0
+
+### New Features
+- **Added**: Retry mechanism with configurable cooldown
+- **Added**: Global defaults configuration through `setDefaults` method
+- **Added**: Per-instance retry controls with visual countdown
+- **Added**: Customizable retry callback functionality
+
+### Improvements
+- **Enhanced**: Constructor is now `const` for better performance
+- **Improved**: State management with cleaner implementation
+- **Updated**: Documentation with comprehensive examples
+- **Refined**: Default widget behavior and configuration
+
+### Breaking Changes
+- Renamed `setDefaultWidgets` to `setDefaults` for better clarity
+- Moved retry configuration to `setDefaults` method

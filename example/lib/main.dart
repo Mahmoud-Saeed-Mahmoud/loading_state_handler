@@ -25,7 +25,7 @@ void main() {
   /// * [defaultOnEmpty]: The default empty callback.
   /// * [defaultOnLoading]: The default loading callback.
   /// * [defaultOnData]: The default data callback.
-  LoadingStateHandlerWidget.setDefaultWidgets(
+  LoadingStateHandlerWidget.setDefaults(
     /// Called when the widget is in the data state.
     ///
     /// The [context] parameter provides the location in the widget tree where this
