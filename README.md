@@ -12,16 +12,6 @@ A powerful Flutter widget for managing UI states with built-in retry functionali
 - ⚡ Optimized performance with const constructor
 - 🎯 Type-safe callbacks and builders
 
-## Installation
-
-Add the following dependency in your `pubspec.yaml` file:
-
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  loading_state_handler: ^1.2.0
-```
 
 ## Quick Start
 
