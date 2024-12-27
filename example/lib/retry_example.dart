@@ -50,9 +50,7 @@ class RetryExample extends StatefulWidget {
 
 class _RetryExampleState extends State<RetryExample> {
   // State flags to control the widget's behavior
-  bool _isLoading = false;
-  bool _hasError = false;
-  bool _isEmpty = false;
+  CurrentStateEnum _currentState = CurrentStateEnum.normal;
   String? _errorMessage;
 
   @override
@@ -63,9 +61,7 @@ class _RetryExampleState extends State<RetryExample> {
       ),
       body: LoadingStateHandlerWidget(
         // State control properties
-        loading: _isLoading,
-        error: _hasError,
-        empty: _isEmpty,
+        currentState: _currentState,
 
         // Custom messages for different states
         errorMessage: _errorMessage,
@@ -125,9 +121,7 @@ class _RetryExampleState extends State<RetryExample> {
   Future<void> _fetchData() async {
     // Set initial loading state
     setState(() {
-      _isLoading = true;
-      _hasError = false;
-      _isEmpty = false;
+      _currentState = CurrentStateEnum.loading;
       _errorMessage = null;
     });
 
@@ -137,8 +131,7 @@ class _RetryExampleState extends State<RetryExample> {
     // Simulate random failure scenario
     if (DateTime.now().second % 2 == 0) {
       setState(() {
-        _isLoading = false;
-        _hasError = true;
+        _currentState = CurrentStateEnum.error;
         _errorMessage = 'Failed to fetch data. Please try again.';
       });
       return;
@@ -147,15 +140,14 @@ class _RetryExampleState extends State<RetryExample> {
     // Simulate empty response scenario
     if (DateTime.now().second % 3 == 0) {
       setState(() {
-        _isLoading = false;
-        _isEmpty = true;
+        _currentState = CurrentStateEnum.empty;
       });
       return;
     }
 
     // Success case - data loaded successfully
     setState(() {
-      _isLoading = false;
+      _currentState = CurrentStateEnum.data;
     });
   }
 }

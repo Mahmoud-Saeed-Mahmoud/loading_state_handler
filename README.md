@@ -33,11 +33,12 @@ LoadingStateHandlerWidget.setDefaults(
     const Center(child: CircularProgressIndicator()),
 );
 
+// loading, error, empty, normal, or data
+CurrentStateEnum currentState = CurrentStateEnum.loading; 
+
 // Use in your widget
 LoadingStateHandlerWidget(
-  loading: isLoading,
-  error: hasError,
-  empty: isEmpty,
+  currentState: currentState,
   errorMessage: 'Failed to load data',
   enableRetry: true,
   retryCooldown: const Duration(seconds: 3),
@@ -84,9 +85,7 @@ Handle different states with custom callbacks:
 
 ```dart
 LoadingStateHandlerWidget(
-  loading: isLoading,
-  error: hasError,
-  empty: isEmpty,
+ currentState: currentState,
   onLoading: (defaultCallback, context, message) {
     // Custom loading behavior
   },
@@ -117,9 +116,7 @@ LoadingStateHandlerWidget(
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `loading` | `bool` | Shows loading state when true |
-| `error` | `bool` | Shows error state when true |
-| `empty` | `bool` | Shows empty state when true |
+| `currentState` | `CurrentStateEnum` | The current state of the widget |
 | `enableRetry` | `bool` | Enables retry functionality |
 | `retryCooldown` | `Duration` | Cooldown period between retries |
 | `onRetry` | `VoidCallback` | Callback when retry is triggered |

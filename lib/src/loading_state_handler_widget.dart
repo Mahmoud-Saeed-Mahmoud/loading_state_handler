@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:loading_state_handler/src/current_state_enum.dart';
 
 /// A widget that handles loading, error, and empty states.
 ///
@@ -142,17 +143,8 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// The default value is false, which means empty widget changes are enabled.
   final bool disableEmptyWidgetChanges;
 
-  /// Whether the widget is in a loading state.
-  final bool loading;
-
-  /// Whether the widget is in an error state.
-  final bool error;
-
-  /// Whether the widget is in an empty state.
-  final bool empty;
-
-  /// Whether the widget is in a data state.
-  final bool data;
+  /// The current state of the widget.
+  final CurrentStateEnum currentState;
 
   /// The error message.
   final String? errorMessage;
@@ -286,10 +278,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     this.disableWidgetChanges = false,
     this.disableErrorWidgetChanges = false,
     this.disableEmptyWidgetChanges = false,
-    this.loading = false,
-    this.error = false,
-    this.empty = false,
-    this.data = false,
+    this.currentState = CurrentStateEnum.normal,
     this.loadingMessage,
     this.errorMessage,
     this.emptyMessage,
@@ -402,14 +391,14 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         (LoadingStateHandlerWidget._disableWidgetChanges ?? false)) {
       return widget.child;
     } else {
-      if (widget.loading) {
+      if (widget.currentState == CurrentStateEnum.loading) {
         return widget.loadingWidget ??
             LoadingStateHandlerWidget._defaultLoadingBuilder
                 ?.call(context, widget.loadingMessage) ??
             const Center(
               child: CircularProgressIndicator(),
             );
-      } else if (widget.error) {
+      } else if (widget.currentState == CurrentStateEnum.error) {
         if (widget.disableErrorWidgetChanges ||
             (LoadingStateHandlerWidget._disableErrorWidgetChanges ?? false)) {
           return widget.child;
@@ -428,7 +417,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
                 ],
               ),
             );
-      } else if (widget.empty) {
+      } else if (widget.currentState == CurrentStateEnum.empty) {
         if (widget.disableEmptyWidgetChanges ||
             (LoadingStateHandlerWidget._disableEmptyWidgetChanges ?? false)) {
           return widget.child;
@@ -439,6 +428,8 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
             const Center(
               child: Text('Empty'),
             );
+      } else if (widget.currentState == CurrentStateEnum.normal) {
+        return widget.child;
       } else {
         return widget.child;
       }
@@ -514,7 +505,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   /// If the methods are not provided, the default methods are called.
   /// If the default methods are not provided, the methods are not called.
   void _applyMethods() {
-    if (widget.loading) {
+    if (widget.currentState == CurrentStateEnum.loading) {
       if (widget.onLoading != null) {
         widget.onLoading?.call(LoadingStateHandlerWidget._defaultOnLoading,
             context, widget.loadingMessage);
@@ -522,7 +513,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         LoadingStateHandlerWidget._defaultOnLoading
             ?.call(context, widget.loadingMessage);
       }
-    } else if (widget.error) {
+    } else if (widget.currentState == CurrentStateEnum.error) {
       if (widget.onError != null) {
         widget.onError?.call(LoadingStateHandlerWidget._defaultOnError, context,
             widget.errorMessage);
@@ -530,7 +521,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         LoadingStateHandlerWidget._defaultOnError
             ?.call(context, widget.errorMessage);
       }
-    } else if (widget.empty) {
+    } else if (widget.currentState == CurrentStateEnum.empty) {
       if (widget.onEmpty != null) {
         widget.onEmpty?.call(LoadingStateHandlerWidget._defaultOnEmpty, context,
             widget.emptyMessage);
@@ -538,11 +529,11 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         LoadingStateHandlerWidget._defaultOnEmpty
             ?.call(context, widget.emptyMessage);
       }
-    } else if (widget.data) {
+    } else if (widget.currentState == CurrentStateEnum.data) {
       if (widget.onData != null) {
         widget.onData?.call(LoadingStateHandlerWidget._defaultOnData, context,
             widget.dataMessage);
-      } else if (widget.data) {
+      } else if (widget.currentState == CurrentStateEnum.data) {
         if (widget.onData != null) {
           widget.onData?.call(LoadingStateHandlerWidget._defaultOnData, context,
               widget.dataMessage);
