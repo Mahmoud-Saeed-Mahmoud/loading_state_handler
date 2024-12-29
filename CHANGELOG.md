@@ -96,3 +96,7 @@
 ### Breaking Changes
 - Renamed `setDefaultWidgets` to `setDefaults` for better clarity
 - Moved retry configuration to `setDefaults` method
+
+## 1.2.3-pre.2
+
+- **Added**: Added `CurrentStateEnum` to `StateHandlerWidget`.

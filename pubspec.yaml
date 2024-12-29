@@ -1,18 +1,16 @@
 name: loading_state_handler
 description: "The StateHandlerWidget manages different UI states—loading, error, empty, and normal—allowing you to customize the displayed widgets for each state."
-version: 1.2.0
+version: 1.2.3-pre.2
 homepage: https://github.com/Mahmoud-Saeed-Mahmoud/loading_state_handler
 
 environment:
-  sdk: ^3.5.4
+  sdk: ^3.6.0
 
 dependencies:
   flutter:
     sdk: flutter
 
 dev_dependencies:
-  flutter_test:
-    sdk: flutter
   flutter_lints: ^5.0.0
 
   # For information on the generic Dart part of this file, see the
