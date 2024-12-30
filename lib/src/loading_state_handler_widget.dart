@@ -74,7 +74,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default on error callback will
   /// not be called.
-  static void Function(BuildContext, String?)? _defaultOnError;
+  static void Function(BuildContext, String?, VoidCallback?)? _defaultOnError;
 
   /// Default on empty callback.
   ///
@@ -278,9 +278,10 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// The default value is null, which means the default error widget will be
   /// used.
   final Function(
-    Function(BuildContext, String?)?,
+    Function(BuildContext, String?, VoidCallback?)?,
     BuildContext,
     String?,
+    VoidCallback?,
   )? onError;
 
   /// A callback function that will be called when the state is empty.
@@ -426,7 +427,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     Widget Function(BuildContext, String?, Widget, Duration, VoidCallback?)?
         defaultErrorBuilder,
     Widget Function(BuildContext, String?)? defaultEmptyBuilder,
-    Function(BuildContext, String?)? defaultOnError,
+    Function(BuildContext, String?, VoidCallback?)? defaultOnError,
     Function(BuildContext, String?)? defaultOnEmpty,
     Function(BuildContext, String?)? defaultOnLoading,
     Function(BuildContext, String?)? defaultOnData,
@@ -652,10 +653,10 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
     } else if (widget.error || widget.currentState == CurrentStateEnum.error) {
       if (widget.onError != null) {
         widget.onError?.call(LoadingStateHandlerWidget._defaultOnError, context,
-            widget.errorMessage);
+            widget.errorMessage, widget.onRetry);
       } else {
         LoadingStateHandlerWidget._defaultOnError
-            ?.call(context, widget.errorMessage);
+            ?.call(context, widget.errorMessage, widget.onRetry);
       }
     } else if (widget.empty || widget.currentState == CurrentStateEnum.empty) {
       if (widget.onEmpty != null) {
