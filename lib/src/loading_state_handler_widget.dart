@@ -138,7 +138,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// Default retry message.
   ///
   /// This is the default message that users will see when they retry after an error.
-  static String? _defaultRetryMessage = 'Retry available in % seconds';
+  static String? _defaultRetryMessage = 'Retry available in %_ seconds';
 
   /// Default retry message style.
   ///
@@ -248,7 +248,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// The retry message.
   ///
   /// The default value is null, which means the default retry message will be used.
-  /// The message should be in format of '[message to show] % [seconds]'.
+  /// The message should be in format of '[message to show] %_ [seconds]'.
   final String? retryMessage;
 
   /// The title of the error.
@@ -687,7 +687,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
           Text(
             '${widget.retryMessage ?? LoadingStateHandlerWidget._defaultRetryMessage}'
                 .replaceAll(
-              RegExp(r"%"),
+              RegExp(r"%_"),
               _remainingCooldown.toString(),
             ),
             style: widget.retryMessageStyle ??
