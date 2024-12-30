@@ -104,3 +104,7 @@
 - **Added**: `retryBtnTextStyle` and `retryMessageStyle` parameters in `StateHandlerWidget`.
 - **Added**: `retryButtonStyle` parameter in `StateHandlerWidget`.
 - **Added**: `CurrentStateEnum` parameter in `StateHandlerWidget`.
+
+## 1.3.1
+
+- **Updated**: `onError` callback in `LoadingStateHandlerWidget` to include the `onRetry` callback.
