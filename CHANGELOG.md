@@ -108,3 +108,7 @@
 ## 1.3.1
 
 - **Updated**: `onError` callback in `LoadingStateHandlerWidget` to include the `onRetry` callback.
+
+## 1.3.2
+
+- **Fixed**: Issue with assertion in `StateHandlerWidget`.

@@ -381,8 +381,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     this.retryBtnText,
     this.retryMessage,
     this.enableRetry = false,
-  })  : assert(!loading || !error || !empty),
-        assert(enableRetry == (onRetry != null));
+  }) : assert(enableRetry == (onRetry != null));
 
   /// Creates the state for the [LoadingStateHandlerWidget].
   @override
