@@ -20,7 +20,7 @@ Add the following dependency in your `pubspec.yaml` file:
 dependencies:
   flutter:
     sdk: flutter
-  loading_state_handler: ^1.2.0
+  loading_state_handler: ^1.3.0
 ```
 
 ## Quick Start
@@ -120,6 +120,19 @@ LoadingStateHandlerWidget(
 | `loading` | `bool` | Shows loading state when true |
 | `error` | `bool` | Shows error state when true |
 | `empty` | `bool` | Shows empty state when true |
+| `currentState` | `CurrentStateEnum` | Current state of the widget |
+| `errorTitle` | `String?` | Custom error title |
+| `retryButtonStyle` | `ButtonStyle?` | Custom retry button style |
+| `retryBtnTextStyle` | `TextStyle?` | Custom retry button text style |
+| `retryMessageStyle` | `TextStyle?` | Custom retry message style |
+| `retryBtnText` | `String?` | Custom retry button text |
+| `retryMessage` | `String?` | Custom retry message |
+| `loadingWidget` | `Widget?` | Custom loading widget |
+| `errorWidget` | `Widget?` | Custom error widget |
+| `emptyWidget` | `Widget?` | Custom empty widget |
+| `disableWidgetChanges` | `bool` | Disables state changes in the widget |
+| `disableErrorWidgetChanges` | `bool` | Disables state changes in the error widget |
+| `disableEmptyWidgetChanges` | `bool` | Disables state changes in the empty widget |
 | `enableRetry` | `bool` | Enables retry functionality |
 | `retryCooldown` | `Duration` | Cooldown period between retries |
 | `onRetry` | `VoidCallback` | Callback when retry is triggered |
@@ -129,7 +142,7 @@ LoadingStateHandlerWidget(
 
 ## Example
 
-Check out the [example](example/lib/retry_example.dart) for a complete demonstration of all features.
+Check out the [example](example/lib/main.dart.dart) and [example](example/lib/retry_example.dart) for a complete demonstration of all features.
 
 ## Contributing
 

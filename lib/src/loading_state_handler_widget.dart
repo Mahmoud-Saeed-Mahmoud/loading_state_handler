@@ -35,7 +35,9 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default error widget will not
   /// be displayed.
-  static Widget Function(BuildContext, String?)? _defaultErrorBuilder;
+  static Widget Function(
+          BuildContext, String?, Widget, Duration, VoidCallback?)?
+      _defaultErrorBuilder;
 
   /// Default empty widget builder.
   ///
@@ -123,6 +125,45 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// This is the default duration that users must wait before retrying after an error.
   static Duration _defaultRetryCooldown = const Duration(seconds: 5);
 
+  /// Default retry button text.
+  ///
+  /// This is the default button text that users will see when they retry after an error.
+  static String _defaultRetryBtnText = 'Retry';
+
+  /// Default retry button text style.
+  ///
+  /// This is the default button text style that users will see when they retry after an error.
+  static TextStyle? _defaultRetryBtnTextStyle;
+
+  /// Default retry message.
+  ///
+  /// This is the default message that users will see when they retry after an error.
+  static String? _defaultRetryMessage = 'Retry available in % seconds';
+
+  /// Default retry message style.
+  ///
+  /// This is the default message style that users will see when they retry after an error.
+  static TextStyle? _defaultRetryMessageStyle;
+
+  /// The title of the error dialog.
+  ///
+  /// The default value is 'Error'.
+  static String _defaultErrorTitle = 'Error';
+
+  /// Default retry button style.
+  ///
+  /// This is the default button style that users will see when they retry after an error.
+  static ButtonStyle? _defaultRetryButtonStyle;
+
+  /// The retry button text style.
+  final TextStyle? retryBtnTextStyle;
+
+  /// The retry message style.
+  final TextStyle? retryMessageStyle;
+
+  /// The retry button style.
+  final ButtonStyle? retryButtonStyle;
+
   /// To disable widget changes.
   ///
   /// If set to true, widget changes will be disabled.
@@ -198,6 +239,22 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// The default value is null, which means the default empty widget will be
   /// used.
   final Widget? emptyWidget;
+
+  /// The retry button text.
+  ///
+  /// The default value is null, which means the default retry button text will be used.
+  final String? retryBtnText;
+
+  /// The retry message.
+  ///
+  /// The default value is null, which means the default retry message will be used.
+  /// The message should be in format of '[message to show] % [seconds]'.
+  final String? retryMessage;
+
+  /// The title of the error.
+  ///
+  /// The default value is null, which means the default error title will be used.
+  final String? errorTitle;
 
   /// The widget to display when the state is normal.
   ///
@@ -311,11 +368,18 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     this.onEmpty,
     this.onLoading,
     this.onData,
+    this.errorTitle,
+    this.retryButtonStyle,
+    this.retryBtnTextStyle,
+    this.retryMessageStyle,
     required this.child,
     this.onRetry,
     this.retryCooldown,
-    this.enableRetry = true,
-  });
+    this.retryBtnText,
+    this.retryMessage,
+    this.enableRetry = false,
+  })  : assert(!loading || !error || !empty),
+        assert(enableRetry == (onRetry != null));
 
   /// Creates the state for the [LoadingStateHandlerWidget].
   @override
@@ -350,8 +414,15 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     bool? disableErrorWidgetChanges,
     bool? disableEmptyWidgetChanges,
     Duration? defaultRetryCooldown,
+    String? defaultRetryBtnText,
+    String? defaultRetryMessage,
+    String? defaultErrorTitle,
+    TextStyle? defaultRetryBtnTextStyle,
+    TextStyle? defaultRetryMessageStyle,
+    ButtonStyle? defaultRetryButtonStyle,
     Widget Function(BuildContext, String?)? defaultLoadingBuilder,
-    Widget Function(BuildContext, String?)? defaultErrorBuilder,
+    Widget Function(BuildContext, String?, Widget, Duration, VoidCallback?)?
+        defaultErrorBuilder,
     Widget Function(BuildContext, String?)? defaultEmptyBuilder,
     Function(BuildContext, String?)? defaultOnError,
     Function(BuildContext, String?)? defaultOnEmpty,
@@ -359,6 +430,17 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     Function(BuildContext, String?)? defaultOnData,
   }) {
     _defaultRetryCooldown = defaultRetryCooldown ?? _defaultRetryCooldown;
+
+    _defaultRetryButtonStyle =
+        defaultRetryButtonStyle ?? _defaultRetryButtonStyle;
+    _defaultRetryBtnTextStyle =
+        defaultRetryBtnTextStyle ?? _defaultRetryBtnTextStyle;
+    _defaultRetryMessageStyle =
+        defaultRetryMessageStyle ?? _defaultRetryMessageStyle;
+    _defaultRetryBtnText = defaultRetryBtnText ?? _defaultRetryBtnText;
+    _defaultRetryMessage = defaultRetryMessage ?? _defaultRetryMessage;
+
+    _defaultErrorTitle = defaultErrorTitle ?? _defaultErrorTitle;
 
     _disableWidgetChanges = disableWidgetChanges ?? false;
     _disableErrorWidgetChanges = disableErrorWidgetChanges ?? false;
@@ -426,8 +508,37 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
           return widget.child;
         }
         return widget.errorWidget ??
-            LoadingStateHandlerWidget._defaultErrorBuilder
-                ?.call(context, widget.errorMessage) ??
+            LoadingStateHandlerWidget._defaultErrorBuilder?.call(
+                context,
+                widget.errorMessage,
+                _buildRetryButton(),
+                widget.retryCooldown ??
+                    LoadingStateHandlerWidget._defaultRetryCooldown,
+                widget.onRetry) ??
+            Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    widget.errorTitle ??
+                        LoadingStateHandlerWidget._defaultErrorTitle,
+                  ),
+                  if (widget.errorMessage != null) Text(widget.errorMessage!),
+                  const SizedBox(height: 16),
+                  _buildRetryButton(),
+                ],
+              ),
+            );
+      } else if (widget.empty) {
+        return widget.errorWidget ??
+            LoadingStateHandlerWidget._defaultErrorBuilder?.call(
+              context,
+              widget.errorMessage,
+              _buildRetryButton(),
+              widget.retryCooldown ??
+                  LoadingStateHandlerWidget._defaultRetryCooldown,
+              widget.onRetry,
+            ) ??
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -573,15 +684,30 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
       mainAxisSize: MainAxisSize.min,
       children: [
         if (_remainingCooldown > 0)
-          Text('Retry available in $_remainingCooldown seconds'),
+          Text(
+            '${widget.retryMessage ?? LoadingStateHandlerWidget._defaultRetryMessage}'
+                .replaceAll(
+              RegExp(r"%"),
+              _remainingCooldown.toString(),
+            ),
+            style: widget.retryMessageStyle ??
+                LoadingStateHandlerWidget._defaultRetryMessageStyle,
+          ),
         ElevatedButton(
+          style: widget.retryButtonStyle ??
+              LoadingStateHandlerWidget._defaultRetryButtonStyle,
           onPressed: _remainingCooldown > 0
               ? null
               : () {
                   widget.onRetry?.call();
                   _startRetryCooldown();
                 },
-          child: const Text('Retry'),
+          child: Text(
+            widget.retryBtnText ??
+                LoadingStateHandlerWidget._defaultRetryBtnText,
+            style: widget.retryBtnTextStyle ??
+                LoadingStateHandlerWidget._defaultRetryBtnTextStyle,
+          ),
         ),
       ],
     );

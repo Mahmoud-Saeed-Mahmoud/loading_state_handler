@@ -69,9 +69,12 @@ void main() {
     /// widget is being built.
     ///
     /// The [errorMessage] parameter is the message to be displayed in the widget.
-    defaultErrorBuilder: (context, errorMessage) => Center(
-      child: Text('Custom Error: $errorMessage',
-          style: const TextStyle(color: Colors.red)),
+    defaultErrorBuilder:
+        (context, errorMessage, retryWidget, retryCooldown, onRetry) => Center(
+      child: Text(
+        'Custom Error: $errorMessage',
+        style: const TextStyle(color: Colors.red),
+      ),
     ),
 
     /// The default empty widget builder.

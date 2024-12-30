@@ -97,6 +97,10 @@
 - Renamed `setDefaultWidgets` to `setDefaults` for better clarity
 - Moved retry configuration to `setDefaults` method
 
-## 1.2.3-pre.2
+## 1.3.0
 
-- **Added**: Added `CurrentStateEnum` to `StateHandlerWidget`.
+### New Features
+- **Added**: `retryBtnText` and `retryMessage` parameters in `StateHandlerWidget`.
+- **Added**: `retryBtnTextStyle` and `retryMessageStyle` parameters in `StateHandlerWidget`.
+- **Added**: `retryButtonStyle` parameter in `StateHandlerWidget`.
+- **Added**: `CurrentStateEnum` parameter in `StateHandlerWidget`.
