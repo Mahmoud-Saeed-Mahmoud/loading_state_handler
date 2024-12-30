@@ -146,23 +146,23 @@ class _RetryExampleState extends State<RetryExample> {
     await Future.delayed(const Duration(seconds: 2));
 
     // Simulate random failure scenario
-    // if (DateTime.now().second % 2 == 0) {
-    setState(() {
-      _isLoading = false;
-      _hasError = true;
-      _errorMessage = 'Failed to fetch data. Please try again.';
-    });
-    // return;
-    // }
+    if (DateTime.now().second % 2 == 0) {
+      setState(() {
+        _isLoading = false;
+        _hasError = true;
+        _errorMessage = 'Failed to fetch data. Please try again.';
+      });
+      return;
+    }
 
-    // // Simulate empty response scenario
-    // if (DateTime.now().second % 3 == 0) {
-    //   setState(() {
-    //     _isLoading = false;
-    //     _isEmpty = true;
-    //   });
-    //   return;
-    // }
+    // Simulate empty response scenario
+    if (DateTime.now().second % 3 == 0) {
+      setState(() {
+        _isLoading = false;
+        _isEmpty = true;
+      });
+      return;
+    }
 
     // Success case - data loaded successfully
     setState(() {
