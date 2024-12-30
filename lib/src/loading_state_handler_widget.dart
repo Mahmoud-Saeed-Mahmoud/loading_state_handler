@@ -248,7 +248,9 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// The retry message.
   ///
   /// The default value is null, which means the default retry message will be used.
-  /// The message should be in format of '[message to show] %_ [seconds]'.
+  /// The message should be in format of 'message to show %_ seconds'.
+  ///
+  /// The [%_] will be replaced with the remaining seconds.
   final String? retryMessage;
 
   /// The title of the error.
