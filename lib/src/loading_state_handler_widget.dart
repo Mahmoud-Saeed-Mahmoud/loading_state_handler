@@ -9,14 +9,14 @@ import 'current_state_enum.dart';
 class LoadingStateHandlerWidget extends StatefulWidget {
   /// Default loading widget builder.
   ///
-  /// This callback will be called when [loading] is true, and the default
+  /// This callback will be called when [loading] is true or [currentState] is [CurrentStateEnum.loading], and the default
   /// widget is displayed.
   ///
   /// The default implementation is to display a [CircularProgressIndicator] in
   /// the center of the screen.
   ///
   /// If not null, the default loading widget will be displayed when [loading] is
-  /// true.
+  /// true or [currentState] is [CurrentStateEnum.loading].
   ///
   /// The default value is null, which means the default loading widget will not
   /// be displayed.
@@ -24,14 +24,14 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Default error widget builder.
   ///
-  /// This callback will be called when [error] is true, and the default
+  /// This callback will be called when [error] is true or [currentState] is [CurrentStateEnum.error], and the default
   /// widget is displayed.
   ///
   /// The default implementation is to display a [Text] widget in the center of
   /// the screen with the error message.
   ///
   /// If not null, the default error widget will be displayed when [error] is
-  /// true.
+  /// true or [currentState] is [CurrentStateEnum.error].
   ///
   /// The default value is null, which means the default error widget will not
   /// be displayed.
@@ -41,14 +41,14 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Default empty widget builder.
   ///
-  /// This callback will be called when [empty] is true, and the default
+  /// This callback will be called when [empty] is true or [currentState] is [CurrentStateEnum.empty], and the default
   /// widget is displayed.
   ///
   /// The default implementation is to display a [Text] widget in the center of
   /// the screen with the empty message.
   ///
   /// If not null, the default empty widget will be displayed when [empty] is
-  /// true.
+  /// true or [currentState] is [CurrentStateEnum.empty].
   ///
   /// The default value is null, which means the default empty widget will not
   /// be displayed.
@@ -56,10 +56,10 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Default on loading callback.
   ///
-  /// This callback will be called when [loading] is true.
+  /// This callback will be called when [loading] is true or [currentState] is [CurrentStateEnum.loading].
   ///
   /// If not null, the default on loading callback will be called when [loading]
-  /// is true.
+  /// is true or [currentState] is [CurrentStateEnum.loading].
   ///
   /// The default value is null, which means the default on loading callback will
   /// not be called.
@@ -67,10 +67,10 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Default on error callback.
   ///
-  /// This callback will be called when [error] is true.
+  /// This callback will be called when [error] is true or [currentState] is [CurrentStateEnum.error].
   ///
   /// If not null, the default on error callback will be called when [error] is
-  /// true.
+  /// true or [currentState] is [CurrentStateEnum.error].
   ///
   /// The default value is null, which means the default on error callback will
   /// not be called.
@@ -78,10 +78,10 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Default on empty callback.
   ///
-  /// This callback will be called when [empty] is true.
+  /// This callback will be called when [empty] is true or [currentState] is [CurrentStateEnum.empty].
   ///
   /// If not null, the default on empty callback will be called when [empty] is
-  /// true.
+  /// true or [currentState] is [CurrentStateEnum.empty].
   ///
   /// The default value is null, which means the default on empty callback will
   /// not be called.
@@ -90,10 +90,10 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// Default on data callback.
   ///
   /// This callback will be called when [loading] is false, [error] is false,
-  /// and [empty] is false.
+  /// and [empty] is false or [currentState] is [CurrentStateEnum.data].
   ///
   /// If not null, the default on data callback will be called when [loading] is
-  /// false, [error] is false, and [empty] is false.
+  /// false, [error] is false, and [empty] is false or [currentState] is [CurrentStateEnum.data].
   ///
   /// The default value is null, which means the default on data callback will
   /// not be called.
@@ -218,7 +218,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// The widget to display when the state is loading.
   ///
-  /// If not null, the [loadingWidget] will be displayed when [loading] is true.
+  /// If not null, the [loadingWidget] will be displayed when [loading] is true or [currentState] is [CurrentStateEnum.loading].
   ///
   /// The default value is null, which means the default loading widget will be
   /// used.
@@ -226,7 +226,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// The widget to display when the state is error.
   ///
-  /// If not null, the [errorWidget] will be displayed when [error] is true.
+  /// If not null, the [errorWidget] will be displayed when [error] is true or [currentState] is [CurrentStateEnum.error].
   ///
   /// The default value is null, which means the default error widget will be
   /// used.
@@ -234,7 +234,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// The widget to display when the state is empty.
   ///
-  /// If not null, the [emptyWidget] will be displayed when [empty] is true.
+  /// If not null, the [emptyWidget] will be displayed when [empty] is true or [currentState] is [CurrentStateEnum.empty].
   ///
   /// The default value is null, which means the default empty widget will be
   /// used.
@@ -261,7 +261,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// The widget to display when the state is normal.
   ///
   /// This widget will be displayed when [loading] is false, [error] is false,
-  /// and [empty] is false.
+  /// and [empty] is false or [currentState] is [CurrentStateEnum.normal].
   final Widget child;
 
   /// A callback function that will be called when the state is error.
@@ -478,15 +478,15 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   /// [LoadingStateHandlerWidget] and returns the appropriate widget based on
   /// the state.
   ///
-  /// If [loading] is true, the method returns the [loadingWidget] if it is not
+  /// If [loading] is true or [currentState] is [CurrentStateEnum.loading], the method returns the [loadingWidget] if it is not
   /// null, otherwise it returns the default loading widget which is a
   /// [Center] widget with a [CircularProgressIndicator].
   ///
-  /// If [error] is true, the method returns the [errorWidget] if it is not null,
+  /// If [error] is true or [currentState] is [CurrentStateEnum.error], the method returns the [errorWidget] if it is not null,
   /// otherwise it returns the default error widget which is a [Center] widget
   /// with the text 'Error'.
   ///
-  /// If [empty] is true, the method returns the [emptyWidget] if it is not null,
+  /// If [empty] is true or [currentState] is [CurrentStateEnum.empty], the method returns the [emptyWidget] if it is not null,
   /// otherwise it returns the default empty widget which is a [Center] widget
   /// with the text 'Empty'.
   ///
@@ -633,10 +633,10 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   ///
   /// The methods are called in the following order:
   ///
-  /// 1. [onLoading] if [loading] is true.
-  /// 2. [onError] if [error] is true.
-  /// 3. [onEmpty] if [empty] is true.
-  /// 4. [onData] if [loading], [error], and [empty] are all false.
+  /// 1. [onLoading] if [loading] is true or [currentState] is [CurrentStateEnum.loading].
+  /// 2. [onError] if [error] is true or [currentState] is [CurrentStateEnum.error].
+  /// 3. [onEmpty] if [empty] is true or [currentState] is [CurrentStateEnum.empty].
+  /// 4. [onData] if [loading], [error], and [empty] are all false or [currentState] is [CurrentStateEnum.data].
   ///
   /// If the methods are not provided, the default methods are called.
   /// If the default methods are not provided, the methods are not called.
@@ -677,6 +677,30 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   }
 
   /// Builds the retry button.
+  ///
+  /// This method returns a [Column] containing:
+  ///
+  /// 1. If [_remainingCooldown] is greater than 0, a [Text] with the
+  ///    retry message. The retry message is optionally provided by the
+  ///    user through the [retryMessage] constructor parameter.
+  ///    If [retryMessage] is null, the default retry message is used.
+  ///
+  /// 2. An [ElevatedButton] that when pressed, calls the [onRetry] callback
+  ///    and starts the retry cooldown timer.
+  ///
+  /// The [ElevatedButton] is only enabled when [_remainingCooldown]
+  /// is 0, i.e., the cooldown has expired.
+  ///
+  /// The button is styled according to the [retryButtonStyle] constructor
+  /// parameter. If [retryButtonStyle] is null, the default button style is
+  /// used.
+  ///
+  /// The button's text is styled according to the [retryBtnTextStyle]
+  /// constructor parameter. If [retryBtnTextStyle] is null, the default
+  /// button text style is used.
+  ///
+  /// The button's text is the [retryBtnText] constructor parameter. If
+  /// [retryBtnText] is null, the default button text is used.
   Widget _buildRetryButton() {
     if (!widget.enableRetry || widget.onRetry == null) {
       return const SizedBox.shrink();
@@ -684,6 +708,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
 
     return Column(
       mainAxisSize: MainAxisSize.min,
+      spacing: 8,
       children: [
         if (_remainingCooldown > 0)
           Text(
@@ -716,22 +741,42 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   }
 
   /// Starts the retry cooldown timer.
+  ///
+  /// This method is called when the retry button is pressed. It sets the
+  /// [_remainingCooldown] to the value of [retryCooldown] constructor
+  /// parameter, or to the default value if [retryCooldown] is null.
+  ///
+  /// Then, it starts a timer that decrements [_remainingCooldown] every
+  /// second. When [_remainingCooldown] reaches 0, the timer is cancelled.
+  ///
+  /// The timer is stored in [_retryCooldownTimer] to be cancelled if the
+  /// retry button is pressed again before the cooldown has expired.
   void _startRetryCooldown() {
     if (!widget.enableRetry || widget.onRetry == null) return;
 
+    /// if retryCooldown is null, use the default value
     _remainingCooldown = (widget.retryCooldown ??
             LoadingStateHandlerWidget._defaultRetryCooldown)
         .inSeconds;
 
+    /// cancel the previous timer if it exists
     _retryCooldownTimer?.cancel();
-    _retryCooldownTimer = Timer.periodic(const Duration(seconds: 1), (timer) {
-      setState(() {
-        if (_remainingCooldown > 0) {
-          _remainingCooldown--;
-        } else {
-          timer.cancel();
-        }
-      });
-    });
+
+    /// start the new timer
+    _retryCooldownTimer = Timer.periodic(
+      const Duration(seconds: 1),
+      (timer) {
+        setState(
+          () {
+            if (_remainingCooldown > 0) {
+              _remainingCooldown--;
+            } else {
+              /// when the cooldown has expired, cancel the timer
+              timer.cancel();
+            }
+          },
+        );
+      },
+    );
   }
 }
