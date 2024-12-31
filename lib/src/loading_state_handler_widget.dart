@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 
 import 'current_state_enum.dart';
+import 'typedefs.dart';
 
 /// A widget that handles loading, error, and empty states.
 ///
@@ -20,7 +21,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default loading widget will not
   /// be displayed.
-  static Widget Function(BuildContext, String?)? _defaultLoadingBuilder;
+  static DefaultLoadingBuilder _defaultLoadingBuilder;
 
   /// Default error widget builder.
   ///
@@ -35,9 +36,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default error widget will not
   /// be displayed.
-  static Widget Function(
-          BuildContext, String?, Widget, Duration, VoidCallback?)?
-      _defaultErrorBuilder;
+  static DefaultErrorBuilder _defaultErrorBuilder;
 
   /// Default empty widget builder.
   ///
@@ -52,7 +51,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default empty widget will not
   /// be displayed.
-  static Widget Function(BuildContext, String?)? _defaultEmptyBuilder;
+  static DefaultEmptyBuilder _defaultEmptyBuilder;
 
   /// Default on loading callback.
   ///
@@ -63,7 +62,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default on loading callback will
   /// not be called.
-  static void Function(BuildContext, String?)? _defaultOnLoading;
+  static DefaultOnLoading _defaultOnLoading;
 
   /// Default on error callback.
   ///
@@ -74,7 +73,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default on error callback will
   /// not be called.
-  static void Function(BuildContext, String?, VoidCallback?)? _defaultOnError;
+  static DefaultOnError _defaultOnError;
 
   /// Default on empty callback.
   ///
@@ -85,7 +84,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default on empty callback will
   /// not be called.
-  static void Function(BuildContext, String?)? _defaultOnEmpty;
+  static DefaultOnEmpty _defaultOnEmpty;
 
   /// Default on data callback.
   ///
@@ -97,7 +96,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default on data callback will
   /// not be called.
-  static void Function(BuildContext, String?)? _defaultOnData;
+  static DefaultOnData _defaultOnData;
 
   /// To disable widget changes globally.
   ///
@@ -277,12 +276,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default error widget will be
   /// used.
-  final Function(
-    Function(BuildContext, String?, VoidCallback?)?,
-    BuildContext,
-    String?,
-    VoidCallback?,
-  )? onError;
+  final OnError onError;
 
   /// A callback function that will be called when the state is empty.
   ///
@@ -297,11 +291,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default empty widget will be
   /// used.
-  final Function(
-    Function(BuildContext, String?)?,
-    BuildContext,
-    String?,
-  )? onEmpty;
+  final OnEmpty onEmpty;
 
   /// A callback function that will be called when the state is loading.
   ///
@@ -316,11 +306,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default loading widget will be
   /// used.
-  final Function(
-    Function(BuildContext, String?)?,
-    BuildContext,
-    String?,
-  )? onLoading;
+  final OnLoading onLoading;
 
   /// A callback function that will be called when the state is normal.
   ///
@@ -335,11 +321,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   ///
   /// The default value is null, which means the default data widget will be
   /// used.
-  final Function(
-    Function(BuildContext, String?)?,
-    BuildContext,
-    String?,
-  )? onData;
+  final OnData onData;
 
   /// The callback to be executed when retry is attempted.
   final VoidCallback? onRetry;
@@ -422,14 +404,13 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     TextStyle? defaultRetryBtnTextStyle,
     TextStyle? defaultRetryMessageStyle,
     ButtonStyle? defaultRetryButtonStyle,
-    Widget Function(BuildContext, String?)? defaultLoadingBuilder,
-    Widget Function(BuildContext, String?, Widget, Duration, VoidCallback?)?
-        defaultErrorBuilder,
-    Widget Function(BuildContext, String?)? defaultEmptyBuilder,
-    Function(BuildContext, String?, VoidCallback?)? defaultOnError,
-    Function(BuildContext, String?)? defaultOnEmpty,
-    Function(BuildContext, String?)? defaultOnLoading,
-    Function(BuildContext, String?)? defaultOnData,
+    DefaultLoadingBuilder defaultLoadingBuilder,
+    DefaultErrorBuilder defaultErrorBuilder,
+    DefaultEmptyBuilder defaultEmptyBuilder,
+    DefaultOnError defaultOnError,
+    DefaultOnEmpty defaultOnEmpty,
+    DefaultOnLoading defaultOnLoading,
+    DefaultOnData defaultOnData,
   }) {
     _defaultRetryCooldown = defaultRetryCooldown ?? _defaultRetryCooldown;
 
