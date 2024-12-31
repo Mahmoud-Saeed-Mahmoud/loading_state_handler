@@ -112,3 +112,9 @@
 ## 1.3.2
 
 - **Fixed**: Issue with assertion in `StateHandlerWidget`.
+
+## 1.3.3
+
+- **Added**: typedefs for `onLoading`, `onError`, and `onData` callbacks in `StateHandlerWidget`.
+- **Added**: typedefs for `defaultOnLoading`, `defaultOnError`, and `defaultOnData` callbacks in `StateHandlerWidget`.
+- **Updated**: Readme to use the latest version of `loading_state_handler`.

@@ -8,7 +8,6 @@ A powerful Flutter widget for managing UI states with built-in retry functionali
 - ⏲️ Built-in retry mechanism with configurable cooldown
 - 🎨 Fully customizable widgets for each state
 - 🌐 Global default configurations
-- 📱 Easy integration with Flutter applications
 - ⚡ Optimized performance with const constructor
 - 🎯 Type-safe callbacks and builders
 
@@ -20,7 +19,7 @@ Add the following dependency in your `pubspec.yaml` file:
 dependencies:
   flutter:
     sdk: flutter
-  loading_state_handler: ^1.3.0
+  loading_state_handler: ^1.3.3
 ```
 
 ## Quick Start
@@ -29,15 +28,13 @@ dependencies:
 // Set global defaults (optional)
 LoadingStateHandlerWidget.setDefaults(
   defaultRetryCooldown: const Duration(seconds: 5),
-  defaultLoadingBuilder: (context, message) => 
-    const Center(child: CircularProgressIndicator()),
+  defaultLoadingBuilder: (context, loadingMessage) =>
+        const Center(child: CircularProgressIndicator()),
 );
 
 // Use in your widget
 LoadingStateHandlerWidget(
-  loading: isLoading,
-  error: hasError,
-  empty: isEmpty,
+  currentState: CurrentStateEnum.error,
   errorMessage: 'Failed to load data',
   enableRetry: true,
   retryCooldown: const Duration(seconds: 3),
@@ -54,14 +51,14 @@ The widget includes a sophisticated retry mechanism with cooldown:
 
 ```dart
 LoadingStateHandlerWidget(
-  error: true,
+  currentState: CurrentStateEnum.error,
   errorMessage: 'Network error occurred',
   enableRetry: true,
   retryCooldown: const Duration(seconds: 3),
   onRetry: () async {
     await refetchData();
   },
-  child: DataWidget(),
+  child: ContentWidget(),
 );
 ```
 
@@ -142,7 +139,7 @@ LoadingStateHandlerWidget(
 
 ## Example
 
-Check out the [example](example/lib/main.dart.dart) and [example](example/lib/retry_example.dart) for a complete demonstration of all features.
+Check out the [example](example/lib/main.dart) and [retry example](example/lib/retry_example.dart) for a complete demonstration of all features.
 
 ## Contributing
 

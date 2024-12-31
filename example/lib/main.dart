@@ -118,6 +118,14 @@ class HomeScreenState extends State<HomeScreen> {
             ),
           );
         },
+        onData: (defaultOnData, context, message) {
+          defaultOnData?.call(context, message);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message ?? 'Custom Got Data...'),
+            ),
+          );
+        },
         error: error,
         errorMessage: errorMessage,
         empty: empty,
