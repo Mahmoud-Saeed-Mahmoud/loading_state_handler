@@ -54,7 +54,6 @@
 <li>⏲️ Built-in retry mechanism with configurable cooldown</li>
 <li>🎨 Fully customizable widgets for each state</li>
 <li>🌐 Global default configurations</li>
-<li>📱 Easy integration with Flutter applications</li>
 <li>⚡ Optimized performance with const constructor</li>
 <li>🎯 Type-safe callbacks and builders</li>
 </ul>
@@ -63,21 +62,19 @@
 <pre class="language-yaml"><code class="language-yaml">dependencies:
   flutter:
     sdk: flutter
-  loading_state_handler: ^1.3.0
+  loading_state_handler: ^1.3.3
 </code></pre>
 <h2 id="quick-start">Quick Start</h2>
 <pre class="language-dart"><code class="language-dart">// Set global defaults (optional)
 LoadingStateHandlerWidget.setDefaults(
   defaultRetryCooldown: const Duration(seconds: 5),
-  defaultLoadingBuilder: (context, message) =&gt; 
-    const Center(child: CircularProgressIndicator()),
+  defaultLoadingBuilder: (context, loadingMessage) =&gt;
+        const Center(child: CircularProgressIndicator()),
 );
 
 // Use in your widget
 LoadingStateHandlerWidget(
-  loading: isLoading,
-  error: hasError,
-  empty: isEmpty,
+  currentState: CurrentStateEnum.error,
   errorMessage: 'Failed to load data',
   enableRetry: true,
   retryCooldown: const Duration(seconds: 3),
@@ -89,14 +86,14 @@ LoadingStateHandlerWidget(
 <h3 id="retry-mechanism">Retry Mechanism</h3>
 <p>The widget includes a sophisticated retry mechanism with cooldown:</p>
 <pre class="language-dart"><code class="language-dart">LoadingStateHandlerWidget(
-  error: true,
+  currentState: CurrentStateEnum.error,
   errorMessage: 'Network error occurred',
   enableRetry: true,
   retryCooldown: const Duration(seconds: 3),
   onRetry: () async {
     await refetchData();
   },
-  child: DataWidget(),
+  child: ContentWidget(),
 );
 </code></pre>
 <h3 id="global-configuration">Global Configuration</h3>
@@ -258,7 +255,7 @@ LoadingStateHandlerWidget(
 </tbody>
 </table>
 <h2 id="example">Example</h2>
-<p>Check out the <a href="example/lib/main.dart.dart">example</a> and <a href="example/lib/retry_example.dart">example</a> for a complete demonstration of all features.</p>
+<p>Check out the <a href="example/lib/main.dart">example</a> and <a href="example/lib/retry_example.dart">retry example</a> for a complete demonstration of all features.</p>
 <h2 id="contributing">Contributing</h2>
 <p>Contributions are welcome! Please feel free to submit a Pull Request.</p>
 <h2 id="license">License</h2>
@@ -303,7 +300,7 @@ LoadingStateHandlerWidget(
 <footer>
   <span class="no-break">
     loading_state_handler
-      1.3.0
+      1.3.3
   </span>
   
 </footer>
