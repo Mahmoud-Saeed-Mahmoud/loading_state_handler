@@ -56,20 +56,28 @@ jobs:
           echo "::set-output name=notes::$NOTES"
 
       - name: Create Git Tag
+        id: create_tag
         run: |
           git tag "v${{ steps.get_version.outputs.version }}"
           echo "TAG created"
 
       - name: Push Tag
+        id: push_tag
         uses: ad-m/github-push-action@master
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           tags: true
           force: true
-
+      - name: Trigger Publish to pub.dev Workflow
+        if : ${{ steps.push_tag.outcome == 'success' }}
+        run: |
+          gh api \
+            -X POST \
+            /repos/${{ github.repository }}/actions/workflows/publish_to_pub.dev.yml/dispatches \
+            -f ref=${{ github.ref }}
       - name: Create GitHub Release (Optional)
         uses: actions/create-release@v1
-        if: ${{ github.ref == 'refs/heads/main' }}
+        if: ${{ github.ref == 'refs/heads/main' && steps.push_tag.outcome == 'success' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
@@ -78,9 +86,3 @@ jobs:
           body: ${{ steps.get_changelog.outputs.notes }}
           draft: false
           prerelease: false
-    
-      - name: Trigger Publish To pub.dev
-        uses: ph-fritsche/action-dispatch@v1
-        with:
-          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          ident: publish_to_pub_dev.yml
