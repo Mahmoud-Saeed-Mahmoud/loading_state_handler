@@ -14,9 +14,10 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up Flutter
-        uses: subosito/flutter-action@v2
+        uses: subosito/flutter-action@v2.14.0
         with:
-           flutter-version: "3.10.0"
+           flutter-version: "latest"
+           channel: "stable"
 
       - name: Read Pubspec Version
         id: get_version
@@ -28,30 +29,30 @@ jobs:
       - name: Read Changelog
         id: get_changelog
         run: |
-          VERSION="v${{ steps.get_version.outputs.version }}"
+          VERSION="${{ steps.get_version.outputs.version }}"
           START_TAG="## $VERSION"
-          END_TAG="## v"
-          
+          END_TAG="## "
+
           # Find the line containing the version
           START_LINE=$(grep -n "$START_TAG" CHANGELOG.md | head -n 1 | cut -d: -f1)
-          
+
           if [[ -z "$START_LINE" ]]; then
              echo "::error::Changelog section for version '$VERSION' not found in CHANGELOG.md"
              exit 1
           fi
-          
+
+          # Find the next section heading, or use end of file
           END_LINE=$(grep -n "$END_TAG" CHANGELOG.md | grep -A 1 -m 1 "$START_TAG" | tail -n 1 | cut -d: -f1)
-          
+
           if [[ -z "$END_LINE" ]]; then
-             END_LINE=$(wc -l < CHANGELOG.md)
+            END_LINE=$(wc -l < CHANGELOG.md)
           fi
-          
+         
           echo "start line is $START_LINE and end line is $END_LINE"
-          
-          # Extract the lines between start and end
+
+          # Extract all lines between the start and end markers
           NOTES=$(sed -n "${START_LINE},${END_LINE}p" CHANGELOG.md | tail -n +2 | tr -d '\r')
-          
-          # set output to variable
+
           echo "::set-output name=notes::$NOTES"
 
       - name: Create Git Tag
