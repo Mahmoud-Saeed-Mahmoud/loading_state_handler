@@ -118,3 +118,7 @@
 - **Added**: typedefs for `onLoading`, `onError`, and `onData` callbacks in `StateHandlerWidget`.
 - **Added**: typedefs for `defaultOnLoading`, `defaultOnError`, and `defaultOnData` callbacks in `StateHandlerWidget`.
 - **Updated**: Readme to use the latest version of `loading_state_handler`.
+
+## 1.4.0
+
+- **Breaking Change**: Marked `loading`, `error`, `data`, and `empty` as `deprecated`.
