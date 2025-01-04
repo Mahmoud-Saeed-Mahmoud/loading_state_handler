@@ -121,4 +121,19 @@
 
 ## 1.4.0
 
-- **Breaking Change**: Marked `loading`, `error`, `data`, and `empty` as `deprecated`.
+### Breaking Changes
+ **Deprecated**: The following state properties in `StateHandlerWidget` are now marked as deprecated:
+  * `loading`
+  * `error`
+  * `data`
+  * `empty`
+
+### Migration Guide
+* Users should transition to the callback-based approach introduced in v1.3.3
+
+* Replace state properties with their corresponding callbacks:
+        
+    * Use `currentState` instead of `loading`
+    * Use `currentState` instead of `error`
+    * Use `currentState` instead of `data`
+    * Use `currentState` instead of `empty`
