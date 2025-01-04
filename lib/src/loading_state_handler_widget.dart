@@ -185,19 +185,15 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   final bool disableEmptyWidgetChanges;
 
   /// Whether the widget is in a loading state.
-  @Deprecated('Use currentState instead')
   final bool loading;
 
   /// Whether the widget is in an error state.
-  @Deprecated('Use currentState instead')
   final bool error;
 
   /// Whether the widget is in an empty state.
-  @Deprecated('Use currentState instead')
   final bool empty;
 
   /// Whether the widget is in a data state.
-  @Deprecated('Use currentState instead')
   final bool data;
 
   /// The current state of the widget.
@@ -338,10 +334,10 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     this.disableErrorWidgetChanges = false,
     this.disableEmptyWidgetChanges = false,
     this.currentState = CurrentStateEnum.normal,
-    this.loading = false,
-    this.error = false,
-    this.empty = false,
-    this.data = false,
+    @Deprecated('Use currentState instead') this.loading = false,
+    @Deprecated('Use currentState instead') this.error = false,
+    @Deprecated('Use currentState instead') this.empty = false,
+    @Deprecated('Use currentState instead') this.data = false,
     this.loadingMessage,
     this.errorMessage,
     this.emptyMessage,
@@ -512,27 +508,6 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
                 ],
               ),
             );
-      } else if (widget.empty) {
-        return widget.errorWidget ??
-            LoadingStateHandlerWidget._defaultErrorBuilder?.call(
-              context,
-              widget.errorMessage,
-              _buildRetryButton(),
-              widget.retryCooldown ??
-                  LoadingStateHandlerWidget._defaultRetryCooldown,
-              widget.onRetry,
-            ) ??
-            Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text('Error'),
-                  if (widget.errorMessage != null) Text(widget.errorMessage!),
-                  const SizedBox(height: 16),
-                  _buildRetryButton(),
-                ],
-              ),
-            );
       } else if (widget.empty ||
           widget.currentState == CurrentStateEnum.empty) {
         if (widget.disableEmptyWidgetChanges ||
@@ -548,6 +523,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
       } else if (widget.data || widget.currentState == CurrentStateEnum.data) {
         return widget.child;
       } else {
+        // normal
         return widget.child;
       }
     }
