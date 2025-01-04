@@ -83,6 +83,8 @@ jobs:
     permissions:
       id-token: write # Required for authentication using OIDC
     runs-on: ubuntu-latest
+    needs: release  # Ensure this job runs after the 'release' job
+    if: ${{needs.release.result == 'success'}}
     steps:
       - uses: actions/checkout@v3
       - uses: dart-lang/setup-dart@v1
@@ -92,6 +94,7 @@ jobs:
       # - run: dart tool/generate-code.dart
       - name: Publish
         run: dart pub publish --force
+
   
   check_publish_status:
       needs: publish
