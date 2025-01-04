@@ -65,7 +65,7 @@ jobs:
         id: push_tag
         uses: ad-m/github-push-action@master
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
+          github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           tags: true
           force: true
       - name: Trigger Publish to pub.dev Workflow
@@ -79,7 +79,7 @@ jobs:
         uses: actions/create-release@v1
         if: ${{ github.ref == 'refs/heads/main' && steps.push_tag.outcome == 'success' }}
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
         with:
           tag_name: v${{ steps.get_version.outputs.version }}
           release_name: v${{ steps.get_version.outputs.version }}
