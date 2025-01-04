@@ -82,4 +82,4 @@
         - name: Trigger Publish to pub.dev workflow
           uses: benc-uk/workflow-dispatch@v1
           with:
-            workflow: main.yaml
+            workflow: .github/workflows/main.yaml
