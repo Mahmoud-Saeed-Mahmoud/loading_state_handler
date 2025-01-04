@@ -20,3 +20,5 @@ jobs:
     
       - name: Trigger Publish To pub.dev
         uses: ph-fritsche/action-dispatch@v1
+        with:
+          token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
