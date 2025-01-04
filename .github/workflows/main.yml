@@ -87,7 +87,7 @@ jobs:
     if: ${{needs.release.result == 'success'}}
     steps:
       - uses: actions/checkout@v3
-      - uses: dart-lang/setup-dart@v1
+      - uses: subosito/flutter-action@v2.14.0
       - name: Install dependencies
         run: dart pub get
       # Here you can insert custom steps you need
