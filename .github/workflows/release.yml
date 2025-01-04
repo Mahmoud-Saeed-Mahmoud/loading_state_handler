@@ -84,4 +84,4 @@
           with:
               token: ${{ secrets.GITHUB_TOKEN }}
               event-type: publish-to-pub
-              client-payload: '{ "tag": "v${{ steps.get_version.outputs.version }}"}'
+              # client-payload: '{ "tag": "v${{ steps.get_version.outputs.version }}"}'
