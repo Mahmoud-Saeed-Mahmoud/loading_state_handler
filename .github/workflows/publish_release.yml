@@ -82,6 +82,6 @@ jobs:
                await github.rest.actions.createWorkflowDispatch({
                  owner: context.repo.owner,
                  repo: context.repo.repo,
-                 workflow_id: 'publish-to-pub-dev.yml',
+                 workflow_id: 'publish-to-pub.dev.yml',
                  ref: context.ref,
                 });
