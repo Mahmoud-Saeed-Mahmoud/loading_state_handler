@@ -11,14 +11,13 @@ permissions:
 jobs:
   release:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
 
       - name: Set up Flutter
         uses: subosito/flutter-action@v2.14.0
-        
+
       - name: Read Pubspec Version
         id: get_version
         run: |
@@ -47,7 +46,7 @@ jobs:
           if [[ -z "$END_LINE" ]]; then
             END_LINE=$(wc -l < CHANGELOG.md)
           fi
-        
+
           echo "start line is $START_LINE and end line is $END_LINE"
 
           # Extract all lines between the start and end markers
@@ -75,3 +74,14 @@ jobs:
           body: ${{ steps.get_changelog.outputs.notes }}
           draft: false
           prerelease: false
+      - name: Trigger publish workflow
+        uses: actions/github-script@v6
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          script: |
+               await github.rest.actions.createWorkflowDispatch({
+                 owner: context.repo.owner,
+                 repo: context.repo.repo,
+                 workflow_id: 'publish-to-pub-dev.yml',
+                 ref: context.ref,
+                });
