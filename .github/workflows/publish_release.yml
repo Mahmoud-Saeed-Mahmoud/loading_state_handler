@@ -61,11 +61,8 @@ jobs:
           echo "TAG created"
 
       - name: Push Tag
-        uses: ad-m/github-push-action@master
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          tags: true
-          force: true
+        run: |
+          git push origin "v${{ steps.get_version.outputs.version }}"
 
       - name: Create GitHub Release (Optional)
         uses: actions/create-release@v1
