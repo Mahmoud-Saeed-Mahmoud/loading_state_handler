@@ -78,35 +78,3 @@ jobs:
           body: ${{ steps.get_changelog.outputs.notes }}
           draft: false
           prerelease: false
-
-  publish:
-    permissions:
-      id-token: write # Required for authentication using OIDC
-    runs-on: ubuntu-latest
-    needs: release  # Ensure this job runs after the 'release' job
-    if: ${{needs.release.result == 'success'}}
-    steps:
-      - uses: actions/checkout@v3
-      - uses: subosito/flutter-action@v2.14.0
-      - uses: dart-lang/setup-dart@v1
-      - name: Install dependencies
-        run: dart pub get
-      # Here you can insert custom steps you need
-      # - run: dart tool/generate-code.dart
-      - name: Publish
-        run: dart pub publish --force
-
-  
-  check_publish_status:
-      needs: publish
-      runs-on: ubuntu-latest
-      if: always() # Run even if 'publish' job fails
-      steps:
-        - name: Check Publish Status
-          run: |
-           if ${{ needs.publish.result }} == 'success'; then
-              echo "The publish job completed successfully!"
-           else
-              echo "The publish job failed."
-              exit 1
-           fi
