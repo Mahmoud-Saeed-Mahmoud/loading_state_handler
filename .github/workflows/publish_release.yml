@@ -84,4 +84,7 @@ jobs:
                  repo: context.repo.repo,
                  workflow_id: 'publish_to_pub.dev.yml',
                  ref: context.ref,
+                 inputs: {
+                 ref: context.ref,
+                  },
                 });
