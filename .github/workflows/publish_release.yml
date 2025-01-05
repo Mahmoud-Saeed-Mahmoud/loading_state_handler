@@ -74,7 +74,7 @@ jobs:
           body: ${{ steps.get_changelog.outputs.notes }}
           draft: false
           prerelease: false
-      - name: Trigger publish workflow
+      - name: Trigger publish to pub.dev workflow
         uses: actions/github-script@v7
         with:
           github-token: ${{ secrets.WORKFLOW_TRIGGER_TOKEN }}
