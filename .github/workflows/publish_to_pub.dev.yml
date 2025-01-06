@@ -34,8 +34,6 @@ jobs:
     - name: Generate OAuth2 token
       id: generate_token
       run: |
-        gcloud auth activate-service-account --key-file=${{ secrets.GOOGLE_CLOUD_KEY }}
-        gcloud config set account $(gcloud auth list --filter=status:ACTIVE --format="value(account)")
         TOKEN=$(gcloud auth application-default print-access-token)
         echo "TOKEN=$TOKEN" >> $GITHUB_ENV
 
