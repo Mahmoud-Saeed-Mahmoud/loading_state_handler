@@ -30,27 +30,31 @@ jobs:
 
     - name: Install Flutter SDK
       uses: subosito/flutter-action@v2
+    
+    - name: Check IAM Policy
+      run: |
+         gcloud projects get-iam-policy ${{ secrets.GCLOUD_PROJECT }} --verbosity=debug
 
     - name: Generate pub.dev Refresh Token
       id: generate_pub_token
       run: |
-          IMPERSONATE_ACCOUNT="${{ secrets.PUB_DEV_EMAIL }}"
-          
-          TOKEN=$(gcloud auth print-access-token --impersonate-service-account=$IMPERSONATE_ACCOUNT)
-          
-          echo "::add-mask::$TOKEN"
-          
-          echo "PUB_TOKEN=$TOKEN" >> $GITHUB_ENV
-          
-          REFRESH_TOKEN=$(curl --request POST \
+        IMPERSONATE_ACCOUNT="${{ secrets.PUB_DEV_EMAIL }}"
+            
+        TOKEN=$(gcloud auth print-access-token --impersonate-service-account=$IMPERSONATE_ACCOUNT --verbosity=debug)
+            
+        echo "::add-mask::$TOKEN"
+            
+        echo "PUB_TOKEN=$TOKEN" >> $GITHUB_ENV
+            
+        REFRESH_TOKEN=$(curl --request POST \
             --header "Authorization: Bearer $TOKEN" \
             --header "Content-Type: application/json" \
             --data "{}" \
             https://pub.dev/api/v2/client/tokens \
             | jq -r .token)
             
-          echo "::add-mask::$REFRESH_TOKEN"
-          echo "PUB_REFRESH_TOKEN=$REFRESH_TOKEN" >> $GITHUB_ENV
+        echo "::add-mask::$REFRESH_TOKEN"
+        echo "PUB_REFRESH_TOKEN=$REFRESH_TOKEN" >> $GITHUB_ENV
             
     - name: Publish to pub.dev
       env:
