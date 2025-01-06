@@ -35,8 +35,11 @@ jobs:
       id: generate_token
       run: |
         TOKEN=$(gcloud auth application-default print-access-token)
+        echo "::add-mask::$TOKEN"
         echo "TOKEN=$TOKEN" >> $GITHUB_ENV
 
     - name: Publish to pub.dev
+      env:
+        PUB_ENVIRONMENT: ${{ env.TOKEN }}
       run: |
-        flutter pub publish --force --token ${{ env.TOKEN }}
+        flutter pub publish --force
