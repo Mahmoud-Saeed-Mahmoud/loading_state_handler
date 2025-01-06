@@ -9,18 +9,24 @@ on:
 
 jobs:
   publish:
+    permissions:
+      id-token: write
     runs-on: ubuntu-latest
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-
+      
+    - name: Authenticate to Google Cloud
+      uses: google-github-actions/auth@v1
+      with:
+        credentials_json: ${{ secrets.GOOGLE_CLOUD_KEY }}
+        
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v2
       with:
         version: 'latest'
         project_id: ${{ secrets.GCLOUD_PROJECT }}
-        service_account_key: ${{ secrets.GOOGLE_CLOUD_KEY }}
 
     - name: Install Flutter SDK
       uses: subosito/flutter-action@v2
