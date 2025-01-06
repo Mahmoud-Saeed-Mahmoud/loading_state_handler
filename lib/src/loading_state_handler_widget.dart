@@ -8,20 +8,20 @@ import 'typedefs.dart';
 /// A widget that handles loading, error, and empty states.
 ///
 class LoadingStateHandlerWidget extends StatefulWidget {
-  /// Default loading widget builder.
+  /// Default empty widget builder.
   ///
-  /// This callback will be called when [loading] is true or [currentState] is [CurrentStateEnum.loading], and the default
+  /// This callback will be called when [empty] is true or [currentState] is [CurrentStateEnum.empty], and the default
   /// widget is displayed.
   ///
-  /// The default implementation is to display a [CircularProgressIndicator] in
-  /// the center of the screen.
+  /// The default implementation is to display a [Text] widget in the center of
+  /// the screen with the empty message.
   ///
-  /// If not null, the default loading widget will be displayed when [loading] is
-  /// true or [currentState] is [CurrentStateEnum.loading].
+  /// If not null, the default empty widget will be displayed when [empty] is
+  /// true or [currentState] is [CurrentStateEnum.empty].
   ///
-  /// The default value is null, which means the default loading widget will not
+  /// The default value is null, which means the default empty widget will not
   /// be displayed.
-  static DefaultLoadingBuilder _defaultLoadingBuilder;
+  static DefaultEmptyBuilder _defaultEmptyBuilder;
 
   /// Default error widget builder.
   ///
@@ -38,53 +38,25 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// be displayed.
   static DefaultErrorBuilder _defaultErrorBuilder;
 
-  /// Default empty widget builder.
+  /// The title of the error dialog.
   ///
-  /// This callback will be called when [empty] is true or [currentState] is [CurrentStateEnum.empty], and the default
+  /// The default value is 'Error'.
+  static String _defaultErrorTitle = 'Error';
+
+  /// Default loading widget builder.
+  ///
+  /// This callback will be called when [loading] is true or [currentState] is [CurrentStateEnum.loading], and the default
   /// widget is displayed.
   ///
-  /// The default implementation is to display a [Text] widget in the center of
-  /// the screen with the empty message.
+  /// The default implementation is to display a [CircularProgressIndicator] in
+  /// the center of the screen.
   ///
-  /// If not null, the default empty widget will be displayed when [empty] is
-  /// true or [currentState] is [CurrentStateEnum.empty].
+  /// If not null, the default loading widget will be displayed when [loading] is
+  /// true or [currentState] is [CurrentStateEnum.loading].
   ///
-  /// The default value is null, which means the default empty widget will not
+  /// The default value is null, which means the default loading widget will not
   /// be displayed.
-  static DefaultEmptyBuilder _defaultEmptyBuilder;
-
-  /// Default on loading callback.
-  ///
-  /// This callback will be called when [loading] is true or [currentState] is [CurrentStateEnum.loading].
-  ///
-  /// If not null, the default on loading callback will be called when [loading]
-  /// is true or [currentState] is [CurrentStateEnum.loading].
-  ///
-  /// The default value is null, which means the default on loading callback will
-  /// not be called.
-  static DefaultOnLoading _defaultOnLoading;
-
-  /// Default on error callback.
-  ///
-  /// This callback will be called when [error] is true or [currentState] is [CurrentStateEnum.error].
-  ///
-  /// If not null, the default on error callback will be called when [error] is
-  /// true or [currentState] is [CurrentStateEnum.error].
-  ///
-  /// The default value is null, which means the default on error callback will
-  /// not be called.
-  static DefaultOnError _defaultOnError;
-
-  /// Default on empty callback.
-  ///
-  /// This callback will be called when [empty] is true or [currentState] is [CurrentStateEnum.empty].
-  ///
-  /// If not null, the default on empty callback will be called when [empty] is
-  /// true or [currentState] is [CurrentStateEnum.empty].
-  ///
-  /// The default value is null, which means the default on empty callback will
-  /// not be called.
-  static DefaultOnEmpty _defaultOnEmpty;
+  static DefaultLoadingBuilder _defaultLoadingBuilder;
 
   /// Default on data callback.
   ///
@@ -98,31 +70,38 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// not be called.
   static DefaultOnData _defaultOnData;
 
-  /// To disable widget changes globally.
+  /// Default on empty callback.
   ///
-  /// If set to true, widget changes will be disabled globally.
+  /// This callback will be called when [empty] is true or [currentState] is [CurrentStateEnum.empty].
   ///
-  /// The default value is false, which means widget changes are enabled globally.
-  static bool? _disableWidgetChanges;
+  /// If not null, the default on empty callback will be called when [empty] is
+  /// true or [currentState] is [CurrentStateEnum.empty].
+  ///
+  /// The default value is null, which means the default on empty callback will
+  /// not be called.
+  static DefaultOnEmpty _defaultOnEmpty;
 
-  /// To disable error widget changes globally.
+  /// Default on error callback.
   ///
-  /// If set to true, error widget changes will be disabled globally.
+  /// This callback will be called when [error] is true or [currentState] is [CurrentStateEnum.error].
   ///
-  /// The default value is false, which means error widget changes are enabled globally.
-  static bool? _disableErrorWidgetChanges;
+  /// If not null, the default on error callback will be called when [error] is
+  /// true or [currentState] is [CurrentStateEnum.error].
+  ///
+  /// The default value is null, which means the default on error callback will
+  /// not be called.
+  static DefaultOnError _defaultOnError;
 
-  /// To disable empty widget changes globally.
+  /// Default on loading callback.
   ///
-  /// If set to true, empty widget changes will be disabled globally.
+  /// This callback will be called when [loading] is true or [currentState] is [CurrentStateEnum.loading].
   ///
-  /// The default value is false, which means empty widget changes are enabled globally.
-  static bool? _disableEmptyWidgetChanges;
-
-  /// Default retry cooldown duration in seconds.
+  /// If not null, the default on loading callback will be called when [loading]
+  /// is true or [currentState] is [CurrentStateEnum.loading].
   ///
-  /// This is the default duration that users must wait before retrying after an error.
-  static Duration _defaultRetryCooldown = const Duration(seconds: 5);
+  /// The default value is null, which means the default on loading callback will
+  /// not be called.
+  static DefaultOnLoading _defaultOnLoading;
 
   /// Default retry button text.
   ///
@@ -134,6 +113,16 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// This is the default button text style that users will see when they retry after an error.
   static TextStyle? _defaultRetryBtnTextStyle;
 
+  /// Default retry button style.
+  ///
+  /// This is the default button style that users will see when they retry after an error.
+  static ButtonStyle? _defaultRetryButtonStyle;
+
+  /// Default retry cooldown duration in seconds.
+  ///
+  /// This is the default duration that users must wait before retrying after an error.
+  static Duration _defaultRetryCooldown = const Duration(seconds: 5);
+
   /// Default retry message.
   ///
   /// This is the default message that users will see when they retry after an error.
@@ -144,38 +133,41 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// This is the default message style that users will see when they retry after an error.
   static TextStyle? _defaultRetryMessageStyle;
 
-  /// The title of the error dialog.
+  /// To disable empty widget changes globally.
   ///
-  /// The default value is 'Error'.
-  static String _defaultErrorTitle = 'Error';
-
-  /// Default retry button style.
+  /// If set to true, empty widget changes will be disabled globally.
   ///
-  /// This is the default button style that users will see when they retry after an error.
-  static ButtonStyle? _defaultRetryButtonStyle;
+  /// The default value is false, which means empty widget changes are enabled globally.
+  static bool? _disableEmptyWidgetChanges;
 
-  /// The retry button text style.
-  final TextStyle? retryBtnTextStyle;
-
-  /// The retry message style.
-  final TextStyle? retryMessageStyle;
-
-  /// The retry button style.
-  final ButtonStyle? retryButtonStyle;
-
-  /// To disable widget changes.
+  /// To disable error widget changes globally.
   ///
-  /// If set to true, widget changes will be disabled.
+  /// If set to true, error widget changes will be disabled globally.
   ///
-  /// The default value is false, which means widget changes are enabled.
-  final bool disableWidgetChanges;
+  /// The default value is false, which means error widget changes are enabled globally.
+  static bool? _disableErrorWidgetChanges;
 
-  /// To disable error widget changes.
+  /// To disable widget changes globally.
   ///
-  /// If set to true, error widget changes will be disabled.
+  /// If set to true, widget changes will be disabled globally.
   ///
-  /// The default value is false, which means error widget changes are enabled.
-  final bool disableErrorWidgetChanges;
+  /// The default value is false, which means widget changes are enabled globally.
+  static bool? _disableWidgetChanges;
+
+  /// The widget to display when the state is normal.
+  ///
+  /// This widget will be displayed when [loading] is false, [error] is false,
+  /// and [empty] is false or [currentState] is [CurrentStateEnum.normal].
+  final Widget child;
+
+  /// The current state of the widget.
+  final CurrentStateEnum currentState;
+
+  /// Whether the widget is in a data state.
+  final bool data;
+
+  /// The data message.
+  final String? dataMessage;
 
   /// To disable empty widget changes.
   ///
@@ -184,48 +176,25 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// The default value is false, which means empty widget changes are enabled.
   final bool disableEmptyWidgetChanges;
 
-  /// Whether the widget is in a loading state.
-  final bool loading;
+  /// To disable error widget changes.
+  ///
+  /// If set to true, error widget changes will be disabled.
+  ///
+  /// The default value is false, which means error widget changes are enabled.
+  final bool disableErrorWidgetChanges;
 
-  /// Whether the widget is in an error state.
-  final bool error;
+  /// To disable widget changes.
+  ///
+  /// If set to true, widget changes will be disabled.
+  ///
+  /// The default value is false, which means widget changes are enabled.
+  final bool disableWidgetChanges;
 
   /// Whether the widget is in an empty state.
   final bool empty;
 
-  /// Whether the widget is in a data state.
-  final bool data;
-
-  /// The current state of the widget.
-  final CurrentStateEnum currentState;
-
-  /// The error message.
-  final String? errorMessage;
-
   /// The empty message.
   final String? emptyMessage;
-
-  /// The loading message.
-  final String? loadingMessage;
-
-  /// The data message.
-  final String? dataMessage;
-
-  /// The widget to display when the state is loading.
-  ///
-  /// If not null, the [loadingWidget] will be displayed when [loading] is true or [currentState] is [CurrentStateEnum.loading].
-  ///
-  /// The default value is null, which means the default loading widget will be
-  /// used.
-  final Widget? loadingWidget;
-
-  /// The widget to display when the state is error.
-  ///
-  /// If not null, the [errorWidget] will be displayed when [error] is true or [currentState] is [CurrentStateEnum.error].
-  ///
-  /// The default value is null, which means the default error widget will be
-  /// used.
-  final Widget? errorWidget;
 
   /// The widget to display when the state is empty.
   ///
@@ -235,74 +204,41 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// used.
   final Widget? emptyWidget;
 
-  /// The retry button text.
-  ///
-  /// The default value is null, which means the default retry button text will be used.
-  final String? retryBtnText;
+  /// Whether the retry mechanism is enabled.
+  final bool enableRetry;
 
-  /// The retry message.
-  ///
-  /// The default value is null, which means the default retry message will be used.
-  /// The message should be in format of 'message to show %_ seconds'.
-  ///
-  /// The [%_] will be replaced with the remaining seconds.
-  final String? retryMessage;
+  /// Whether the widget is in an error state.
+  final bool error;
+
+  /// The error message.
+  final String? errorMessage;
 
   /// The title of the error.
   ///
   /// The default value is null, which means the default error title will be used.
   final String? errorTitle;
 
-  /// The widget to display when the state is normal.
+  /// The widget to display when the state is error.
   ///
-  /// This widget will be displayed when [loading] is false, [error] is false,
-  /// and [empty] is false or [currentState] is [CurrentStateEnum.normal].
-  final Widget child;
-
-  /// A callback function that will be called when the state is error.
-  ///
-  /// The callback function takes two parameters, the default error widget
-  /// function and the error message.
-  ///
-  /// The default error widget function will be passed to the callback function
-  /// and can be used to generate the error widget.
-  ///
-  /// The error message will be passed to the callback function and can be used
-  /// to display the error message.
+  /// If not null, the [errorWidget] will be displayed when [error] is true or [currentState] is [CurrentStateEnum.error].
   ///
   /// The default value is null, which means the default error widget will be
   /// used.
-  final OnError onError;
+  final Widget? errorWidget;
 
-  /// A callback function that will be called when the state is empty.
-  ///
-  /// The callback function takes two parameters, the default empty widget
-  /// function and the empty message.
-  ///
-  /// The default empty widget function will be passed to the callback function
-  /// and can be used to generate the empty widget.
-  ///
-  /// The empty message will be passed to the callback function and can be used
-  /// to display the empty message.
-  ///
-  /// The default value is null, which means the default empty widget will be
-  /// used.
-  final OnEmpty onEmpty;
+  /// Whether the widget is in a loading state.
+  final bool loading;
 
-  /// A callback function that will be called when the state is loading.
+  /// The loading message.
+  final String? loadingMessage;
+
+  /// The widget to display when the state is loading.
   ///
-  /// The callback function takes two parameters, the default loading widget
-  /// function and the loading message.
-  ///
-  /// The default loading widget function will be passed to the callback function
-  /// and can be used to generate the loading widget.
-  ///
-  /// The loading message will be passed to the callback function and can be used
-  /// to display the loading message.
+  /// If not null, the [loadingWidget] will be displayed when [loading] is true or [currentState] is [CurrentStateEnum.loading].
   ///
   /// The default value is null, which means the default loading widget will be
   /// used.
-  final OnLoading onLoading;
+  final Widget? loadingWidget;
 
   /// A callback function that will be called when the state is normal.
   ///
@@ -319,14 +255,78 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// used.
   final OnData onData;
 
+  /// A callback function that will be called when the state is empty.
+  ///
+  /// The callback function takes two parameters, the default empty widget
+  /// function and the empty message.
+  ///
+  /// The default empty widget function will be passed to the callback function
+  /// and can be used to generate the empty widget.
+  ///
+  /// The empty message will be passed to the callback function and can be used
+  /// to display the empty message.
+  ///
+  /// The default value is null, which means the default empty widget will be
+  /// used.
+  final OnEmpty onEmpty;
+
+  /// A callback function that will be called when the state is error.
+  ///
+  /// The callback function takes two parameters, the default error widget
+  /// function and the error message.
+  ///
+  /// The default error widget function will be passed to the callback function
+  /// and can be used to generate the error widget.
+  ///
+  /// The error message will be passed to the callback function and can be used
+  /// to display the error message.
+  ///
+  /// The default value is null, which means the default error widget will be
+  /// used.
+  final OnError onError;
+
+  /// A callback function that will be called when the state is loading.
+  ///
+  /// The callback function takes two parameters, the default loading widget
+  /// function and the loading message.
+  ///
+  /// The default loading widget function will be passed to the callback function
+  /// and can be used to generate the loading widget.
+  ///
+  /// The loading message will be passed to the callback function and can be used
+  /// to display the loading message.
+  ///
+  /// The default value is null, which means the default loading widget will be
+  /// used.
+  final OnLoading onLoading;
+
   /// The callback to be executed when retry is attempted.
   final VoidCallback? onRetry;
+
+  /// The retry button text.
+  ///
+  /// The default value is null, which means the default retry button text will be used.
+  final String? retryBtnText;
+
+  /// The retry button text style.
+  final TextStyle? retryBtnTextStyle;
+
+  /// The retry button style.
+  final ButtonStyle? retryButtonStyle;
 
   /// The duration to wait before allowing another retry attempt.
   final Duration? retryCooldown;
 
-  /// Whether the retry mechanism is enabled.
-  final bool enableRetry;
+  /// The retry message.
+  ///
+  /// The default value is null, which means the default retry message will be used.
+  /// The message should be in format of 'message to show %_ seconds'.
+  ///
+  /// The [%_] will be replaced with the remaining seconds.
+  final String? retryMessage;
+
+  /// The retry message style.
+  final TextStyle? retryMessageStyle;
 
   const LoadingStateHandlerWidget({
     super.key,
@@ -438,11 +438,11 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
 /// The state for the [LoadingStateHandlerWidget].
 class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
-  /// The current retry cooldown timer.
-  Timer? _retryCooldownTimer;
-
   /// Remaining cooldown time in seconds.
   int _remainingCooldown = 0;
+
+  /// The current retry cooldown timer.
+  Timer? _retryCooldownTimer;
 
   @override
 
