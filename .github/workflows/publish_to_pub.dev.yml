@@ -42,4 +42,4 @@ jobs:
       env:
         PUB_ENVIRONMENT: ${{ env.TOKEN }}
       run: |
-        flutter pub publish --force
+        dart pub publish --force
