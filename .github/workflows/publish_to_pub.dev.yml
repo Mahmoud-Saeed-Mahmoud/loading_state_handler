@@ -31,15 +31,16 @@ jobs:
     - name: Install Flutter SDK
       uses: subosito/flutter-action@v2
 
-    - name: Generate OAuth2 token
-      id: generate_token
+    - name: Generate OAuth2 refresh token
+      id: generate_refresh_token
       run: |
-        TOKEN=$(gcloud auth application-default print-access-token)
-        echo "::add-mask::$TOKEN"
-        echo "TOKEN=$TOKEN" >> $GITHUB_ENV
+        REFRESH_TOKEN=$(gcloud auth application-default login --no-launch-browser --format='value(refresh_token)')
+        echo "::add-mask::$REFRESH_TOKEN"
+        echo "REFRESH_TOKEN=$REFRESH_TOKEN" >> $GITHUB_ENV
 
     - name: Publish to pub.dev
       env:
-        PUB_ENVIRONMENT: ${{ env.TOKEN }}
+        PUB_HOSTED_URL: 'https://pub.dartlang.org'
+        PUB_REFRESH_TOKEN: ${{ env.REFRESH_TOKEN }}
       run: |
         dart pub publish --force
