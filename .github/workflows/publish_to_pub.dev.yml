@@ -1,8 +1,8 @@
-name: Publish to pub.dev
+name: Publish Package to pub.dev
 
 on:
   workflow_dispatch:
-    
+      
   push:
     tags:
       - 'v[0-9]+.[0-9]+.[0-9]+*'
@@ -10,24 +10,29 @@ on:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    permissions:
-      id-token: write # Required for authentication using OIDC
+
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
+    - name: Checkout code
+      uses: actions/checkout@v4
 
-      - name: Setup Flutter
-        uses: subosito/flutter-action@v2.14.0
-        
+    - name: Set up Google Cloud SDK
+      uses: google-github-actions/setup-gcloud@master
+      with:
+        version: 'latest'
+        project_id: ${{ secrets.GCLOUD_PROJECT }}
+        service_account_key: ${{ secrets.GOOGLE_CLOUD_KEY }}
 
-      - name: Set up pub.dev credentials
-        run: |
-          mkdir -p ~/.pub-cache
-          echo "//pub.dev:$(PUB_DEV_TOKEN)" > ~/.pub-cache/credentials.json
-        env:
-          PUB_DEV_TOKEN: ${{ secrets.PUB_DEV_TOKEN }}
+    - name: Install Flutter SDK
+      uses: subosito/flutter-action@v2
 
-      - name: Publish to pub.dev
-        run: dart pub publish --force
-        env:
-          PUB_CACHE: /home/runner/.pub-cache
+    - name: Generate OAuth2 token
+      id: generate_token
+      run: |
+        gcloud auth activate-service-account --key-file=${{ secrets.GOOGLE_CLOUD_KEY }}
+        gcloud config set account $(gcloud auth list --filter=status:ACTIVE --format="value(account)")
+        TOKEN=$(gcloud auth application-default print-access-token)
+        echo "TOKEN=$TOKEN" >> $GITHUB_ENV
+
+    - name: Publish to pub.dev
+      run: |
+        flutter pub publish --force --token ${{ env.TOKEN }}
