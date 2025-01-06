@@ -34,7 +34,7 @@ jobs:
     - name: Generate OAuth2 refresh token
       id: generate_refresh_token
       run: |
-        REFRESH_TOKEN=$(gcloud auth application-default login --no-launch-browser --format='value(refresh_token)')
+        REFRESH_TOKEN=$(gcloud auth application-default login --no-launch-browser --quiet --format='value(refresh_token)')
         echo "::add-mask::$REFRESH_TOKEN"
         echo "REFRESH_TOKEN=$REFRESH_TOKEN" >> $GITHUB_ENV
 
