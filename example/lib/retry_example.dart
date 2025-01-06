@@ -60,11 +60,11 @@ class RetryExample extends StatefulWidget {
 }
 
 class _RetryExampleState extends State<RetryExample> {
-  // State flags to control the widget's behavior
-  bool _isLoading = false;
+  String? _errorMessage;
   bool _hasError = false;
   bool _isEmpty = false;
-  String? _errorMessage;
+  // State flags to control the widget's behavior
+  bool _isLoading = false;
 
   @override
   Widget build(BuildContext context) {
