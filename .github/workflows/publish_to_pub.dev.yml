@@ -17,48 +17,18 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
       
-    - name: Authenticate to Google Cloud
-      uses: google-github-actions/auth@v1
-      with:
-        credentials_json: ${{ secrets.GOOGLE_CLOUD_KEY }}
-        
-    - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@v2
-      with:
-        version: 'latest'
-        project_id: ${{ secrets.GCLOUD_PROJECT }}
-
     - name: Install Flutter SDK
       uses: subosito/flutter-action@v2
-    
-    - name: Check IAM Policy
+      
+    - name: Install dependencies
+      run: flutter pub get
+      
+    - name: Authenticate with pub.dev
       run: |
-         gcloud projects get-iam-policy ${{ secrets.GCLOUD_PROJECT }} --verbosity=debug
+        echo "${{ secrets.PUB_CREDENTIALS }}" | dart pub publish --dry-run
 
-    - name: Generate pub.dev Refresh Token
-      id: generate_pub_token
-      run: |
-        IMPERSONATE_ACCOUNT="${{ secrets.PUB_DEV_EMAIL }}"
-            
-        TOKEN=$(gcloud auth print-access-token --impersonate-service-account=$IMPERSONATE_ACCOUNT --verbosity=debug)
-            
-        echo "::add-mask::$TOKEN"
-            
-        echo "PUB_TOKEN=$TOKEN" >> $GITHUB_ENV
-            
-        REFRESH_TOKEN=$(curl --request POST \
-            --header "Authorization: Bearer $TOKEN" \
-            --header "Content-Type: application/json" \
-            --data "{}" \
-            https://pub.dev/api/v2/client/tokens \
-            | jq -r .token)
-            
-        echo "::add-mask::$REFRESH_TOKEN"
-        echo "PUB_REFRESH_TOKEN=$REFRESH_TOKEN" >> $GITHUB_ENV
-            
     - name: Publish to pub.dev
-      env:
-        PUB_HOSTED_URL: 'https://pub.dartlang.org'
-        PUB_REFRESH_TOKEN: ${{ env.PUB_REFRESH_TOKEN }}
       run: |
-        dart pub publish --force
+        echo "${{ secrets.PUB_CREDENTIALS }}" | dart pub publish
+
+        
