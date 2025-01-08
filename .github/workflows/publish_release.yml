@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Read Pubspec Version
         id: get_version
@@ -37,13 +37,14 @@ jobs:
             exit 1
           fi
 
-          # Find the next section heading, or use end of file
-          END_LINE=$(grep -n "$END_TAG" CHANGELOG.md | grep -A 1 -m 1 "$START_TAG" | tail -n 1 | cut -d: -f1)
-
-          if [[ -z "$END_LINE" ]]; then
-            END_LINE=$(wc -l < CHANGELOG.md)
+          # Find the next section heading, or use the end of the file
+          NEXT_HEADER_LINE=$(grep -n "$END_TAG" CHANGELOG.md | grep -A 1 -m 1 "$START_TAG" | tail -n 1 | cut -d: -f1)
+          
+          if [[ -z "$NEXT_HEADER_LINE" ]]; then
+           END_LINE=$(wc -l < CHANGELOG.md)
+          else
+            END_LINE=$(echo "$NEXT_HEADER_LINE - 1" | bc)
           fi
-
           echo "start line is $START_LINE and end line is $END_LINE"
 
           # Extract all lines between the start and end markers
