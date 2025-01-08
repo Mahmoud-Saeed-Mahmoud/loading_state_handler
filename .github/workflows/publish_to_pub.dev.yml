@@ -27,3 +27,4 @@ jobs:
       run: dart pub publish --force
       env:
         PUB_TOKEN: ${{ secrets.PUB_TOKEN }}
+        senstive: true
