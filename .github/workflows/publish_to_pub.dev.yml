@@ -2,10 +2,10 @@ name: Publish Package to pub.dev
 
 on:
   workflow_dispatch:
-      
+        
   push:
     tags:
-      - 'v[0-9]+.[0-9]+.[0-9]+*'
+    - 'v[0-9]+.[0-9]+.[0-9]+*'
 
 jobs:
   publish:
@@ -16,19 +16,20 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
-      
+        
     - name: Install Flutter SDK
       uses: subosito/flutter-action@v2
-      
+        
     - name: Install dependencies
       run: flutter pub get
 
     - name: Authenticate with pub.dev and Dry-run
       run: |
-        export PUB_TOKEN="${{ secrets.PUB_CREDENTIALS }}" 
+        export PUB_TOKEN="${{ secrets.PUB_CREDENTIALS }}"
+        echo "PUB_TOKEN is: $PUB_TOKEN"
         dart pub publish --dry-run
-
     - name: Publish to pub.dev
       run: |
-        export PUB_TOKEN="${{ secrets.PUB_CREDENTIALS }}"  
+        export PUB_TOKEN="${{ secrets.PUB_CREDENTIALS }}"
+        echo "PUB_TOKEN is: $PUB_TOKEN"
         dart pub publish --force
