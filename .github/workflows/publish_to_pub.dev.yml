@@ -11,6 +11,7 @@ jobs:
   publish:
     permissions:
       id-token: write
+      contents: read
     runs-on: ubuntu-latest
 
     steps:
@@ -26,5 +27,5 @@ jobs:
     - name: Publish Package
       run: dart pub publish --force
       env:
-        PUB_TOKEN: ${{ secrets.PUB_TOKEN }}
+        PUB_DEV_TOKEN: ${{ secrets.PUB_TOKEN }}
         senstive: true
