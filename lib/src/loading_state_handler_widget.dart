@@ -670,7 +670,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         if (_remainingCooldown > 0)
           Text(
             '${widget.retryMessage ?? LoadingStateHandlerWidget._defaultRetryMessage}'
-                .replaceAll(
+                .replaceFirst(
               RegExp(r"%_"),
               _remainingCooldown.toString(),
             ),
