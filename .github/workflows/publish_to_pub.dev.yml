@@ -31,3 +31,6 @@ jobs:
 
     - name: Publish Package
       run: dart pub publish --force
+      env:
+        PUB_TOKEN: ${{ secrets.PUB_TOKEN }}
+        sensitive: true
