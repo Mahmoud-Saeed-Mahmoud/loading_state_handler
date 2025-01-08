@@ -23,13 +23,8 @@ jobs:
     - name: Install dependencies
       run: flutter pub get
 
-    - name: Configure pub credentials
-      run: |
-          mkdir -p ~/.pub-cache
-          echo "$PUB_CREDENTIALS" | base64 -d > ~/.pub-cache/credentials.json
-      env:
-        PUB_CREDENTIALS: ${{ secrets.PUB_CREDENTIALS_BASE64 }}
-        sensitive: true
+    - name: Set up pub token
+      run: dart pub token add ${{ secrets.PUB_TOKEN }}
 
     - name: Publish Package
       run: dart pub publish --force
