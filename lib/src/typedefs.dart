@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart' show Widget, BuildContext, VoidCallback;
 
 typedef DefaultEmptyBuilder = Widget Function(
-    BuildContext context, String? message)?;
+  BuildContext context,
+  String? message,
+)?;
 
 typedef DefaultErrorBuilder = Widget Function(
   BuildContext context,
@@ -12,17 +14,30 @@ typedef DefaultErrorBuilder = Widget Function(
 )?;
 
 typedef DefaultLoadingBuilder = Widget Function(
-    BuildContext context, String? message)?;
+  BuildContext context,
+  String? message,
+)?;
 
-typedef DefaultOnData = void Function(BuildContext context, String? message)?;
+typedef DefaultOnData = void Function(
+  BuildContext context,
+  String? message,
+)?;
 
-typedef DefaultOnEmpty = void Function(BuildContext context, String? message)?;
+typedef DefaultOnEmpty = void Function(
+  BuildContext context,
+  String? message,
+)?;
 
 typedef DefaultOnError = void Function(
-    BuildContext context, String? errorMessage, VoidCallback? onRetry)?;
+  BuildContext context,
+  String? errorMessage,
+  VoidCallback? onRetry,
+)?;
 
 typedef DefaultOnLoading = void Function(
-    BuildContext context, String? message)?;
+  BuildContext context,
+  String? message,
+)?;
 
 typedef OnData = Function(
   DefaultOnData defaultOnData,
