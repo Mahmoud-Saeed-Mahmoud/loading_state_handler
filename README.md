@@ -13,13 +13,10 @@ A powerful Flutter widget for managing UI states with built-in retry functionali
 
 ## Installation
 
-Add the following dependency in your `pubspec.yaml` file:
+Run the following command to add the package to your project:
 
-```yaml
-dependencies:
-  flutter:
-    sdk: flutter
-  loading_state_handler: ^1.3.3
+```bash
+flutter pub add loading_state_handler
 ```
 
 ## Quick Start
