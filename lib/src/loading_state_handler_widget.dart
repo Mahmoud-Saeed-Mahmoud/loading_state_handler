@@ -359,7 +359,10 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     this.retryBtnText,
     this.retryMessage,
     this.enableRetry = false,
-  }) : assert(enableRetry == (onRetry != null));
+  }) : assert(
+          enableRetry == (onRetry != null),
+          'onRetry must be provided if enableRetry is true',
+        );
 
   /// Creates the state for the [LoadingStateHandlerWidget].
   @override
@@ -488,12 +491,13 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         }
         return widget.errorWidget ??
             LoadingStateHandlerWidget._defaultErrorBuilder?.call(
-                context,
-                widget.errorMessage,
-                _buildRetryButton(),
-                widget.retryCooldown ??
-                    LoadingStateHandlerWidget._defaultRetryCooldown,
-                widget.onRetry) ??
+              context,
+              widget.errorMessage,
+              _buildRetryButton(),
+              widget.retryCooldown ??
+                  LoadingStateHandlerWidget._defaultRetryCooldown,
+              widget.onRetry,
+            ) ??
             Center(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -600,32 +604,45 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   void _applyMethods() {
     if (widget.loading || widget.currentState == CurrentStateEnum.loading) {
       if (widget.onLoading != null) {
-        widget.onLoading?.call(LoadingStateHandlerWidget._defaultOnLoading,
-            context, widget.loadingMessage);
+        widget.onLoading?.call(
+          LoadingStateHandlerWidget._defaultOnLoading,
+          context,
+          widget.loadingMessage,
+        );
       } else {
         LoadingStateHandlerWidget._defaultOnLoading
             ?.call(context, widget.loadingMessage);
       }
     } else if (widget.error || widget.currentState == CurrentStateEnum.error) {
       if (widget.onError != null) {
-        widget.onError?.call(LoadingStateHandlerWidget._defaultOnError, context,
-            widget.errorMessage, widget.onRetry);
+        widget.onError?.call(
+          LoadingStateHandlerWidget._defaultOnError,
+          context,
+          widget.errorMessage,
+          widget.onRetry,
+        );
       } else {
         LoadingStateHandlerWidget._defaultOnError
             ?.call(context, widget.errorMessage, widget.onRetry);
       }
     } else if (widget.empty || widget.currentState == CurrentStateEnum.empty) {
       if (widget.onEmpty != null) {
-        widget.onEmpty?.call(LoadingStateHandlerWidget._defaultOnEmpty, context,
-            widget.emptyMessage);
+        widget.onEmpty?.call(
+          LoadingStateHandlerWidget._defaultOnEmpty,
+          context,
+          widget.emptyMessage,
+        );
       } else {
         LoadingStateHandlerWidget._defaultOnEmpty
             ?.call(context, widget.emptyMessage);
       }
     } else if (widget.data || widget.currentState == CurrentStateEnum.data) {
       if (widget.onData != null) {
-        widget.onData?.call(LoadingStateHandlerWidget._defaultOnData, context,
-            widget.dataMessage);
+        widget.onData?.call(
+          LoadingStateHandlerWidget._defaultOnData,
+          context,
+          widget.dataMessage,
+        );
       } else {
         LoadingStateHandlerWidget._defaultOnData
             ?.call(context, widget.dataMessage);
@@ -671,7 +688,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
           Text(
             '${widget.retryMessage ?? LoadingStateHandlerWidget._defaultRetryMessage}'
                 .replaceFirst(
-              RegExp(r"%_"),
+              RegExp(r'%_'),
               _remainingCooldown.toString(),
             ),
             style: widget.retryMessageStyle ??
