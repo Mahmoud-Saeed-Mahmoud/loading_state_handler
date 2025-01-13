@@ -98,17 +98,15 @@ class HomeScreen extends StatefulWidget {
 }
 
 class HomeScreenState extends State<HomeScreen> {
-  bool empty = false;
-  bool error = false;
+  CurrentStateEnum currentState = CurrentStateEnum.normal;
   String? errorMessage;
-  bool loading = true;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(title: const Text('Loading State Handler Example')),
       body: LoadingStateHandlerWidget(
-        loading: loading,
+        currentState: currentState,
         onLoading: (defaultOnLoading, context, message) {
           /// Uncomment to use the default loading callback
           // defaultOnLoading?.call(context, message);
@@ -126,9 +124,7 @@ class HomeScreenState extends State<HomeScreen> {
             ),
           );
         },
-        error: error,
         errorMessage: errorMessage,
-        empty: empty,
         child: const Center(child: Text('Data Loaded Successfully!')),
       ),
     );
@@ -140,12 +136,12 @@ class HomeScreenState extends State<HomeScreen> {
     // Simulate a data fetch
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {
-        loading = false;
+        currentState = CurrentStateEnum.data;
         // Uncomment to simulate an error
-        // error = true;
+        // currentState = CurrentStateEnum.error;
         // errorMessage = "Failed to load data";
         // Uncomment to simulate an empty state
-        // empty = true;
+        // currentState = CurrentStateEnum.empty;
       });
     });
   }
