@@ -1,4 +1,72 @@
 include: package:flutter_lints/flutter.yaml
 
-# Additional information about this file can be found at
-# https://dart.dev/guides/language/analysis-options
+analyzer:
+linter:
+  rules:
+    use_super_parameters: true
+    use_rethrow_when_possible: true
+    use_late_for_private_fields_and_variables: true
+    use_is_even_rather_than_modulo: true
+    use_decorated_box: true
+    use_colored_box: true
+    use_build_context_synchronously: true
+    unrelated_type_equality_checks: true
+    unnecessary_to_list_in_spreads: true
+    unnecessary_this: true
+    unnecessary_string_interpolations: true
+    unnecessary_statements: true
+    unnecessary_overrides: true
+    unnecessary_null_in_if_null_operators: true
+    unnecessary_null_checks: true
+    unnecessary_null_aware_assignments: true
+    unnecessary_library_name: true
+    unnecessary_late: true
+    unnecessary_lambdas: true
+    unnecessary_final: true
+    unnecessary_breaks: true
+    unnecessary_const: true
+    unnecessary_brace_in_string_interps: true
+    unnecessary_await_in_return: true
+    unawaited_futures: true
+    throw_in_finally: true
+    sort_unnamed_constructors_first: true
+    sort_child_properties_last: true
+    require_trailing_commas: true
+    provide_deprecation_message: true
+    prefer_spread_collections: true
+    prefer_single_quotes: true
+    prefer_relative_imports: true
+    prefer_iterable_whereType: true
+    prefer_is_not_operator: true
+    prefer_is_not_empty: true
+    prefer_is_empty: true
+    prefer_interpolation_to_compose_strings: true
+    prefer_if_null_operators: true
+    prefer_foreach: true
+    prefer_final_in_for_each: true
+    prefer_final_fields: true
+    prefer_expression_function_bodies: true
+    prefer_contains: true
+    prefer_constructors_over_static_methods: true
+    prefer_const_constructors_in_immutables: true
+    prefer_const_constructors: true
+    prefer_conditional_assignment: true
+    prefer_collection_literals: true
+    prefer_asserts_with_message: true
+    null_closures: true
+    non_constant_identifier_names: true
+    matching_super_parameters: true
+    hash_and_equals: true
+    file_names: true
+    exhaustive_cases: true
+    empty_statements: true
+    empty_constructor_bodies: true
+    empty_catches: true
+    directives_ordering: true
+    deprecated_member_use_from_same_package: true
+    avoid_unnecessary_containers: true
+    avoid_returning_this: true
+    avoid_returning_null_for_void: true
+    avoid_catches_without_on_clauses: true
+    avoid_as: true
+    always_declare_return_types: true
