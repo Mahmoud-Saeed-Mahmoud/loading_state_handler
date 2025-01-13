@@ -24,20 +24,43 @@ flutter pub add loading_state_handler
 ```dart
 // Set global defaults (optional)
 LoadingStateHandlerWidget.setDefaults(
-  defaultRetryCooldown: const Duration(seconds: 5),
-  defaultLoadingBuilder: (context, loadingMessage) =>
-        const Center(child: CircularProgressIndicator()),
-);
+    defaultRetryCooldown: const Duration(seconds: 5),
+    defaultErrorBuilder:
+        (context, errorMessage, retryWidget, retryCooldown, onRetry) => Center(
+      child: Column(
+        spacing: 20,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(errorMessage ?? 'An error occurred'),
+          retryWidget,
+        ],
+      ),
+    ),
+  );
 
 // Use in your widget
 LoadingStateHandlerWidget(
-  currentState: CurrentStateEnum.error,
-  errorMessage: 'Failed to load data',
-  enableRetry: true,
-  retryCooldown: const Duration(seconds: 3),
-  onRetry: () => fetchData(),
-  child: YourWidget(),
-);
+        currentState: currentState,
+        onLoading: (defaultOnLoading, context, message) {
+          /// Uncomment to use the default loading callback
+          // defaultOnLoading?.call(context, message);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message ?? 'Custom Loading...'),
+            ),
+          );
+        },
+        onData: (defaultOnData, context, message) {
+          defaultOnData?.call(context, message);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message ?? 'Custom Got Data...'),
+            ),
+          );
+        },
+        errorMessage: errorMessage,
+        child: const Center(child: Text('Data Loaded Successfully!')),
+      );
 ```
 
 ## Advanced Usage
@@ -48,15 +71,42 @@ The widget includes a sophisticated retry mechanism with cooldown:
 
 ```dart
 LoadingStateHandlerWidget(
-  currentState: CurrentStateEnum.error,
-  errorMessage: 'Network error occurred',
-  enableRetry: true,
-  retryCooldown: const Duration(seconds: 3),
-  onRetry: () async {
-    await refetchData();
-  },
-  child: ContentWidget(),
-);
+        // State control properties
+        currentState: _currentState,
+
+        // Custom messages for different states
+        errorMessage: _errorMessage,
+        emptyMessage: 'No data available',
+        loadingMessage: 'Fetching data...',
+
+        // Retry configuration
+        enableRetry: true, // Enable the retry mechanism
+        retryCooldown:
+            const Duration(seconds: 3), // Custom cooldown per instance
+        onRetry: () {
+          // Callback executed when the retry button is pressed
+          // This will be disabled during the cooldown period
+          _fetchData();
+        },
+
+        // Content to display when in normal state (not loading/error/empty)
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Data loaded successfully!',
+                style: TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _fetchData,
+                child: const Text('Refresh Data'),
+              ),
+            ],
+          ),
+        ),
+      );
 ```
 
 ### Global Configuration
@@ -65,11 +115,37 @@ Set default behaviors for all instances:
 
 ```dart
 LoadingStateHandlerWidget.setDefaults(
-  defaultRetryCooldown: const Duration(seconds: 5),
-  defaultLoadingBuilder: (context, message) => CustomLoadingWidget(),
-  defaultErrorBuilder: (context, message) => CustomErrorWidget(),
-  defaultEmptyBuilder: (context, message) => CustomEmptyWidget(),
-);
+    defaultOnData: (context, message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message ?? 'Default Got Data...'),
+        ),
+      );
+    },
+
+    defaultOnLoading: (context, message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message ?? 'Default Loading...'),
+        ),
+      );
+    },
+
+    defaultLoadingBuilder: (context, loadingMessage) =>
+        const Center(child: CircularProgressIndicator()),
+
+    defaultErrorBuilder:
+        (context, errorMessage, retryWidget, retryCooldown, onRetry) => Center(
+      child: Text(
+        'Custom Error: $errorMessage',
+        style: const TextStyle(color: Colors.red),
+      ),
+    ),
+
+    defaultEmptyBuilder: (context, emptyMessage) => const Center(
+      child: Text('No Data Available'),
+    ),
+  );
 ```
 
 ### State-Specific Callbacks
@@ -82,13 +158,25 @@ LoadingStateHandlerWidget(
   error: hasError,
   empty: isEmpty,
   onLoading: (defaultCallback, context, message) {
-    // Custom loading behavior
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message ?? 'Custom Loading...'),
+      ),
+    );
   },
   onError: (defaultCallback, context, message) {
-    // Custom error handling
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message ?? 'Custom Error...'),
+      ),
+    );
   },
   onEmpty: (defaultCallback, context, message) {
-    // Custom empty state handling
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message ?? 'Custom Empty...'),
+      ),
+    );
   },
   child: ContentWidget(),
 );
