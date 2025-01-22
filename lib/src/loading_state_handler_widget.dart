@@ -1,23 +1,17 @@
-import 'dart:async';
+import 'loading_state_handler_widget_imports.dart';
 
-import 'package:flutter/material.dart';
-
-import 'current_state_enum.dart';
-import 'typedefs.dart';
-
-/// A widget that handles loading, error, and empty states.
+/// A widget that handles loading, error,data, normal, and empty states.
 ///
 class LoadingStateHandlerWidget extends StatefulWidget {
   /// Default empty widget builder.
   ///
-  /// This callback will be called when [empty] is true or [currentState] is [CurrentStateEnum.empty], and the default
+  /// This callback will be called when [currentState] is [CurrentStateEnum.empty], and the default
   /// widget is displayed.
   ///
   /// The default implementation is to display a [Text] widget in the center of
   /// the screen with the empty message.
   ///
-  /// If not null, the default empty widget will be displayed when [empty] is
-  /// true or [currentState] is [CurrentStateEnum.empty].
+  /// If not null, the default empty widget will be displayed when [currentState] is [CurrentStateEnum.empty].
   ///
   /// The default value is null, which means the default empty widget will not
   /// be displayed.
@@ -25,14 +19,13 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Default error widget builder.
   ///
-  /// This callback will be called when [error] is true or [currentState] is [CurrentStateEnum.error], and the default
+  /// This callback will be called when [currentState] is [CurrentStateEnum.error], and the default
   /// widget is displayed.
   ///
   /// The default implementation is to display a [Text] widget in the center of
   /// the screen with the error message.
   ///
-  /// If not null, the default error widget will be displayed when [error] is
-  /// true or [currentState] is [CurrentStateEnum.error].
+  /// If not null, the default error widget will be displayed when [currentState] is [CurrentStateEnum.error].
   ///
   /// The default value is null, which means the default error widget will not
   /// be displayed.
@@ -45,14 +38,13 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Default loading widget builder.
   ///
-  /// This callback will be called when [loading] is true or [currentState] is [CurrentStateEnum.loading], and the default
+  /// This callback will be called when [currentState] is [CurrentStateEnum.loading], and the default
   /// widget is displayed.
   ///
   /// The default implementation is to display a [CircularProgressIndicator] in
   /// the center of the screen.
   ///
-  /// If not null, the default loading widget will be displayed when [loading] is
-  /// true or [currentState] is [CurrentStateEnum.loading].
+  /// If not null, the default loading widget will be displayed when [currentState] is [CurrentStateEnum.loading].
   ///
   /// The default value is null, which means the default loading widget will not
   /// be displayed.
@@ -60,11 +52,9 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Default on data callback.
   ///
-  /// This callback will be called when [loading] is false, [error] is false,
-  /// and [empty] is false or [currentState] is [CurrentStateEnum.data].
+  /// This callback will be called when [currentState] is [CurrentStateEnum.data].
   ///
-  /// If not null, the default on data callback will be called when [loading] is
-  /// false, [error] is false, and [empty] is false or [currentState] is [CurrentStateEnum.data].
+  /// If not null, the default on data callback will be called when  [currentState] is [CurrentStateEnum.data].
   ///
   /// The default value is null, which means the default on data callback will
   /// not be called.
@@ -72,10 +62,9 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Default on empty callback.
   ///
-  /// This callback will be called when [empty] is true or [currentState] is [CurrentStateEnum.empty].
+  /// This callback will be called when [currentState] is [CurrentStateEnum.empty].
   ///
-  /// If not null, the default on empty callback will be called when [empty] is
-  /// true or [currentState] is [CurrentStateEnum.empty].
+  /// If not null, the default on empty callback will be called when [currentState] is [CurrentStateEnum.empty].
   ///
   /// The default value is null, which means the default on empty callback will
   /// not be called.
@@ -83,10 +72,9 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Default on error callback.
   ///
-  /// This callback will be called when [error] is true or [currentState] is [CurrentStateEnum.error].
+  /// This callback will be called when [currentState] is [CurrentStateEnum.error].
   ///
-  /// If not null, the default on error callback will be called when [error] is
-  /// true or [currentState] is [CurrentStateEnum.error].
+  /// If not null, the default on error callback will be called when [currentState] is [CurrentStateEnum.error].
   ///
   /// The default value is null, which means the default on error callback will
   /// not be called.
@@ -94,10 +82,9 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Default on loading callback.
   ///
-  /// This callback will be called when [loading] is true or [currentState] is [CurrentStateEnum.loading].
+  /// This callback will be called when [currentState] is [CurrentStateEnum.loading].
   ///
-  /// If not null, the default on loading callback will be called when [loading]
-  /// is true or [currentState] is [CurrentStateEnum.loading].
+  /// If not null, the default on loading callback will be called when [currentState] is [CurrentStateEnum.loading].
   ///
   /// The default value is null, which means the default on loading callback will
   /// not be called.
@@ -154,6 +141,11 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// The default value is false, which means widget changes are enabled globally.
   static bool? _disableWidgetChanges;
 
+  /// The controller for the [LoadingStateHandlerWidget].
+  ///
+  /// The controller can be used to control the state of the widget.
+  final LoadingStateHandlerController? controller;
+
   /// The widget to display when the state is normal.
   ///
   /// This widget will be displayed when [loading] is false, [error] is false,
@@ -162,9 +154,6 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// The current state of the widget.
   final CurrentStateEnum currentState;
-
-  /// Whether the widget is in a data state.
-  final bool data;
 
   /// The data message.
   final String? dataMessage;
@@ -185,20 +174,17 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// To disable widget changes.
   ///
-  /// If set to true, widget changes will be disabled.
+  /// If set to true, widget changes will be disabled globally.
   ///
   /// The default value is false, which means widget changes are enabled.
   final bool disableWidgetChanges;
-
-  /// Whether the widget is in an empty state.
-  final bool empty;
 
   /// The empty message.
   final String? emptyMessage;
 
   /// The widget to display when the state is empty.
   ///
-  /// If not null, the [emptyWidget] will be displayed when [empty] is true or [currentState] is [CurrentStateEnum.empty].
+  /// If not null, the [emptyWidget] will be displayed when [currentState] is [CurrentStateEnum.empty].
   ///
   /// The default value is null, which means the default empty widget will be
   /// used.
@@ -206,9 +192,6 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// Whether the retry mechanism is enabled.
   final bool enableRetry;
-
-  /// Whether the widget is in an error state.
-  final bool error;
 
   /// The error message.
   final String? errorMessage;
@@ -220,21 +203,18 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
   /// The widget to display when the state is error.
   ///
-  /// If not null, the [errorWidget] will be displayed when [error] is true or [currentState] is [CurrentStateEnum.error].
+  /// If not null, the [errorWidget] will be displayed when [currentState] is [CurrentStateEnum.error].
   ///
   /// The default value is null, which means the default error widget will be
   /// used.
   final Widget? errorWidget;
-
-  /// Whether the widget is in a loading state.
-  final bool loading;
 
   /// The loading message.
   final String? loadingMessage;
 
   /// The widget to display when the state is loading.
   ///
-  /// If not null, the [loadingWidget] will be displayed when [loading] is true or [currentState] is [CurrentStateEnum.loading].
+  /// If not null, the [loadingWidget] will be displayed when [currentState] is [CurrentStateEnum.loading].
   ///
   /// The default value is null, which means the default loading widget will be
   /// used.
@@ -334,10 +314,6 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     this.disableErrorWidgetChanges = false,
     this.disableEmptyWidgetChanges = false,
     this.currentState = CurrentStateEnum.normal,
-    @Deprecated('Use currentState instead') this.loading = false,
-    @Deprecated('Use currentState instead') this.error = false,
-    @Deprecated('Use currentState instead') this.empty = false,
-    @Deprecated('Use currentState instead') this.data = false,
     this.loadingMessage,
     this.errorMessage,
     this.emptyMessage,
@@ -359,6 +335,7 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     this.retryBtnText,
     this.retryMessage,
     this.enableRetry = false,
+    this.controller,
   }) : assert(
           enableRetry == (onRetry != null),
           'onRetry must be provided if enableRetry is true',
@@ -446,7 +423,6 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
 
   /// The current retry cooldown timer.
   Timer? _retryCooldownTimer;
-
   @override
 
   /// Builds the widget tree for the [LoadingStateHandlerWidget].
@@ -458,15 +434,15 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   /// [LoadingStateHandlerWidget] and returns the appropriate widget based on
   /// the state.
   ///
-  /// If [loading] is true or [currentState] is [CurrentStateEnum.loading], the method returns the [loadingWidget] if it is not
+  /// If [currentState] is [CurrentStateEnum.loading], the method returns the [loadingWidget] if it is not
   /// null, otherwise it returns the default loading widget which is a
   /// [Center] widget with a [CircularProgressIndicator].
   ///
-  /// If [error] is true or [currentState] is [CurrentStateEnum.error], the method returns the [errorWidget] if it is not null,
+  /// If [currentState] is [CurrentStateEnum.error], the method returns the [errorWidget] if it is not null,
   /// otherwise it returns the default error widget which is a [Center] widget
   /// with the text 'Error'.
   ///
-  /// If [empty] is true or [currentState] is [CurrentStateEnum.empty], the method returns the [emptyWidget] if it is not null,
+  /// If [currentState] is [CurrentStateEnum.empty], the method returns the [emptyWidget] if it is not null,
   /// otherwise it returns the default empty widget which is a [Center] widget
   /// with the text 'Empty'.
   ///
@@ -476,15 +452,14 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         (LoadingStateHandlerWidget._disableWidgetChanges ?? false)) {
       return widget.child;
     } else {
-      if (widget.loading || widget.currentState == CurrentStateEnum.loading) {
+      if (_getIsLoading()) {
         return widget.loadingWidget ??
             LoadingStateHandlerWidget._defaultLoadingBuilder
                 ?.call(context, widget.loadingMessage) ??
             const Center(
               child: CircularProgressIndicator(),
             );
-      } else if (widget.error ||
-          widget.currentState == CurrentStateEnum.error) {
+      } else if (_getIsError()) {
         if (widget.disableErrorWidgetChanges ||
             (LoadingStateHandlerWidget._disableErrorWidgetChanges ?? false)) {
           return widget.child;
@@ -512,8 +487,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
                 ],
               ),
             );
-      } else if (widget.empty ||
-          widget.currentState == CurrentStateEnum.empty) {
+      } else if (_getIsEmpty()) {
         if (widget.disableEmptyWidgetChanges ||
             (LoadingStateHandlerWidget._disableEmptyWidgetChanges ?? false)) {
           return widget.child;
@@ -524,7 +498,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
             const Center(
               child: Text('Empty'),
             );
-      } else if (widget.data || widget.currentState == CurrentStateEnum.data) {
+      } else if (_getIsData()) {
         return widget.child;
       } else {
         // normal
@@ -533,51 +507,85 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
     }
   }
 
+  /// Called when the widget's configuration changes.
+  ///
+  /// This method is called when the widget is rebuilt with a new instance but
+  /// with the same runtimeType. It is not called when the widget is removed from
+  /// the tree.
+  ///
+  /// The [didUpdateWidget] method is responsible for:
+  ///
+  /// 1. Calling the [didUpdateWidget] method of the parent class. This ensures
+  ///    that any resources used by the parent class are also updated.
+  ///
+  /// 2. If the [controller] is null, the method adds a callback to the
+  ///    [WidgetsBinding.instance] to call the [_applyMethods] method once the
+  ///    frame is built. This ensures that the methods are applied after the
+  ///    widget is rebuilt.
+  ///
+  /// 3. If the [controller] is not null and the old [controller] is not equal
+  ///    to the new [controller], the method removes the listener from the old
+  ///    [controller] and adds a listener to the new [controller]. This ensures
+  ///    that the widget only receives state changes from the new [controller].
   @override
-
-  /// Called when this widget is updated with a new configuration.
-  ///
-  /// This method is invoked when the widget is rebuilt with a new instance but
-  /// with the same runtimeType. It allows the widget to update its internal
-  /// state to reflect the new configuration.
-  ///
-  /// The [oldWidget] parameter contains the previous configuration of this
-  /// widget. If necessary, you can compare it to the current widget to determine
-  /// what has changed.
-  ///
-  /// In this implementation, a post-frame callback is added to apply any
-  /// updated methods after the current frame is rendered, ensuring that the
-  /// widget tree reflects the latest changes.
   void didUpdateWidget(covariant LoadingStateHandlerWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
-
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _applyMethods(),
-    );
+    if (widget.controller == null) {
+      // If the controller is null, add a callback to call the methods once the
+      // frame is built.
+      WidgetsBinding.instance.addPostFrameCallback((_) => _applyMethods());
+    } else if (oldWidget.controller != widget.controller) {
+      // If the controller is not null and the old controller is not equal to the
+      // new controller, remove the listener from the old controller and add a
+      // listener to the new controller.
+      oldWidget.controller?.removeListener(_handleControllerStateChange);
+      widget.controller?.addListener(_handleControllerStateChange);
+    }
   }
 
+  /// Releases the resources used by the [LoadingStateHandlerWidget].
+  ///
+  /// This method is called when the widget is removed from the tree. It is
+  /// responsible for:
+  ///
+  /// 1. Cancelling the retry cooldown timer. This ensures that the timer is
+  ///    stopped and does not continue to run in the background after the widget
+  ///    is disposed.
+  ///
+  /// 2. Removing the listener from the [controller]. This ensures that the
+  ///    widget does not receive state changes from the [controller] after it is
+  ///    disposed.
+  ///
+  /// 3. Calling the [dispose] method of the parent class. This ensures that any
+  ///    resources used by the parent class are also released.
+  ///
+  /// The [dispose] method is not called when the widget is rebuilt with a new
+  /// instance but with the same runtimeType. It is only called when the widget
+  /// is removed from the tree.
+  ///
+  /// It is important to call [dispose] when the widget is no longer needed to
+  /// avoid memory leaks.
   @override
   void dispose() {
     _retryCooldownTimer?.cancel();
+    widget.controller?.removeListener(_handleControllerStateChange);
+
     super.dispose();
   }
 
+  /// Initializes the state of the widget.
+  ///
+  /// This method is called when the widget is created. It is responsible for:
+  ///
+  /// 1. Adding a listener to the [controller] to listen for state changes.
+  /// 2. Calling [_applyMethods] to apply the methods provided in the
+  ///    [LoadingStateHandlerWidget].
   @override
-
-  /// Initializes the state of the [LoadingStateHandlerWidget].
-  ///
-  /// This method is responsible for applying the methods in the next frame.
-  /// This is necessary to ensure that the current widget tree is updated before
-  /// updating the methods.
-  ///
-  /// The method adds a post-frame callback to apply the methods in the next
-  /// frame. When the callback is called, the [_applyMethods] function is called
-  /// to apply the methods.
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) => _applyMethods(),
-    );
+
+    widget.controller?.addListener(_handleControllerStateChange);
+    WidgetsBinding.instance.addPostFrameCallback((_) => _applyMethods());
   }
 
   /// Applies the methods provided in the [LoadingStateHandlerWidget].
@@ -594,15 +602,15 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   ///
   /// The methods are called in the following order:
   ///
-  /// 1. [onLoading] if [loading] is true or [currentState] is [CurrentStateEnum.loading].
-  /// 2. [onError] if [error] is true or [currentState] is [CurrentStateEnum.error].
-  /// 3. [onEmpty] if [empty] is true or [currentState] is [CurrentStateEnum.empty].
-  /// 4. [onData] if [loading], [error], and [empty] are all false or [currentState] is [CurrentStateEnum.data].
+  /// 1. [onLoading] if [currentState] is [CurrentStateEnum.loading].
+  /// 2. [onError] if [currentState] is [CurrentStateEnum.error].
+  /// 3. [onEmpty] if [currentState] is [CurrentStateEnum.empty].
+  /// 4. [onData] if [currentState] is [CurrentStateEnum.data].
   ///
   /// If the methods are not provided, the default methods are called.
   /// If the default methods are not provided, the methods are not called.
   void _applyMethods() {
-    if (widget.loading || widget.currentState == CurrentStateEnum.loading) {
+    if (_getIsLoading()) {
       if (widget.onLoading != null) {
         widget.onLoading?.call(
           LoadingStateHandlerWidget._defaultOnLoading,
@@ -613,7 +621,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         LoadingStateHandlerWidget._defaultOnLoading
             ?.call(context, widget.loadingMessage);
       }
-    } else if (widget.error || widget.currentState == CurrentStateEnum.error) {
+    } else if (_getIsError()) {
       if (widget.onError != null) {
         widget.onError?.call(
           LoadingStateHandlerWidget._defaultOnError,
@@ -625,7 +633,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         LoadingStateHandlerWidget._defaultOnError
             ?.call(context, widget.errorMessage, widget.onRetry);
       }
-    } else if (widget.empty || widget.currentState == CurrentStateEnum.empty) {
+    } else if (_getIsEmpty()) {
       if (widget.onEmpty != null) {
         widget.onEmpty?.call(
           LoadingStateHandlerWidget._defaultOnEmpty,
@@ -636,7 +644,7 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         LoadingStateHandlerWidget._defaultOnEmpty
             ?.call(context, widget.emptyMessage);
       }
-    } else if (widget.data || widget.currentState == CurrentStateEnum.data) {
+    } else if (_getIsData()) {
       if (widget.onData != null) {
         widget.onData?.call(
           LoadingStateHandlerWidget._defaultOnData,
@@ -712,6 +720,40 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
         ),
       ],
     );
+  }
+
+  bool _getIsData() =>
+      widget.currentState == CurrentStateEnum.data ||
+      widget.controller?.value == CurrentStateEnum.data;
+
+  bool _getIsEmpty() =>
+      widget.currentState == CurrentStateEnum.empty ||
+      widget.controller?.value == CurrentStateEnum.empty;
+
+  bool _getIsError() =>
+      widget.currentState == CurrentStateEnum.error ||
+      widget.controller?.value == CurrentStateEnum.error;
+
+  bool _getIsLoading() =>
+      widget.currentState == CurrentStateEnum.loading ||
+      widget.controller?.value == CurrentStateEnum.loading;
+
+  /// Handles state changes of the controller.
+  ///
+  /// When the controller's state changes, the [_applyMethods] method is called to
+  /// apply the methods provided in the [LoadingStateHandlerWidget] according to
+  /// the state of the widget.
+  ///
+  /// This method is called when the controller's state changes. If the widget is
+  /// still mounted, the [_applyMethods] method is called.
+  ///
+  /// This method is used when the controller is not null.
+  void _handleControllerStateChange() {
+    if (context.mounted) {
+      if (widget.controller != null) {
+        setState(_applyMethods);
+      }
+    }
   }
 
   /// Starts the retry cooldown timer.

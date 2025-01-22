@@ -4,7 +4,7 @@ A powerful Flutter widget for managing UI states with built-in retry functionali
 
 ## Features
 
-- 🔄 Smart state management (loading, error, empty, normal)
+- 🔄 Smart state management (loading, error, empty, normal, data)
 - ⏲️ Built-in retry mechanism with configurable cooldown
 - 🎨 Fully customizable widgets for each state
 - 🌐 Global default configurations
@@ -17,6 +17,12 @@ Run the following command to add the package to your project:
 
 ```bash
 flutter pub add loading_state_handler
+```
+or add the package to your `pubspec.yaml` file:
+
+```yml
+dependencies:
+  loading_state_handler: ^2.0.0
 ```
 
 ## Quick Start
@@ -199,10 +205,8 @@ LoadingStateHandlerWidget(
 
 | Property | Type | Description |
 |----------|------|-------------|
-| `loading` | `bool` | Shows loading state when true |
-| `error` | `bool` | Shows error state when true |
-| `empty` | `bool` | Shows empty state when true |
-| `currentState` | `CurrentStateEnum` | Current state of the widget |
+| `controller` | `LoadingStateHandlerController?` | Controller instance used to manage the state of the widget |
+| `currentState` | `CurrentStateEnum` | Current state of the widget for |
 | `errorTitle` | `String?` | Custom error title |
 | `retryButtonStyle` | `ButtonStyle?` | Custom retry button style |
 | `retryBtnTextStyle` | `TextStyle?` | Custom retry button text style |
@@ -224,7 +228,7 @@ LoadingStateHandlerWidget(
 
 ## Example
 
-Check out the [example](example/lib/main.dart) and [retry example](example/lib/retry_example.dart) for a complete demonstration of all features.
+Check out the [example](example/lib/main.dart), [retry example](example/lib/retry_example.dart), and [controller example](example/lib/loading_state_handler_with_controller_example.dart) for a complete demonstration of all features.
 
 ## Contributing
 
