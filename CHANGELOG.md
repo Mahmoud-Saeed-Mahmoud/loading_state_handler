@@ -137,3 +137,18 @@
     * Use `currentState` instead of `error`
     * Use `currentState` instead of `data`
     * Use `currentState` instead of `empty`
+
+## 2.0.0-pre.1
+
+### New Features
+
+- **Added**: `LoadingStateHandlerController` class for advanced control over the loading state.
+
+### Removed
+ The following state properties in `StateHandlerWidget` are now removed 
+  * `loading`
+  * `error`
+  * `data`
+  * `empty`
+
+### Migration Guide Use `currentState` instead
