@@ -93,12 +93,12 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// Default retry button text.
   ///
   /// This is the default button text that users will see when they retry after an error.
-  static String _defaultRetryBtnText = 'Retry';
+  static String _defaultRetryButtonText = 'Retry';
 
   /// Default retry button text style.
   ///
   /// This is the default button text style that users will see when they retry after an error.
-  static TextStyle? _defaultRetryBtnTextStyle;
+  static TextStyle? _defaultRetryButtonTextStyle;
 
   /// Default retry button style.
   ///
@@ -286,10 +286,10 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// The retry button text.
   ///
   /// The default value is null, which means the default retry button text will be used.
-  final String? retryBtnText;
+  final String? retryButtonText;
 
   /// The retry button text style.
-  final TextStyle? retryBtnTextStyle;
+  final TextStyle? retryButtonTextStyle;
 
   /// The retry button style.
   final ButtonStyle? retryButtonStyle;
@@ -327,12 +327,12 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     this.onData,
     this.errorTitle,
     this.retryButtonStyle,
-    this.retryBtnTextStyle,
+    this.retryButtonTextStyle,
     this.retryMessageStyle,
     required this.child,
     this.onRetry,
     this.retryCooldown,
-    this.retryBtnText,
+    this.retryButtonText,
     this.retryMessage,
     this.enableRetry = false,
     this.controller,
@@ -374,10 +374,10 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     bool? disableErrorWidgetChanges,
     bool? disableEmptyWidgetChanges,
     Duration? defaultRetryCooldown,
-    String? defaultRetryBtnText,
+    String? defaultRetryButtonText,
     String? defaultRetryMessage,
     String? defaultErrorTitle,
-    TextStyle? defaultRetryBtnTextStyle,
+    TextStyle? defaultRetryButtonTextStyle,
     TextStyle? defaultRetryMessageStyle,
     ButtonStyle? defaultRetryButtonStyle,
     DefaultLoadingBuilder defaultLoadingBuilder,
@@ -392,11 +392,11 @@ class LoadingStateHandlerWidget extends StatefulWidget {
 
     _defaultRetryButtonStyle =
         defaultRetryButtonStyle ?? _defaultRetryButtonStyle;
-    _defaultRetryBtnTextStyle =
-        defaultRetryBtnTextStyle ?? _defaultRetryBtnTextStyle;
+    _defaultRetryButtonTextStyle =
+        defaultRetryButtonTextStyle ?? _defaultRetryButtonTextStyle;
     _defaultRetryMessageStyle =
         defaultRetryMessageStyle ?? _defaultRetryMessageStyle;
-    _defaultRetryBtnText = defaultRetryBtnText ?? _defaultRetryBtnText;
+    _defaultRetryButtonText = defaultRetryButtonText ?? _defaultRetryButtonText;
     _defaultRetryMessage = defaultRetryMessage ?? _defaultRetryMessage;
 
     _defaultErrorTitle = defaultErrorTitle ?? _defaultErrorTitle;
@@ -677,12 +677,12 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   /// parameter. If [retryButtonStyle] is null, the default button style is
   /// used.
   ///
-  /// The button's text is styled according to the [retryBtnTextStyle]
-  /// constructor parameter. If [retryBtnTextStyle] is null, the default
+  /// The button's text is styled according to the [retryButtonTextStyle]
+  /// constructor parameter. If [retryButtonTextStyle] is null, the default
   /// button text style is used.
   ///
-  /// The button's text is the [retryBtnText] constructor parameter. If
-  /// [retryBtnText] is null, the default button text is used.
+  /// The button's text is the [retryButtonText] constructor parameter. If
+  /// [retryButtonText] is null, the default button text is used.
   Widget _buildRetryButton() {
     if (!widget.enableRetry || widget.onRetry == null) {
       return const SizedBox.shrink();
@@ -712,10 +712,10 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
                   _startRetryCooldown();
                 },
           child: Text(
-            widget.retryBtnText ??
-                LoadingStateHandlerWidget._defaultRetryBtnText,
-            style: widget.retryBtnTextStyle ??
-                LoadingStateHandlerWidget._defaultRetryBtnTextStyle,
+            widget.retryButtonText ??
+                LoadingStateHandlerWidget._defaultRetryButtonText,
+            style: widget.retryButtonTextStyle ??
+                LoadingStateHandlerWidget._defaultRetryButtonTextStyle,
           ),
         ),
       ],

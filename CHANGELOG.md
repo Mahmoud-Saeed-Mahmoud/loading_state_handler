@@ -100,8 +100,8 @@
 ## 1.3.0
 
 ### New Features
-- **Added**: `retryBtnText` and `retryMessage` parameters in `StateHandlerWidget`.
-- **Added**: `retryBtnTextStyle` and `retryMessageStyle` parameters in `StateHandlerWidget`.
+- **Added**: `retryButtonText` and `retryMessage` parameters in `StateHandlerWidget`.
+- **Added**: `retryButtonTextStyle` and `retryMessageStyle` parameters in `StateHandlerWidget`.
 - **Added**: `retryButtonStyle` parameter in `StateHandlerWidget`.
 - **Added**: `CurrentStateEnum` parameter in `StateHandlerWidget`.
 
