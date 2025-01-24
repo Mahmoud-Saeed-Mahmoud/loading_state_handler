@@ -62,10 +62,10 @@
 <li><span class="parameter" id="setDefaults-param-disableErrorWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">disableErrorWidgetChanges</span>, </span></li>
 <li><span class="parameter" id="setDefaults-param-disableEmptyWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a>?</span> <span class="parameter-name">disableEmptyWidgetChanges</span>, </span></li>
 <li><span class="parameter" id="setDefaults-param-defaultRetryCooldown"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a>?</span> <span class="parameter-name">defaultRetryCooldown</span>, </span></li>
-<li><span class="parameter" id="setDefaults-param-defaultRetryBtnText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">defaultRetryBtnText</span>, </span></li>
+<li><span class="parameter" id="setDefaults-param-defaultRetryButtonText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">defaultRetryButtonText</span>, </span></li>
 <li><span class="parameter" id="setDefaults-param-defaultRetryMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">defaultRetryMessage</span>, </span></li>
 <li><span class="parameter" id="setDefaults-param-defaultErrorTitle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">defaultErrorTitle</span>, </span></li>
-<li><span class="parameter" id="setDefaults-param-defaultRetryBtnTextStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a>?</span> <span class="parameter-name">defaultRetryBtnTextStyle</span>, </span></li>
+<li><span class="parameter" id="setDefaults-param-defaultRetryButtonTextStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a>?</span> <span class="parameter-name">defaultRetryButtonTextStyle</span>, </span></li>
 <li><span class="parameter" id="setDefaults-param-defaultRetryMessageStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a>?</span> <span class="parameter-name">defaultRetryMessageStyle</span>, </span></li>
 <li><span class="parameter" id="setDefaults-param-defaultRetryButtonStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/material/ButtonStyle-class.html">ButtonStyle</a>?</span> <span class="parameter-name">defaultRetryButtonStyle</span>, </span></li>
 <li><span class="parameter" id="setDefaults-param-defaultLoadingBuilder"><span class="type-annotation">DefaultLoadingBuilder?</span> <span class="parameter-name">defaultLoadingBuilder</span>, </span></li>
@@ -112,10 +112,10 @@ recommended to set them before creating any <a href="../../loading_state_handler
   bool? disableErrorWidgetChanges,
   bool? disableEmptyWidgetChanges,
   Duration? defaultRetryCooldown,
-  String? defaultRetryBtnText,
+  String? defaultRetryButtonText,
   String? defaultRetryMessage,
   String? defaultErrorTitle,
-  TextStyle? defaultRetryBtnTextStyle,
+  TextStyle? defaultRetryButtonTextStyle,
   TextStyle? defaultRetryMessageStyle,
   ButtonStyle? defaultRetryButtonStyle,
   DefaultLoadingBuilder defaultLoadingBuilder,
@@ -130,11 +130,11 @@ recommended to set them before creating any <a href="../../loading_state_handler
 
   _defaultRetryButtonStyle =
       defaultRetryButtonStyle ?? _defaultRetryButtonStyle;
-  _defaultRetryBtnTextStyle =
-      defaultRetryBtnTextStyle ?? _defaultRetryBtnTextStyle;
+  _defaultRetryButtonTextStyle =
+      defaultRetryButtonTextStyle ?? _defaultRetryButtonTextStyle;
   _defaultRetryMessageStyle =
       defaultRetryMessageStyle ?? _defaultRetryMessageStyle;
-  _defaultRetryBtnText = defaultRetryBtnText ?? _defaultRetryBtnText;
+  _defaultRetryButtonText = defaultRetryButtonText ?? _defaultRetryButtonText;
   _defaultRetryMessage = defaultRetryMessage ?? _defaultRetryMessage;
 
   _defaultErrorTitle = defaultErrorTitle ?? _defaultErrorTitle;

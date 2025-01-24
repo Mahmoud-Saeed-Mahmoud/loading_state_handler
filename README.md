@@ -209,9 +209,9 @@ LoadingStateHandlerWidget(
 | `currentState` | `CurrentStateEnum` | Current state of the widget for |
 | `errorTitle` | `String?` | Custom error title |
 | `retryButtonStyle` | `ButtonStyle?` | Custom retry button style |
-| `retryBtnTextStyle` | `TextStyle?` | Custom retry button text style |
+| `retryButtonTextStyle` | `TextStyle?` | Custom retry button text style |
 | `retryMessageStyle` | `TextStyle?` | Custom retry message style |
-| `retryBtnText` | `String?` | Custom retry button text |
+| `retryButtonText` | `String?` | Custom retry button text |
 | `retryMessage` | `String?` | Custom retry message |
 | `loadingWidget` | `Widget?` | Custom loading widget |
 | `errorWidget` | `Widget?` | Custom error widget |
