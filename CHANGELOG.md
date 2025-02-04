@@ -138,7 +138,7 @@
     * Use `currentState` instead of `data`
     * Use `currentState` instead of `empty`
 
-## 2.0.0-pre.1
+## 2.0.0
 
 ### New Features
 
