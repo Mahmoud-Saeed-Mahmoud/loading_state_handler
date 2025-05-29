@@ -25,7 +25,7 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">loading_state_handler</a></li>
-    <li><a href="../../loading_state_handler/loading_state_handler-library.html">loading_state_handler.dart</a></li>
+    <li><a href="../../loading_state_handler/">loading_state_handler.dart</a></li>
     <li><a href="../../loading_state_handler/LoadingStateHandlerWidget-class.html">LoadingStateHandlerWidget</a></li>
     <li class="self-crumb">child property</li>
   </ol>
@@ -33,17 +33,14 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -66,8 +63,8 @@
       
 <section class="desc markdown">
   <p>The widget to display when the state is normal.</p>
-<p>This widget will be displayed when <a class="deprecated" href="../../loading_state_handler/LoadingStateHandlerWidget/loading.html">loading</a> is false, <a class="deprecated" href="../../loading_state_handler/LoadingStateHandlerWidget/error.html">error</a> is false,
-and <a class="deprecated" href="../../loading_state_handler/LoadingStateHandlerWidget/empty.html">empty</a> is false or <a href="../../loading_state_handler/LoadingStateHandlerWidget/currentState.html">currentState</a> is <a href="../../src_current_state_enum/CurrentStateEnum.html">CurrentStateEnum.normal</a>.</p>
+<p>This widget will be displayed when <code>loading</code> is false, <code>error</code> is false,
+and <code>empty</code> is false or <a href="../../loading_state_handler/LoadingStateHandlerWidget/currentState.html">currentState</a> is <a href="../../loading_state_handler/CurrentStateEnum.html">CurrentStateEnum.normal</a>.</p>
 </section>
 
       
@@ -88,7 +85,7 @@ and <a class="deprecated" href="../../loading_state_handler/LoadingStateHandlerW
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">loading_state_handler</a></li>
-    <li><a href="../../loading_state_handler/loading_state_handler-library.html">loading_state_handler</a></li>
+    <li><a href="../../loading_state_handler/">loading_state_handler</a></li>
     <li><a href="../../loading_state_handler/LoadingStateHandlerWidget-class.html">LoadingStateHandlerWidget</a></li>
     <li class="self-crumb">child property</li>
 </ol>
@@ -102,7 +99,7 @@ and <a class="deprecated" href="../../loading_state_handler/LoadingStateHandlerW
 <footer>
   <span class="no-break">
     loading_state_handler
-      1.3.3
+      2.1.0
   </span>
   
 </footer>

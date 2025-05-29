@@ -25,24 +25,21 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../index.html">loading_state_handler</a></li>
-    <li><a href="../loading_state_handler/loading_state_handler-library.html">loading_state_handler.dart</a></li>
+    <li><a href="../loading_state_handler/">loading_state_handler.dart</a></li>
     <li class="self-crumb">LoadingStateHandlerWidget class</li>
   </ol>
   <div class="self-name">LoadingStateHandlerWidget</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
 <div
@@ -57,7 +54,7 @@
 
     
 <section class="desc markdown">
-  <p>A widget that handles loading, error, and empty states.</p>
+  <p>A widget that handles loading, error,data, normal, and empty states.</p>
 </section>
 
 
@@ -90,8 +87,8 @@
   <section class="summary offset-anchor" id="constructors">
     <h2>Constructors</h2>
     <dl class="constructor-summary-list">
-        <dt id="LoadingStateHandlerWidget" class="callable">
-          <span class="name"><a href="../loading_state_handler/LoadingStateHandlerWidget/LoadingStateHandlerWidget.html">LoadingStateHandlerWidget</a></span><span class="signature">({<span class="parameter" id="-param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span>, </span><span class="parameter" id="-param-disableWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">disableWidgetChanges</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-disableErrorWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">disableErrorWidgetChanges</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-disableEmptyWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">disableEmptyWidgetChanges</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-currentState"><span class="type-annotation"><a href="../loading_state_handler/CurrentStateEnum.html">CurrentStateEnum</a></span> <span class="parameter-name">currentState</span> = <span class="default-value">CurrentStateEnum.normal</span>, </span><span class="parameter" id="-param-loading"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">loading</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-error"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">error</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-empty"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">empty</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">data</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-loadingMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">loadingMessage</span>, </span><span class="parameter" id="-param-errorMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">errorMessage</span>, </span><span class="parameter" id="-param-emptyMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">emptyMessage</span>, </span><span class="parameter" id="-param-dataMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">dataMessage</span>, </span><span class="parameter" id="-param-loadingWidget"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">loadingWidget</span>, </span><span class="parameter" id="-param-errorWidget"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">errorWidget</span>, </span><span class="parameter" id="-param-emptyWidget"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">emptyWidget</span>, </span><span class="parameter" id="-param-onError"><span class="type-annotation">OnError?</span> <span class="parameter-name">onError</span>, </span><span class="parameter" id="-param-onEmpty"><span class="type-annotation">OnEmpty?</span> <span class="parameter-name">onEmpty</span>, </span><span class="parameter" id="-param-onLoading"><span class="type-annotation">OnLoading?</span> <span class="parameter-name">onLoading</span>, </span><span class="parameter" id="-param-onData"><span class="type-annotation">OnData?</span> <span class="parameter-name">onData</span>, </span><span class="parameter" id="-param-errorTitle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">errorTitle</span>, </span><span class="parameter" id="-param-retryButtonStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/material/ButtonStyle-class.html">ButtonStyle</a>?</span> <span class="parameter-name">retryButtonStyle</span>, </span><span class="parameter" id="-param-retryButtonTextStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a>?</span> <span class="parameter-name">retryButtonTextStyle</span>, </span><span class="parameter" id="-param-retryMessageStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a>?</span> <span class="parameter-name">retryMessageStyle</span>, </span><span class="parameter" id="-param-child"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span> <span class="parameter-name">child</span>, </span><span class="parameter" id="-param-onRetry"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/VoidCallback.html">VoidCallback</a>?</span> <span class="parameter-name">onRetry</span>, </span><span class="parameter" id="-param-retryCooldown"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a>?</span> <span class="parameter-name">retryCooldown</span>, </span><span class="parameter" id="-param-retryButtonText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">retryButtonText</span>, </span><span class="parameter" id="-param-retryMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">retryMessage</span>, </span><span class="parameter" id="-param-enableRetry"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">enableRetry</span> = <span class="default-value">false</span></span>})</span>
+        <dt id="LoadingStateHandlerWidget.new" class="callable">
+          <span class="name"><a href="../loading_state_handler/LoadingStateHandlerWidget/LoadingStateHandlerWidget.html">LoadingStateHandlerWidget.new</a></span><span class="signature">({<span class="parameter" id="-param-key"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/foundation/Key-class.html">Key</a>?</span> <span class="parameter-name">key</span>, </span><span class="parameter" id="-param-disableWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">disableWidgetChanges</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-disableErrorWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">disableErrorWidgetChanges</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-disableEmptyWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">disableEmptyWidgetChanges</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-currentState"><span class="type-annotation"><a href="../loading_state_handler/CurrentStateEnum.html">CurrentStateEnum</a></span> <span class="parameter-name">currentState</span> = <span class="default-value">CurrentStateEnum.normal</span>, </span><span class="parameter" id="-param-loadingMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">loadingMessage</span>, </span><span class="parameter" id="-param-errorMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">errorMessage</span>, </span><span class="parameter" id="-param-emptyMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">emptyMessage</span>, </span><span class="parameter" id="-param-dataMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">dataMessage</span>, </span><span class="parameter" id="-param-loadingWidget"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">loadingWidget</span>, </span><span class="parameter" id="-param-errorWidget"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">errorWidget</span>, </span><span class="parameter" id="-param-emptyWidget"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a>?</span> <span class="parameter-name">emptyWidget</span>, </span><span class="parameter" id="-param-onError"><span class="type-annotation">OnError?</span> <span class="parameter-name">onError</span>, </span><span class="parameter" id="-param-onEmpty"><span class="type-annotation">OnEmpty?</span> <span class="parameter-name">onEmpty</span>, </span><span class="parameter" id="-param-onLoading"><span class="type-annotation">OnLoading?</span> <span class="parameter-name">onLoading</span>, </span><span class="parameter" id="-param-onData"><span class="type-annotation">OnData?</span> <span class="parameter-name">onData</span>, </span><span class="parameter" id="-param-onStateChange"><span class="type-annotation">OnStateChange?</span> <span class="parameter-name">onStateChange</span>, </span><span class="parameter" id="-param-childBuilder"><span class="type-annotation">ChildBuilder?</span> <span class="parameter-name">childBuilder</span>, </span><span class="parameter" id="-param-errorTitle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">errorTitle</span>, </span><span class="parameter" id="-param-retryButtonStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/material/ButtonStyle-class.html">ButtonStyle</a>?</span> <span class="parameter-name">retryButtonStyle</span>, </span><span class="parameter" id="-param-retryButtonTextStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a>?</span> <span class="parameter-name">retryButtonTextStyle</span>, </span><span class="parameter" id="-param-retryMessageStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a>?</span> <span class="parameter-name">retryMessageStyle</span>, </span><span class="parameter" id="-param-child"><span>required</span> <span class="type-annotation"><a href="https://api.flutter.dev/flutter/widgets/Widget-class.html">Widget</a></span> <span class="parameter-name">child</span>, </span><span class="parameter" id="-param-onRetry"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-ui/VoidCallback.html">VoidCallback</a>?</span> <span class="parameter-name">onRetry</span>, </span><span class="parameter" id="-param-retryCooldown"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/Duration-class.html">Duration</a>?</span> <span class="parameter-name">retryCooldown</span>, </span><span class="parameter" id="-param-retryButtonText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">retryButtonText</span>, </span><span class="parameter" id="-param-retryMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">retryMessage</span>, </span><span class="parameter" id="-param-enableRetry"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">enableRetry</span> = <span class="default-value">false</span>, </span><span class="parameter" id="-param-controller"><span class="type-annotation"><a href="../loading_state_handler/LoadingStateHandlerController-class.html">LoadingStateHandlerController</a>?</span> <span class="parameter-name">controller</span></span>})</span>
         </dt>
         <dd>
           
@@ -117,6 +114,30 @@
 
 </dd>
 
+        <dt id="childBuilder" class="property">
+  <span class="name"><a href="../loading_state_handler/LoadingStateHandlerWidget/childBuilder.html">childBuilder</a></span>
+  <span class="signature">&#8594; ChildBuilder?</span>
+  
+
+</dt>
+<dd>
+  A builder for the child widget.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="controller" class="property">
+  <span class="name"><a href="../loading_state_handler/LoadingStateHandlerWidget/controller.html">controller</a></span>
+  <span class="signature">&#8594; <a href="../loading_state_handler/LoadingStateHandlerController-class.html">LoadingStateHandlerController</a>?</span>
+  
+
+</dt>
+<dd>
+  The controller for the <a href="../loading_state_handler/LoadingStateHandlerWidget-class.html">LoadingStateHandlerWidget</a>.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
         <dt id="currentState" class="property">
   <span class="name"><a href="../loading_state_handler/LoadingStateHandlerWidget/currentState.html">currentState</a></span>
   <span class="signature">&#8594; <a href="../loading_state_handler/CurrentStateEnum.html">CurrentStateEnum</a></span>
@@ -125,18 +146,6 @@
 </dt>
 <dd>
   The current state of the widget.
-  <div class="features"><span class="feature">final</span></div>
-
-</dd>
-
-        <dt id="data" class="property">
-  <span class="name"><a class="deprecated" href="../loading_state_handler/LoadingStateHandlerWidget/data.html">data</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
-  
-
-</dt>
-<dd>
-  Whether the widget is in a data state.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -189,18 +198,6 @@
 
 </dd>
 
-        <dt id="empty" class="property">
-  <span class="name"><a class="deprecated" href="../loading_state_handler/LoadingStateHandlerWidget/empty.html">empty</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
-  
-
-</dt>
-<dd>
-  Whether the widget is in an empty state.
-  <div class="features"><span class="feature">final</span></div>
-
-</dd>
-
         <dt id="emptyMessage" class="property">
   <span class="name"><a href="../loading_state_handler/LoadingStateHandlerWidget/emptyMessage.html">emptyMessage</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span>
@@ -233,18 +230,6 @@
 </dt>
 <dd>
   Whether the retry mechanism is enabled.
-  <div class="features"><span class="feature">final</span></div>
-
-</dd>
-
-        <dt id="error" class="property">
-  <span class="name"><a class="deprecated" href="../loading_state_handler/LoadingStateHandlerWidget/error.html">error</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
-  
-
-</dt>
-<dd>
-  Whether the widget is in an error state.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -306,18 +291,6 @@
 <dd class="inherited">
   Controls how one widget replaces another widget in the tree.
   <div class="features"><span class="feature">final</span><span class="feature">inherited</span></div>
-
-</dd>
-
-        <dt id="loading" class="property">
-  <span class="name"><a class="deprecated" href="../loading_state_handler/LoadingStateHandlerWidget/loading.html">loading</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span>
-  
-
-</dt>
-<dd>
-  Whether the widget is in a loading state.
-  <div class="features"><span class="feature">final</span></div>
 
 </dd>
 
@@ -405,6 +378,30 @@
 
 </dd>
 
+        <dt id="onStateChange" class="property">
+  <span class="name"><a href="../loading_state_handler/LoadingStateHandlerWidget/onStateChange.html">onStateChange</a></span>
+  <span class="signature">&#8594; OnStateChange?</span>
+  
+
+</dt>
+<dd>
+  A callback that is called when the state of the widget changes.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
+        <dt id="retryButtonStyle" class="property">
+  <span class="name"><a href="../loading_state_handler/LoadingStateHandlerWidget/retryButtonStyle.html">retryButtonStyle</a></span>
+  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/material/ButtonStyle-class.html">ButtonStyle</a>?</span>
+  
+
+</dt>
+<dd>
+  The retry button style.
+  <div class="features"><span class="feature">final</span></div>
+
+</dd>
+
         <dt id="retryButtonText" class="property">
   <span class="name"><a href="../loading_state_handler/LoadingStateHandlerWidget/retryButtonText.html">retryButtonText</a></span>
   <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span>
@@ -425,18 +422,6 @@
 </dt>
 <dd>
   The retry button text style.
-  <div class="features"><span class="feature">final</span></div>
-
-</dd>
-
-        <dt id="retryButtonStyle" class="property">
-  <span class="name"><a href="../loading_state_handler/LoadingStateHandlerWidget/retryButtonStyle.html">retryButtonStyle</a></span>
-  <span class="signature">&#8594; <a href="https://api.flutter.dev/flutter/material/ButtonStyle-class.html">ButtonStyle</a>?</span>
-  
-
-</dt>
-<dd>
-  The retry button style.
   <div class="features"><span class="feature">final</span></div>
 
 </dd>
@@ -686,7 +671,7 @@ tools and by <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../index.html">loading_state_handler</a></li>
-    <li><a href="../loading_state_handler/loading_state_handler-library.html">loading_state_handler</a></li>
+    <li><a href="../loading_state_handler/">loading_state_handler</a></li>
     <li class="self-crumb">LoadingStateHandlerWidget class</li>
 </ol>
 
@@ -699,7 +684,7 @@ tools and by <a href="https://api.flutter.dev/flutter/foundation/DiagnosticsNode
 <footer>
   <span class="no-break">
     loading_state_handler
-      1.3.3
+      2.1.0
   </span>
   
 </footer>

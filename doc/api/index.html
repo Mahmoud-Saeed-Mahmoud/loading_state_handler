@@ -30,27 +30,25 @@
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
   <div id="dartdoc-main-content" class="main-content">
       
 <section class="desc markdown">
   <h1 id="loadingstatehandlerwidget">LoadingStateHandlerWidget</h1>
+<p><a href="https://dart.dev"><img src="https://img.shields.io/badge/Dart-0175C2?logo=dart&amp;logoColor=white" alt="Dart"></a> <a href="https://dart.dev"><img src="https://img.shields.io/badge/Dart-0175C2?logo=flutter&amp;logoColor=white" alt="Flutter"></a> <a href="https://pub.dev/packages/loading_state_handler"><img src="https://img.shields.io/pub/v/loading_state_handler" alt="Pub Version"></a> <a href="https://img.shields.io/pub/likes/loading_state_handler"><img src="https://img.shields.io/pub/likes/loading_state_handler" alt="Pub Likes"></a> <a href="https://img.shields.io/pub/publisher/loading_state_handler"><img src="https://img.shields.io/pub/publisher/loading_state_handler" alt="Pub Publisher"></a> <img src="https://img.shields.io/pub/points/loading_state_handler" alt="Pub Points"> <img src="https://img.shields.io/pub/dm/loading_state_handler" alt="Pub Monthly Downloads"> <a href="/LICENSE"><img src="https://img.shields.io/badge/license-MIT-blue.svg" alt="License"></a></p>
 <p>A powerful Flutter widget for managing UI states with built-in retry functionality. This widget handles loading, error, empty, and normal states elegantly while providing a customizable retry mechanism with cooldown support.</p>
 <h2 id="features">Features</h2>
 <ul>
-<li>🔄 Smart state management (loading, error, empty, normal)</li>
+<li>🔄 Smart state management (loading, error, empty, normal, data)</li>
 <li>⏲️ Built-in retry mechanism with configurable cooldown</li>
 <li>🎨 Fully customizable widgets for each state</li>
 <li>🌐 Global default configurations</li>
@@ -58,52 +56,129 @@
 <li>🎯 Type-safe callbacks and builders</li>
 </ul>
 <h2 id="installation">Installation</h2>
-<p>Add the following dependency in your <code>pubspec.yaml</code> file:</p>
-<pre class="language-yaml"><code class="language-yaml">dependencies:
-  flutter:
-    sdk: flutter
-  loading_state_handler: ^1.3.3
+<p>Run the following command to add the package to your project:</p>
+<pre class="language-bash"><code class="language-bash">flutter pub add loading_state_handler
+</code></pre>
+<p>or add the package to your <code>pubspec.yaml</code> file:</p>
+<pre class="language-yml"><code class="language-yml">dependencies:
+  loading_state_handler: ^2.1.0
 </code></pre>
 <h2 id="quick-start">Quick Start</h2>
 <pre class="language-dart"><code class="language-dart">// Set global defaults (optional)
 LoadingStateHandlerWidget.setDefaults(
-  defaultRetryCooldown: const Duration(seconds: 5),
-  defaultLoadingBuilder: (context, loadingMessage) =&gt;
-        const Center(child: CircularProgressIndicator()),
-);
+    defaultRetryCooldown: const Duration(seconds: 5),
+    defaultErrorBuilder:
+        (context, errorMessage, retryWidget, retryCooldown, onRetry) =&gt; Center(
+      child: Column(
+        spacing: 20,
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Text(errorMessage ?? 'An error occurred'),
+          retryWidget,
+        ],
+      ),
+    ),
+  );
 
 // Use in your widget
 LoadingStateHandlerWidget(
-  currentState: CurrentStateEnum.error,
-  errorMessage: 'Failed to load data',
-  enableRetry: true,
-  retryCooldown: const Duration(seconds: 3),
-  onRetry: () =&gt; fetchData(),
-  child: YourWidget(),
-);
+        currentState: currentState,
+        onLoading: (defaultOnLoading, context, message) {
+          /// Uncomment to use the default loading callback
+          // defaultOnLoading?.call(context, message);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message ?? 'Custom Loading...'),
+            ),
+          );
+        },
+        onData: (defaultOnData, context, message) {
+          defaultOnData?.call(context, message);
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text(message ?? 'Custom Got Data...'),
+            ),
+          );
+        },
+        errorMessage: errorMessage,
+        child: const Center(child: Text('Data Loaded Successfully!')),
+      );
 </code></pre>
 <h2 id="advanced-usage">Advanced Usage</h2>
 <h3 id="retry-mechanism">Retry Mechanism</h3>
 <p>The widget includes a sophisticated retry mechanism with cooldown:</p>
 <pre class="language-dart"><code class="language-dart">LoadingStateHandlerWidget(
-  currentState: CurrentStateEnum.error,
-  errorMessage: 'Network error occurred',
-  enableRetry: true,
-  retryCooldown: const Duration(seconds: 3),
-  onRetry: () async {
-    await refetchData();
-  },
-  child: ContentWidget(),
-);
+        // State control properties
+        currentState: _currentState,
+
+        // Custom messages for different states
+        errorMessage: _errorMessage,
+        emptyMessage: 'No data available',
+        loadingMessage: 'Fetching data...',
+
+        // Retry configuration
+        enableRetry: true, // Enable the retry mechanism
+        retryCooldown:
+            const Duration(seconds: 3), // Custom cooldown per instance
+        onRetry: () {
+          // Callback executed when the retry button is pressed
+          // This will be disabled during the cooldown period
+          _fetchData();
+        },
+
+        // Content to display when in normal state (not loading/error/empty)
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              const Text(
+                'Data loaded successfully!',
+                style: TextStyle(fontSize: 18),
+              ),
+              const SizedBox(height: 20),
+              ElevatedButton(
+                onPressed: _fetchData,
+                child: const Text('Refresh Data'),
+              ),
+            ],
+          ),
+        ),
+      );
 </code></pre>
 <h3 id="global-configuration">Global Configuration</h3>
 <p>Set default behaviors for all instances:</p>
 <pre class="language-dart"><code class="language-dart">LoadingStateHandlerWidget.setDefaults(
-  defaultRetryCooldown: const Duration(seconds: 5),
-  defaultLoadingBuilder: (context, message) =&gt; CustomLoadingWidget(),
-  defaultErrorBuilder: (context, message) =&gt; CustomErrorWidget(),
-  defaultEmptyBuilder: (context, message) =&gt; CustomEmptyWidget(),
-);
+    defaultOnData: (context, message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message ?? 'Default Got Data...'),
+        ),
+      );
+    },
+
+    defaultOnLoading: (context, message) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message ?? 'Default Loading...'),
+        ),
+      );
+    },
+
+    defaultLoadingBuilder: (context, loadingMessage) =&gt;
+        const Center(child: CircularProgressIndicator()),
+
+    defaultErrorBuilder:
+        (context, errorMessage, retryWidget, retryCooldown, onRetry) =&gt; Center(
+      child: Text(
+        'Custom Error: $errorMessage',
+        style: const TextStyle(color: Colors.red),
+      ),
+    ),
+
+    defaultEmptyBuilder: (context, emptyMessage) =&gt; const Center(
+      child: Text('No Data Available'),
+    ),
+  );
 </code></pre>
 <h3 id="state-specific-callbacks">State-Specific Callbacks</h3>
 <p>Handle different states with custom callbacks:</p>
@@ -112,13 +187,25 @@ LoadingStateHandlerWidget(
   error: hasError,
   empty: isEmpty,
   onLoading: (defaultCallback, context, message) {
-    // Custom loading behavior
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message ?? 'Custom Loading...'),
+      ),
+    );
   },
   onError: (defaultCallback, context, message) {
-    // Custom error handling
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message ?? 'Custom Error...'),
+      ),
+    );
   },
   onEmpty: (defaultCallback, context, message) {
-    // Custom empty state handling
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message ?? 'Custom Empty...'),
+      ),
+    );
   },
   child: ContentWidget(),
 );
@@ -132,6 +219,50 @@ LoadingStateHandlerWidget(
   // ... other properties
 );
 </code></pre>
+<h3 id="state-change-callback">State Change Callback</h3>
+<p>Track state transitions with the <code>onStateChange</code> callback:</p>
+<pre class="language-dart"><code class="language-dart">LoadingStateHandlerWidget(
+  currentState: currentState,
+  onStateChange: (oldState, newState) {
+    print('State changed from $oldState to $newState');
+    // You can use this to log state transitions or trigger additional actions
+  },
+  child: YourContentWidget(),
+);
+</code></pre>
+<h3 id="custom-child-builder">Custom Child Builder</h3>
+<p>Customize the child widget based on the current state:</p>
+<pre class="language-dart"><code class="language-dart">LoadingStateHandlerWidget(
+  currentState: currentState,
+  childBuilder: (context, currentState, child) {
+    // Add a colored border based on the current state
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: _getStateColor(currentState),
+          width: 2.0,
+        ),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      padding: const EdgeInsets.all(16.0),
+      child: child, // The original child widget
+    );
+  },
+  child: YourContentWidget(),
+);
+
+// Helper method to get color based on state
+Color _getStateColor(CurrentStateEnum state) {
+  switch (state) {
+    case CurrentStateEnum.normal: return Colors.grey;
+    case CurrentStateEnum.loading: return Colors.blue;
+    case CurrentStateEnum.data: return Colors.green;
+    case CurrentStateEnum.empty: return Colors.amber;
+    case CurrentStateEnum.error: return Colors.red;
+    default: return Colors.grey;
+  }
+}
+</code></pre>
 <h2 id="properties">Properties</h2>
 <table>
 <thead>
@@ -143,24 +274,24 @@ LoadingStateHandlerWidget(
 </thead>
 <tbody>
 <tr>
-<td><code>loading</code></td>
-<td><code>bool</code></td>
-<td>Shows loading state when true</td>
-</tr>
-<tr>
-<td><code>error</code></td>
-<td><code>bool</code></td>
-<td>Shows error state when true</td>
-</tr>
-<tr>
-<td><code>empty</code></td>
-<td><code>bool</code></td>
-<td>Shows empty state when true</td>
+<td><code>controller</code></td>
+<td><code>LoadingStateHandlerController?</code></td>
+<td>Controller instance used to manage the state of the widget</td>
 </tr>
 <tr>
 <td><code>currentState</code></td>
 <td><code>CurrentStateEnum</code></td>
 <td>Current state of the widget</td>
+</tr>
+<tr>
+<td><code>onStateChange</code></td>
+<td><code>OnStateChange?</code></td>
+<td>Callback when state changes, provides old and new states</td>
+</tr>
+<tr>
+<td><code>childBuilder</code></td>
+<td><code>ChildBuilder?</code></td>
+<td>Builder for customizing the child widget based on state</td>
 </tr>
 <tr>
 <td><code>errorTitle</code></td>
@@ -255,19 +386,33 @@ LoadingStateHandlerWidget(
 </tbody>
 </table>
 <h2 id="example">Example</h2>
-<p>Check out the <a href="example/lib/main.dart">example</a> and <a href="example/lib/retry_example.dart">retry example</a> for a complete demonstration of all features.</p>
+<p>Check out the <a href="example/lib/main.dart">example</a>, <a href="example/lib/retry_example.dart">retry example</a>, and <a href="example/lib/loading_state_handler_with_controller_example.dart">controller example</a> for a complete demonstration of all features.</p>
 <h2 id="contributing">Contributing</h2>
 <p>Contributions are welcome! Please feel free to submit a Pull Request.</p>
 <h2 id="license">License</h2>
-<p>This project is licensed under the BSD 3-Clause License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
+<p>This project is licensed under the MIT License - see the <a href="LICENSE">LICENSE</a> file for details.</p>
 </section>
 
 
       <section class="summary">
           <h2>Libraries</h2>
         <dl>
+          <dt id="controller">
+  <span class="name"><a href="controller/">controller</a></span> 
+
+</dt>
+<dd>
+</dd>
+
+          <dt id="enums">
+  <span class="name"><a href="enums/">enums</a></span> 
+
+</dt>
+<dd>
+</dd>
+
           <dt id="loading_state_handler">
-  <span class="name"><a href="loading_state_handler/loading_state_handler-library.html">loading_state_handler</a></span> 
+  <span class="name"><a href="loading_state_handler/">loading_state_handler</a></span> 
 
 </dt>
 <dd>
@@ -290,7 +435,9 @@ LoadingStateHandlerWidget(
     <h5 class="hidden-xs"><span class="package-name">loading_state_handler</span> <span class="package-kind">package</span></h5>
     <ol>
       <li class="section-title">Libraries</li>
-      <li><a href="loading_state_handler/loading_state_handler-library.html">loading_state_handler</a></li>
+      <li><a href="controller/">controller</a></li>
+      <li><a href="enums/">enums</a></li>
+      <li><a href="loading_state_handler/">loading_state_handler</a></li>
 </ol>
 
   </div>
@@ -300,7 +447,7 @@ LoadingStateHandlerWidget(
 <footer>
   <span class="no-break">
     loading_state_handler
-      1.3.3
+      2.1.0
   </span>
   
 </footer>

@@ -4,8 +4,8 @@
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1, user-scalable=no">
-  <meta name="description" content="API docs for the LoadingStateHandlerWidget constructor from Class LoadingStateHandlerWidget from the loading_state_handler library, for the Dart programming language.">
-  <title>LoadingStateHandlerWidget constructor - LoadingStateHandlerWidget - loading_state_handler library - Dart API</title>
+  <meta name="description" content="API docs for the LoadingStateHandlerWidget.new constructor from Class LoadingStateHandlerWidget from the loading_state_handler library, for the Dart programming language.">
+  <title>LoadingStateHandlerWidget.new constructor - LoadingStateHandlerWidget - loading_state_handler library - Dart API</title>
 
 
   
@@ -25,25 +25,22 @@
   <span id="sidenav-left-toggle" class="material-symbols-outlined" role="button" tabindex="0">menu</span>
   <ol class="breadcrumbs gt-separated dark hidden-xs">
     <li><a href="../../index.html">loading_state_handler</a></li>
-    <li><a href="../../loading_state_handler/loading_state_handler-library.html">loading_state_handler.dart</a></li>
+    <li><a href="../../loading_state_handler/">loading_state_handler.dart</a></li>
     <li><a href="../../loading_state_handler/LoadingStateHandlerWidget-class.html">LoadingStateHandlerWidget</a></li>
-    <li class="self-crumb">LoadingStateHandlerWidget const constructor</li>
+    <li class="self-crumb">LoadingStateHandlerWidget.new const constructor</li>
   </ol>
-  <div class="self-name">LoadingStateHandlerWidget</div>
+  <div class="self-name">LoadingStateHandlerWidget.new</div>
   <form class="search navbar-right" role="search">
     <input type="text" id="search-box" autocomplete="off" disabled class="form-control typeahead" placeholder="Loading search...">
   </form>
-  <div class="toggle" id="theme-button" title="Toggle brightness">
-    <label for="theme">
-      <input type="checkbox" id="theme" value="light-theme">
-      <span id="dark-theme-button" class="material-symbols-outlined">
-        dark_mode
-      </span>
-      <span id="light-theme-button" class="material-symbols-outlined">
-        light_mode
-      </span>
-    </label>
-  </div>
+  <button class="toggle" id="theme-button" title="Toggle between light and dark mode" aria-label="Light and dark mode toggle">
+    <span id="dark-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      dark_mode
+    </span>
+    <span id="light-theme-button" class="material-symbols-outlined" aria-hidden="true">
+      light_mode
+    </span>
+  </button>
 </header>
 <main>
   <div
@@ -62,10 +59,6 @@
 <li><span class="parameter" id="-param-disableErrorWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">disableErrorWidgetChanges</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-disableEmptyWidgetChanges"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">disableEmptyWidgetChanges</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-currentState"><span class="type-annotation"><a href="../../loading_state_handler/CurrentStateEnum.html">CurrentStateEnum</a></span> <span class="parameter-name">currentState</span> = <span class="default-value">CurrentStateEnum.normal</span>, </span></li>
-<li><span class="parameter" id="-param-loading"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">loading</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-error"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">error</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-empty"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">empty</span> = <span class="default-value">false</span>, </span></li>
-<li><span class="parameter" id="-param-data"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">data</span> = <span class="default-value">false</span>, </span></li>
 <li><span class="parameter" id="-param-loadingMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">loadingMessage</span>, </span></li>
 <li><span class="parameter" id="-param-errorMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">errorMessage</span>, </span></li>
 <li><span class="parameter" id="-param-emptyMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">emptyMessage</span>, </span></li>
@@ -77,6 +70,8 @@
 <li><span class="parameter" id="-param-onEmpty"><span class="type-annotation">OnEmpty?</span> <span class="parameter-name">onEmpty</span>, </span></li>
 <li><span class="parameter" id="-param-onLoading"><span class="type-annotation">OnLoading?</span> <span class="parameter-name">onLoading</span>, </span></li>
 <li><span class="parameter" id="-param-onData"><span class="type-annotation">OnData?</span> <span class="parameter-name">onData</span>, </span></li>
+<li><span class="parameter" id="-param-onStateChange"><span class="type-annotation">OnStateChange?</span> <span class="parameter-name">onStateChange</span>, </span></li>
+<li><span class="parameter" id="-param-childBuilder"><span class="type-annotation">ChildBuilder?</span> <span class="parameter-name">childBuilder</span>, </span></li>
 <li><span class="parameter" id="-param-errorTitle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">errorTitle</span>, </span></li>
 <li><span class="parameter" id="-param-retryButtonStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/material/ButtonStyle-class.html">ButtonStyle</a>?</span> <span class="parameter-name">retryButtonStyle</span>, </span></li>
 <li><span class="parameter" id="-param-retryButtonTextStyle"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/painting/TextStyle-class.html">TextStyle</a>?</span> <span class="parameter-name">retryButtonTextStyle</span>, </span></li>
@@ -87,6 +82,7 @@
 <li><span class="parameter" id="-param-retryButtonText"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">retryButtonText</span>, </span></li>
 <li><span class="parameter" id="-param-retryMessage"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/String-class.html">String</a>?</span> <span class="parameter-name">retryMessage</span>, </span></li>
 <li><span class="parameter" id="-param-enableRetry"><span class="type-annotation"><a href="https://api.flutter.dev/flutter/dart-core/bool-class.html">bool</a></span> <span class="parameter-name">enableRetry</span> = <span class="default-value">false</span>, </span></li>
+<li><span class="parameter" id="-param-controller"><span class="type-annotation"><a href="../../loading_state_handler/LoadingStateHandlerController-class.html">LoadingStateHandlerController</a>?</span> <span class="parameter-name">controller</span>, </span></li>
 </ol>})
     </section>
     
@@ -101,10 +97,6 @@
   this.disableErrorWidgetChanges = false,
   this.disableEmptyWidgetChanges = false,
   this.currentState = CurrentStateEnum.normal,
-  this.loading = false,
-  this.error = false,
-  this.empty = false,
-  this.data = false,
   this.loadingMessage,
   this.errorMessage,
   this.emptyMessage,
@@ -116,6 +108,8 @@
   this.onEmpty,
   this.onLoading,
   this.onData,
+  this.onStateChange,
+  this.childBuilder,
   this.errorTitle,
   this.retryButtonStyle,
   this.retryButtonTextStyle,
@@ -126,7 +120,11 @@
   this.retryButtonText,
   this.retryMessage,
   this.enableRetry = false,
-}) : assert(enableRetry == (onRetry != null));</code></pre>
+  this.controller,
+}) : assert(
+        enableRetry == (onRetry != null),
+        &#39;onRetry must be provided if enableRetry is true&#39;,
+      );</code></pre>
 </section>
 
 
@@ -140,9 +138,9 @@
 </header>
 <ol class="breadcrumbs gt-separated dark hidden-l" id="sidebar-nav">
     <li><a href="../../index.html">loading_state_handler</a></li>
-    <li><a href="../../loading_state_handler/loading_state_handler-library.html">loading_state_handler</a></li>
+    <li><a href="../../loading_state_handler/">loading_state_handler</a></li>
     <li><a href="../../loading_state_handler/LoadingStateHandlerWidget-class.html">LoadingStateHandlerWidget</a></li>
-    <li class="self-crumb">LoadingStateHandlerWidget const constructor</li>
+    <li class="self-crumb">LoadingStateHandlerWidget.new const constructor</li>
 </ol>
 
     <h5>LoadingStateHandlerWidget class</h5>
@@ -154,7 +152,7 @@
 <footer>
   <span class="no-break">
     loading_state_handler
-      1.3.3
+      2.1.0
   </span>
   
 </footer>
