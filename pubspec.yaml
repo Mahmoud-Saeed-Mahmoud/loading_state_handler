@@ -1,9 +1,18 @@
 name: loading_state_handler
-description: "The StateHandlerWidget manages different UI states—loading, error, empty, and normal—allowing you to customize the displayed widgets for each state."
-version: 2.0.0
+description: "A powerful Flutter widget for managing UI states with built-in retry functionality. This widget handles loading, error, empty, and normal states elegantly while providing a customizable retry mechanism with cooldown support."
+version: 2.1.0
 homepage: https://github.com/Mahmoud-Saeed-Mahmoud/loading_state_handler
 documentation: https://mahmoud-saeed-mahmoud.github.io/loading_state_handler
+issue_tracker: https://github.com/Mahmoud-Saeed-Mahmoud/loading_state_handler/issues
 repository: https://github.com/Mahmoud-Saeed-Mahmoud/loading_state_handler
+platforms:
+  android:
+  ios:
+  linux:
+  macos:
+  web:
+  windows:
+
 topics:
   - widget
   - state

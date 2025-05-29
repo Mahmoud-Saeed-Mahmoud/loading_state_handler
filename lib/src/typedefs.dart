@@ -1,5 +1,22 @@
 import 'package:flutter/material.dart' show Widget, BuildContext, VoidCallback;
 
+import 'current_state_enum.dart';
+
+/// A builder for the child widget.
+///
+/// The [context] parameter provides the location in the widget tree where this
+/// widget is being built.
+///
+/// The [currentState] parameter is the current state of the widget.
+///
+/// This builder is useful for conditionally rendering different child widgets
+/// based on the current state of the widget.
+typedef ChildBuilder = Widget Function(
+  BuildContext context,
+  CurrentStateEnum currentState,
+  Widget child,
+);
+
 typedef DefaultEmptyBuilder = Widget Function(
   BuildContext context,
   String? message,
@@ -63,3 +80,16 @@ typedef OnLoading = Function(
   BuildContext context,
   String? message,
 )?;
+
+/// A callback that is called when the state of the widget changes.
+///
+/// The [oldState] parameter is the previous state of the widget.
+///
+/// The [newState] parameter is the new state of the widget.
+///
+/// This callback is useful for tracking state changes and performing actions
+/// when the state changes, such as analytics tracking or logging.
+typedef OnStateChange = void Function(
+  CurrentStateEnum oldState,
+  CurrentStateEnum newState,
+);

@@ -17,6 +17,7 @@ export 'package:flutter/material.dart'
         TextStyle,
         VoidCallback,
         Widget,
+        WidgetBuilder,
         WidgetsBinding;
 
 export 'current_state_enum.dart';

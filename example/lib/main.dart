@@ -124,6 +124,32 @@ class HomeScreenState extends State<HomeScreen> {
             ),
           );
         },
+        // Demonstrate the new onStateChange callback
+        onStateChange: (oldState, newState) {
+          debugPrint('State changed from $oldState to $newState');
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(
+              content: Text('State changed from $oldState to $newState'),
+              duration: const Duration(seconds: 1),
+            ),
+          );
+        },
+        // Demonstrate the new childBuilder
+        childBuilder: (context, currentState, child) {
+          // Add a colored border based on the current state
+          return Container(
+            decoration: BoxDecoration(
+              border: Border.all(
+                color: _getBorderColor(currentState),
+                width: 4.0,
+              ),
+              borderRadius: BorderRadius.circular(8.0),
+            ),
+            margin: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.all(16.0),
+            child: child,
+          );
+        },
         errorMessage: errorMessage,
         child: const Center(child: Text('Data Loaded Successfully!')),
       ),
@@ -144,6 +170,22 @@ class HomeScreenState extends State<HomeScreen> {
         // currentState = CurrentStateEnum.empty;
       });
     });
+  }
+
+  // Helper method to get border color based on current state
+  Color _getBorderColor(CurrentStateEnum state) {
+    switch (state) {
+      case CurrentStateEnum.normal:
+        return Colors.grey;
+      case CurrentStateEnum.loading:
+        return Colors.blue;
+      case CurrentStateEnum.data:
+        return Colors.green;
+      case CurrentStateEnum.empty:
+        return Colors.amber;
+      case CurrentStateEnum.error:
+        return Colors.red;
+    }
   }
 }
 

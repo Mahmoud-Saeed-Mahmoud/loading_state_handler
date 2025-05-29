@@ -18,11 +18,12 @@ Run the following command to add the package to your project:
 ```bash
 flutter pub add loading_state_handler
 ```
+
 or add the package to your `pubspec.yaml` file:
 
 ```yml
 dependencies:
-  loading_state_handler: ^2.0.0
+  loading_state_handler: ^2.1.0
 ```
 
 ## Quick Start
@@ -201,30 +202,84 @@ LoadingStateHandlerWidget(
 );
 ```
 
+### State Change Callback
+
+Track state transitions with the `onStateChange` callback:
+
+```dart
+LoadingStateHandlerWidget(
+  currentState: currentState,
+  onStateChange: (oldState, newState) {
+    print('State changed from $oldState to $newState');
+    // You can use this to log state transitions or trigger additional actions
+  },
+  child: YourContentWidget(),
+);
+```
+
+### Custom Child Builder
+
+Customize the child widget based on the current state:
+
+```dart
+LoadingStateHandlerWidget(
+  currentState: currentState,
+  childBuilder: (context, currentState, child) {
+    // Add a colored border based on the current state
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(
+          color: _getStateColor(currentState),
+          width: 2.0,
+        ),
+        borderRadius: BorderRadius.circular(8.0),
+      ),
+      padding: const EdgeInsets.all(16.0),
+      child: child, // The original child widget
+    );
+  },
+  child: YourContentWidget(),
+);
+
+// Helper method to get color based on state
+Color _getStateColor(CurrentStateEnum state) {
+  switch (state) {
+    case CurrentStateEnum.normal: return Colors.grey;
+    case CurrentStateEnum.loading: return Colors.blue;
+    case CurrentStateEnum.data: return Colors.green;
+    case CurrentStateEnum.empty: return Colors.amber;
+    case CurrentStateEnum.error: return Colors.red;
+    default: return Colors.grey;
+  }
+}
+```
+
 ## Properties
 
-| Property | Type | Description |
-|----------|------|-------------|
-| `controller` | `LoadingStateHandlerController?` | Controller instance used to manage the state of the widget |
-| `currentState` | `CurrentStateEnum` | Current state of the widget for |
-| `errorTitle` | `String?` | Custom error title |
-| `retryButtonStyle` | `ButtonStyle?` | Custom retry button style |
-| `retryButtonTextStyle` | `TextStyle?` | Custom retry button text style |
-| `retryMessageStyle` | `TextStyle?` | Custom retry message style |
-| `retryButtonText` | `String?` | Custom retry button text |
-| `retryMessage` | `String?` | Custom retry message |
-| `loadingWidget` | `Widget?` | Custom loading widget |
-| `errorWidget` | `Widget?` | Custom error widget |
-| `emptyWidget` | `Widget?` | Custom empty widget |
-| `disableWidgetChanges` | `bool` | Disables state changes in the widget |
-| `disableErrorWidgetChanges` | `bool` | Disables state changes in the error widget |
-| `disableEmptyWidgetChanges` | `bool` | Disables state changes in the empty widget |
-| `enableRetry` | `bool` | Enables retry functionality |
-| `retryCooldown` | `Duration` | Cooldown period between retries |
-| `onRetry` | `VoidCallback` | Callback when retry is triggered |
-| `errorMessage` | `String?` | Custom error message |
-| `loadingMessage` | `String?` | Custom loading message |
-| `emptyMessage` | `String?` | Custom empty state message |
+| Property                    | Type                             | Description                                                |
+| --------------------------- | -------------------------------- | ---------------------------------------------------------- |
+| `controller`                | `LoadingStateHandlerController?` | Controller instance used to manage the state of the widget |
+| `currentState`              | `CurrentStateEnum`               | Current state of the widget                                |
+| `onStateChange`             | `OnStateChange?`                 | Callback when state changes, provides old and new states   |
+| `childBuilder`              | `ChildBuilder?`                  | Builder for customizing the child widget based on state    |
+| `errorTitle`                | `String?`                        | Custom error title                                         |
+| `retryButtonStyle`          | `ButtonStyle?`                   | Custom retry button style                                  |
+| `retryButtonTextStyle`      | `TextStyle?`                     | Custom retry button text style                             |
+| `retryMessageStyle`         | `TextStyle?`                     | Custom retry message style                                 |
+| `retryButtonText`           | `String?`                        | Custom retry button text                                   |
+| `retryMessage`              | `String?`                        | Custom retry message                                       |
+| `loadingWidget`             | `Widget?`                        | Custom loading widget                                      |
+| `errorWidget`               | `Widget?`                        | Custom error widget                                        |
+| `emptyWidget`               | `Widget?`                        | Custom empty widget                                        |
+| `disableWidgetChanges`      | `bool`                           | Disables state changes in the widget                       |
+| `disableErrorWidgetChanges` | `bool`                           | Disables state changes in the error widget                 |
+| `disableEmptyWidgetChanges` | `bool`                           | Disables state changes in the empty widget                 |
+| `enableRetry`               | `bool`                           | Enables retry functionality                                |
+| `retryCooldown`             | `Duration`                       | Cooldown period between retries                            |
+| `onRetry`                   | `VoidCallback`                   | Callback when retry is triggered                           |
+| `errorMessage`              | `String?`                        | Custom error message                                       |
+| `loadingMessage`            | `String?`                        | Custom loading message                                     |
+| `emptyMessage`              | `String?`                        | Custom empty state message                                 |
 
 ## Example
 
