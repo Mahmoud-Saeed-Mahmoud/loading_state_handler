@@ -1,5 +1,7 @@
 # LoadingStateHandlerWidget
 
+[![Dart](https://img.shields.io/badge/Dart-0175C2?logo=dart&logoColor=white)](https://dart.dev) [![Flutter](https://img.shields.io/badge/Dart-0175C2?logo=flutter&logoColor=white)](https://dart.dev) [![Pub Version](https://img.shields.io/pub/v/loading_state_handler)](https://pub.dev/packages/loading_state_handler) [![Pub Likes](https://img.shields.io/pub/likes/loading_state_handler)](https://img.shields.io/pub/likes/loading_state_handler) [![Pub Publisher](https://img.shields.io/pub/publisher/loading_state_handler)](https://img.shields.io/pub/publisher/loading_state_handler) ![Pub Points](https://img.shields.io/pub/points/loading_state_handler) ![Pub Monthly Downloads](https://img.shields.io/pub/dm/loading_state_handler) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](/LICENSE)
+
 A powerful Flutter widget for managing UI states with built-in retry functionality. This widget handles loading, error, empty, and normal states elegantly while providing a customizable retry mechanism with cooldown support.
 
 ## Features
