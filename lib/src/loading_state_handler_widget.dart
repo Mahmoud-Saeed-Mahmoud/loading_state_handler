@@ -283,6 +283,29 @@ class LoadingStateHandlerWidget extends StatefulWidget {
   /// The callback to be executed when retry is attempted.
   final VoidCallback? onRetry;
 
+  /// A callback that is called when the state of the widget changes.
+  ///
+  /// The [oldState] parameter is the previous state of the widget.
+  ///
+  /// The [newState] parameter is the new state of the widget.
+  ///
+  /// This callback is useful for tracking state changes and performing actions
+  /// when the state changes, such as analytics tracking or logging.
+  final OnStateChange? onStateChange;
+
+  /// A builder for the child widget.
+  ///
+  /// The [context] parameter provides the location in the widget tree where this
+  /// widget is being built.
+  ///
+  /// The [currentState] parameter is the current state of the widget.
+  ///
+  /// The [child] parameter is the child widget that was passed to the constructor.
+  ///
+  /// This builder is useful for conditionally rendering different child widgets
+  /// based on the current state of the widget.
+  final ChildBuilder? childBuilder;
+
   /// The retry button text.
   ///
   /// The default value is null, which means the default retry button text will be used.
@@ -325,6 +348,8 @@ class LoadingStateHandlerWidget extends StatefulWidget {
     this.onEmpty,
     this.onLoading,
     this.onData,
+    this.onStateChange,
+    this.childBuilder,
     this.errorTitle,
     this.retryButtonStyle,
     this.retryButtonTextStyle,
@@ -423,6 +448,11 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
 
   /// The current retry cooldown timer.
   Timer? _retryCooldownTimer;
+
+  /// The previous state of the widget.
+  /// Used to track state changes for the onStateChange callback.
+  CurrentStateEnum? _previousState;
+
   @override
 
   /// Builds the widget tree for the [LoadingStateHandlerWidget].
@@ -499,10 +529,11 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
               child: Text('Empty'),
             );
       } else if (_getIsData()) {
-        return widget.child;
+        // Use the childBuilder if provided, otherwise return the child directly
+        return _buildChildWithBuilder();
       } else {
         // normal
-        return widget.child;
+        return _buildChildWithBuilder();
       }
     }
   }
@@ -530,6 +561,19 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   @override
   void didUpdateWidget(covariant LoadingStateHandlerWidget oldWidget) {
     super.didUpdateWidget(oldWidget);
+
+    // Get the current state from either the controller or the widget property
+    final currentState = widget.controller?.value ?? widget.currentState;
+
+    // Check if the state has changed
+    if (_previousState != currentState) {
+      // Call the onStateChange callback if provided
+      widget.onStateChange?.call(_previousState!, currentState);
+
+      // Update the previous state
+      _previousState = currentState;
+    }
+
     if (widget.controller == null) {
       // If the controller is null, add a callback to call the methods once the
       // frame is built.
@@ -580,9 +624,13 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   /// 1. Adding a listener to the [controller] to listen for state changes.
   /// 2. Calling [_applyMethods] to apply the methods provided in the
   ///    [LoadingStateHandlerWidget].
+  /// 3. Initializing the _previousState to track state changes.
   @override
   void initState() {
     super.initState();
+
+    // Initialize the previous state
+    _previousState = widget.controller?.value ?? widget.currentState;
 
     widget.controller?.addListener(_handleControllerStateChange);
     WidgetsBinding.instance.addPostFrameCallback((_) => _applyMethods());
@@ -656,6 +704,24 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
             ?.call(context, widget.dataMessage);
       }
     }
+  }
+
+  /// Builds the child widget using the childBuilder if provided.
+  ///
+  /// If the childBuilder is provided, it is called with the context,
+  /// current state, and child widget. Otherwise, the child widget is
+  /// returned directly.
+  ///
+  /// This method is used to conditionally render different child widgets
+  /// based on the current state of the widget.
+  Widget _buildChildWithBuilder() {
+    // Get the current state from either the controller or the widget property
+    final currentState = widget.controller?.value ?? widget.currentState;
+
+    // Use the childBuilder if provided, otherwise return the child directly
+    return widget.childBuilder != null
+        ? widget.childBuilder!(context, currentState, widget.child)
+        : widget.child;
   }
 
   /// Builds the retry button.
@@ -748,9 +814,23 @@ class _LoadingStateHandlerWidgetState extends State<LoadingStateHandlerWidget> {
   /// still mounted, the [_applyMethods] method is called.
   ///
   /// This method is used when the controller is not null.
+  ///
+  /// It also calls the onStateChange callback if provided.
   void _handleControllerStateChange() {
     if (context.mounted) {
       if (widget.controller != null) {
+        // Get the current state from the controller
+        final currentState = widget.controller!.value;
+
+        // Check if the state has changed
+        if (_previousState != currentState) {
+          // Call the onStateChange callback if provided
+          widget.onStateChange?.call(_previousState!, currentState);
+
+          // Update the previous state
+          _previousState = currentState;
+        }
+
         setState(_applyMethods);
       }
     }

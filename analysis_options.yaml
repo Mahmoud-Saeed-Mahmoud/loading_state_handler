@@ -22,7 +22,6 @@ linter:
     unnecessary_library_name: true
     unnecessary_late: true
     unnecessary_lambdas: true
-    unnecessary_final: true
     unnecessary_breaks: true
     unnecessary_const: true
     unnecessary_brace_in_string_interps: true

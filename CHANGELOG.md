@@ -1,10 +1,10 @@
 ## 0.0.1
 
-* Initial release.
+- Initial release.
 
 ## 0.0.2
 
-* changed the description in `pubspec.yaml`.
+- changed the description in `pubspec.yaml`.
 
 ## 0.0.3
 
@@ -12,11 +12,9 @@
 - **Updated**: Documentation to clarify widget behavior for loading, error, and empty states.
 - **Refined**: Default builder functions for consistent styling across app states.
 
-
 ## 0.0.4
 
 - **Added**: Example usage for better demonstration of widget functionality.
-
 
 ## 0.0.5
 
@@ -25,7 +23,6 @@
 ## 0.0.6
 
 - **Updated**: Description in `pubspec.yaml`.
-
 
 ## 1.0.0
 
@@ -82,24 +79,28 @@
 ## 1.2.0
 
 ### New Features
+
 - **Added**: Retry mechanism with configurable cooldown
 - **Added**: Global defaults configuration through `setDefaults` method
 - **Added**: Per-instance retry controls with visual countdown
 - **Added**: Customizable retry callback functionality
 
 ### Improvements
+
 - **Enhanced**: Constructor is now `const` for better performance
 - **Improved**: State management with cleaner implementation
 - **Updated**: Documentation with comprehensive examples
 - **Refined**: Default widget behavior and configuration
 
 ### Breaking Changes
+
 - Renamed `setDefaultWidgets` to `setDefaults` for better clarity
 - Moved retry configuration to `setDefaults` method
 
 ## 1.3.0
 
 ### New Features
+
 - **Added**: `retryButtonText` and `retryMessage` parameters in `StateHandlerWidget`.
 - **Added**: `retryButtonTextStyle` and `retryMessageStyle` parameters in `StateHandlerWidget`.
 - **Added**: `retryButtonStyle` parameter in `StateHandlerWidget`.
@@ -122,21 +123,23 @@
 ## 1.4.0
 
 ### Breaking Changes
- **Deprecated**: The following state properties in `StateHandlerWidget` are now marked as deprecated:
-  * `loading`
-  * `error`
-  * `data`
-  * `empty`
+
+**Deprecated**: The following state properties in `StateHandlerWidget` are now marked as deprecated:
+
+- `loading`
+- `error`
+- `data`
+- `empty`
 
 ### Migration Guide
-* Users should transition to the callback-based approach introduced in v1.3.3
 
-* Replace state properties with their corresponding callbacks:
-        
-    * Use `currentState` instead of `loading`
-    * Use `currentState` instead of `error`
-    * Use `currentState` instead of `data`
-    * Use `currentState` instead of `empty`
+- Users should transition to the callback-based approach introduced in v1.3.3
+
+- Replace state properties with their corresponding callbacks:
+  - Use `currentState` instead of `loading`
+  - Use `currentState` instead of `error`
+  - Use `currentState` instead of `data`
+  - Use `currentState` instead of `empty`
 
 ## 2.0.0
 
@@ -145,10 +148,24 @@
 - **Added**: `LoadingStateHandlerController` class for advanced control over the loading state.
 
 ### Removed
- The following state properties in `StateHandlerWidget` are now removed 
-  * `loading`
-  * `error`
-  * `data`
-  * `empty`
+
+The following state properties in `StateHandlerWidget` are now removed
+
+- `loading`
+- `error`
+- `data`
+- `empty`
 
 ### Migration Guide Use `currentState` instead
+
+## 2.1.0
+
+### New Features
+
+- **Added**: `onStateChange` callback to track state transitions between old and new states
+- **Added**: `childBuilder` to customize the child widget based on the current state
+
+### Improvements
+
+- Enhanced state change tracking with previous state comparison
+- Added documentation and examples for new features
